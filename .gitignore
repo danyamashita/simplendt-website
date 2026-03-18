@@ -1,1 +1,36 @@
+# Environment variables and secrets
+.env
+.env.*
+.env.local
+.env.production
+.env.development
+
+# OS files
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor config
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (in case of any build tooling)
+node_modules/
+package-lock.json
+
+# Claude Code local state
+.claude/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Netlify local
+.netlify/
+
+# Temporary files
+*.tmp
+*.bak
