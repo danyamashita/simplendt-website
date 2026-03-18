@@ -122,7 +122,7 @@
 
 <script>
 const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll(".reveal").forEach(el => { observer.observe(el); const r = el.getBoundingClientRect(); if (r.top < window.innerHeight && r.bottom >= 0) el.classList.add("visible"); });
 let lastScroll = 0; const navEl = document.querySelector('nav');
 window.addEventListener('scroll', () => { const c = window.scrollY; navEl.style.transform = (c > lastScroll && c > 100) ? 'translateY(-100%)' : 'translateY(0)'; lastScroll = c; }, { passive: true });
 document.querySelectorAll('.faq-question').forEach(q => { q.addEventListener('click', () => { q.parentElement.classList.toggle('open'); }); });
