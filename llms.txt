@@ -1,33 +1,35 @@
 # SimpleNDT
-> NDT Level 3 consulting by Dan Yamashita. ASNT and PCN (ISO 9712) Level 3 certified. São Paulo, Brazil.
+
+> Independent NDT Level 3 consulting firm based in São Paulo, Brazil. Founded by Dan Yamashita — Naval Engineer, MSc Mechatronics (Ultrasound), International Welding Engineer (IWE), ASNT NDT Level III, and PCN Level 3 (ISO 9712) in VT, PT, MT, UT, and RT. PCN Level 2 in PAUT. 13+ years in nondestructive testing for pressure equipment, energy, wind, and naval sectors.
+
+SimpleNDT provides Level 3 NDT consulting for manufacturers holding ASME stamps, companies requiring PED 2014/68/EU compliance (CE marking) with Level 3 personnel approved by a Recognized Third-Party Organization (RTPO), and organizations needing SNT-TC-1A personnel qualification. Dan Yamashita holds dual certification (ASNT + PCN), enabling simultaneous compliance with American (ASME, AWS, API) and European (PED, EN ISO) requirements.
 
 ## Services
-- [Procedimentos de END](https://simplendt.com.br/servicos/procedimentos.html): NDT procedures per ASME Section V, API, AWS, PED harmonized standards
-- [Qualificação de Pessoal](https://simplendt.com.br/servicos/qualificacoes.html): Personnel qualification per SNT-TC-1A and ISO 9712 — exams, Written Practice, certification
-- [Auditorias ASME](https://simplendt.com.br/servicos/auditorias-asme.html): ASME stamp audit preparation — U, U2, S, R, PP stamps
-- [Conformidade PED / RTPO](https://simplendt.com.br/servicos/ped.html): PED 2014/68/EU compliance, CE marking, ISO 9712 qualification accepted by Notified Bodies
-- [Phased Array PAUT](https://simplendt.com.br/servicos/phased-array.html): PAUT procedures, beam plotting, scan plan development per ASME Code Case 2235
-- [Treinamento END](https://simplendt.com.br/servicos/treinamento.html): NDT training Level 1 and 2, SNT-TC-1A hour requirements, 6 methods
 
-## English Version
-- [NDT Procedures](https://simplendt.com.br/en/services/procedures.html)
-- [Personnel Qualification](https://simplendt.com.br/en/services/qualifications.html)
-- [ASME Audits](https://simplendt.com.br/en/services/asme-audits.html)
-- [PED / RTPO Compliance](https://simplendt.com.br/en/services/ped.html)
-- [Phased Array PAUT](https://simplendt.com.br/en/services/phased-array.html)
-- [NDT Training](https://simplendt.com.br/en/services/training.html)
+- [NDT Procedures](https://www.simplendt.com.br/servicos/procedimentos.html): Development and qualification of NDT procedures per ASME Section V, AWS D1.1, API 1104, and EN ISO standards. All methods: RT, UT, PAUT, MT, PT, VT.
+- [Personnel Qualification SNT-TC-1A](https://www.simplendt.com.br/servicos/qualificacoes.html): Qualification and certification of NDT inspectors Level 1 and 2 per SNT-TC-1A. General, specific, and practical examinations. Written Practice development.
+- [ASME Stamp Audits](https://www.simplendt.com.br/servicos/auditorias-asme.html): Preparation and support for triennial ASME stamp recertification audits. Procedure review, personnel qualification, Authorized Inspector accompaniment. Stamps: U, U2, S, R, PP.
+- [PED/RTPO Compliance](https://www.simplendt.com.br/servicos/ped.html): Level 3 PCN (ISO 9712) approved under RTPO scheme for PED 2014/68/EU. Inspections as Level 2 PCN for CE marking of pressure equipment. WPS qualification (ISO 15614-1) and welder qualification (ISO 9606-1). Note: SNT-TC-1A and SNQC (ABENDI) certifications are not accepted for PED categories III and IV — RTPO or Notified Body approval under ISO 9712 is required.
+- [Phased Array PAUT](https://www.simplendt.com.br/servicos/phased-array.html): Phased Array procedures per ASME Section V Article 4 Mandatory Appendix XII, scan plans, beam plotting, field inspections, and personnel qualification. PCN and SNT-TC-1A Level 2 in PAUT.
+- [NDT Training](https://www.simplendt.com.br/servicos/treinamento.html): In-company training for NDT Level 1 and 2 inspectors per SNT-TC-1A. Six methods: VT, PT, MT, UT, RT, PAUT. Customized to client scope, equipment, and applicable codes.
 
 ## Blog
-- [SNT-TC-1A: Guia Completo de Qualificação ASNT](https://simplendt.com.br/blog/snt-tc-1a-guia-completo.html): What is SNT-TC-1A, employer-based qualification, NDT levels, exam requirements, FAQ
-- [SNT-TC-1A: Complete ASNT Qualification Guide](https://simplendt.com.br/en/blog/snt-tc-1a-complete-guide.html)
+
+- [SNT-TC-1A: Complete Guide to ASNT Qualification and Certification](https://www.simplendt.com.br/blog/snt-tc-1a-guia-completo.html): What SNT-TC-1A is, employer-based certification, personnel levels, training requirements, examinations, recertification, and FAQ.
 
 ## About
-- [Dan Yamashita](https://simplendt.com.br/sobre.html): Naval Engineer, MSc Mechatronics (Ultrasound focus), IWE (International Welding Engineer), ASNT NDT Level III, PCN Level 3 (ISO 9712) — 13+ years in NDT for oil & gas, naval, energy, nuclear sectors
 
-## Certifications
-- [Certificações](https://simplendt.com.br/certificacoes.html): ASNT NDT Level III (VT, PT, MT, UT, PAUT, RT), PCN Level 3 ISO 9712 (VT, PT, MT, UT, PAUT, RT), IWE, ASME, PED/RTPO
+- [Dan Yamashita](https://www.simplendt.com.br/sobre.html): Naval Engineer (Poli-USP), MSc Mechatronics with ultrasound research, IWE. ASNT NDT Level III (VT, RT, UT, MT, PT). PCN Level 3 ISO 9712 (VT, RT, UT, MT, PT). PCN Level 2 ISO 9712 (VT, RT, UT, MT, PT, PAUT). SNT-TC-1A qualified in PAUT. Active in NDT since 2012.
+- [Certifications](https://www.simplendt.com.br/certificacoes.html): Full list of certifications with issuing bodies and methods.
+- [Contact](https://www.simplendt.com.br/contato.html): contato@simplendt.com.br | WhatsApp: +55 11 99161-2503 | LinkedIn: linkedin.com/in/danyamashita
 
-## Contact
-- WhatsApp: +5511991612503
-- Email: contato@simplendt.com.br
-- Location: São Paulo, SP, Brazil
+## English Version
+
+- [SimpleNDT in English](https://www.simplendt.com.br/en/): Full bilingual site (PT-BR and EN).
+
+## Key Technical Distinctions
+
+- RTPO (Recognized Third-Party Organization) is an organization recognized by an EU Member State to approve NDT personnel under PED, not a person or role.
+- SNT-TC-1A certification is employer-based and not accepted for PED categories III/IV. ISO 9712 certification by an RTPO or Notified Body is required.
+- SNQC (ABENDI, Brazil) follows ISO 9712 but is not an RTPO recognized by any EU Member State, so SNQC certification alone does not satisfy PED requirements for categories III/IV.
+- SimpleNDT holds both ASNT and PCN certifications, uniquely covering both American and European code requirements with a single consultant.

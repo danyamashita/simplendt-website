@@ -13,4 +13,4 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-Sitemap: https://simplendt.com.br/sitemap.xml
+Sitemap: https://www.simplendt.com.br/sitemap.xml

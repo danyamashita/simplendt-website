@@ -94,12 +94,12 @@ simplendt/
 1. Unique `<title>` tag — max 60 chars, include primary keyword + "SimpleNDT"
 2. Unique `<meta name="description">` — max 155 chars, include keywords + CTA
 3. `<meta name="keywords">` — 5-7 relevant terms
-4. Canonical URL: `<link rel="canonical" href="https://simplendt.com.br/...">`
+4. Canonical URL: `<link rel="canonical" href="https://www.simplendt.com.br/...">`
 5. Open Graph tags: og:title, og:description, og:image, og:url, og:type
 6. `hreflang` tags linking PT and EN versions:
    ```html
-   <link rel="alternate" hreflang="pt-BR" href="https://simplendt.com.br/page.html">
-   <link rel="alternate" hreflang="en" href="https://simplendt.com.br/en/page.html">
+   <link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/page.html">
+   <link rel="alternate" hreflang="en" href="https://www.simplendt.com.br/en/page.html">
    ```
 7. Proper heading hierarchy: single H1, H2s for sections, H3s for subsections
 8. Schema.org JSON-LD (see below)
@@ -111,7 +111,7 @@ simplendt/
   "@type": "ProfessionalService",
   "name": "SimpleNDT",
   "description": "NDT Level 3 Consulting — ASME, PED/RTPO, SNT-TC-1A, ISO 9712",
-  "url": "https://simplendt.com.br",
+  "url": "https://www.simplendt.com.br",
   "telephone": "+5511991612503",
   "email": "contato@simplendt.com.br",
   "address": {

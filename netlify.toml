@@ -1,0 +1,142 @@
+# ============================================================
+# SECURITY HEADERS
+# ============================================================
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'"
+
+# ============================================================
+# REDIRECTS — clean URLs → .html (resolve duplicate content)
+# ============================================================
+
+# --- PT-BR core pages ---
+[[redirects]]
+  from = "/sobre"
+  to = "/sobre.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/certificacoes"
+  to = "/certificacoes.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contato"
+  to = "/contato.html"
+  status = 301
+  force = true
+
+# --- PT-BR service pages ---
+[[redirects]]
+  from = "/servicos/procedimentos"
+  to = "/servicos/procedimentos.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servicos/qualificacoes"
+  to = "/servicos/qualificacoes.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servicos/auditorias-asme"
+  to = "/servicos/auditorias-asme.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servicos/ped"
+  to = "/servicos/ped.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servicos/phased-array"
+  to = "/servicos/phased-array.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servicos/treinamento"
+  to = "/servicos/treinamento.html"
+  status = 301
+  force = true
+
+# --- PT-BR blog ---
+[[redirects]]
+  from = "/blog/snt-tc-1a-guia-completo"
+  to = "/blog/snt-tc-1a-guia-completo.html"
+  status = 301
+  force = true
+
+# --- EN core pages ---
+[[redirects]]
+  from = "/en/about"
+  to = "/en/about.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/certifications"
+  to = "/en/certifications.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/contact"
+  to = "/en/contact.html"
+  status = 301
+  force = true
+
+# --- EN service pages ---
+[[redirects]]
+  from = "/en/services/procedures"
+  to = "/en/services/procedures.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/services/qualifications"
+  to = "/en/services/qualifications.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/services/asme-audits"
+  to = "/en/services/asme-audits.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/services/ped"
+  to = "/en/services/ped.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/services/phased-array"
+  to = "/en/services/phased-array.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/services/training"
+  to = "/en/services/training.html"
+  status = 301
+  force = true
+
+# --- EN blog ---
+[[redirects]]
+  from = "/en/blog/snt-tc-1a-complete-guide"
+  to = "/en/blog/snt-tc-1a-complete-guide.html"
+  status = 301
+  force = true
