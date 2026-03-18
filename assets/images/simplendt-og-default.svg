@@ -1,0 +1,103 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(79,209,197,0.05)" stroke-width="0.5"/>
+    </pattern>
+    <linearGradient id="bottomLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="transparent"/>
+      <stop offset="50%" stop-color="#4fd1c5"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </linearGradient>
+    <linearGradient id="divider" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="transparent"/>
+      <stop offset="50%" stop-color="rgba(79,209,197,0.12)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0c10"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Geometric accents -->
+  <rect x="920" y="-40" width="260" height="260" rx="6" fill="none" stroke="rgba(79,209,197,0.06)" stroke-width="0.5" transform="rotate(45, 1050, 90)"/>
+  <rect x="60" y="420" width="160" height="160" rx="4" fill="none" stroke="rgba(79,209,197,0.04)" stroke-width="0.5" transform="rotate(20, 140, 500)"/>
+
+  <!-- Vertical divider line -->
+  <line x1="860" y1="80" x2="860" y2="550" stroke="url(#divider)" stroke-width="0.5"/>
+
+  <!-- Badge -->
+  <rect x="80" y="100" width="360" height="28" rx="14" fill="none" stroke="rgba(79,209,197,0.25)" stroke-width="0.8"/>
+  <text x="260" y="118" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="10" font-weight="500" fill="#4fd1c5" letter-spacing="2.5">NÍVEL 3 ASNT · PCN / ISO 9712 · RTPO</text>
+
+  <!-- Logo mark -->
+  <rect x="80" y="156" width="48" height="48" rx="0" fill="none" stroke="#4fd1c5" stroke-width="1.8"/>
+  <text x="104" y="188" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="20" font-weight="700" fill="#4fd1c5">S</text>
+
+  <!-- Logo text -->
+  <text x="144" y="190" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="34" font-weight="600" fill="#e2e8f0" letter-spacing="3.5">
+    SIMPLE<tspan fill="#4fd1c5">NDT</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="80" y="268" font-family="'Georgia', 'Instrument Serif', serif" font-size="42" font-weight="400" fill="#f1f5f9">
+    Consultoria Nível 3 em
+  </text>
+  <text x="80" y="318" font-family="'Georgia', 'Instrument Serif', serif" font-size="42" font-weight="400" font-style="italic" fill="#4fd1c5">
+    Ensaios Não Destrutivos
+  </text>
+
+  <!-- Author line -->
+  <text x="80" y="380" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="13" font-weight="500" fill="#94a3b8" letter-spacing="1.5">
+    Dan Yamashita · Eng. Naval · MSc Mecatrônica · IWE
+  </text>
+  <text x="80" y="404" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="12" font-weight="400" fill="#64748b" letter-spacing="1.5">
+    ASME · PED/CE · SNT-TC-1A · ISO 9712
+  </text>
+
+  <!-- Right side: Method badges -->
+  <text x="920" y="120" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="10" font-weight="500" fill="#475569" letter-spacing="3">MÉTODOS CERTIFICADOS</text>
+
+  <!-- Method tags - 2 columns -->
+  <rect x="920" y="144" width="60" height="30" rx="4" fill="rgba(79,209,197,0.06)" stroke="rgba(79,209,197,0.12)" stroke-width="0.5"/>
+  <text x="950" y="164" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="13" font-weight="500" fill="#94a3b8">VT</text>
+
+  <rect x="990" y="144" width="60" height="30" rx="4" fill="rgba(79,209,197,0.06)" stroke="rgba(79,209,197,0.12)" stroke-width="0.5"/>
+  <text x="1020" y="164" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="13" font-weight="500" fill="#94a3b8">RT</text>
+
+  <rect x="1060" y="144" width="60" height="30" rx="4" fill="rgba(79,209,197,0.06)" stroke="rgba(79,209,197,0.12)" stroke-width="0.5"/>
+  <text x="1090" y="164" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="13" font-weight="500" fill="#94a3b8">UT</text>
+
+  <rect x="920" y="182" width="60" height="30" rx="4" fill="rgba(79,209,197,0.06)" stroke="rgba(79,209,197,0.12)" stroke-width="0.5"/>
+  <text x="950" y="202" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="13" font-weight="500" fill="#94a3b8">MT</text>
+
+  <rect x="990" y="182" width="60" height="30" rx="4" fill="rgba(79,209,197,0.06)" stroke="rgba(79,209,197,0.12)" stroke-width="0.5"/>
+  <text x="1020" y="202" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="13" font-weight="500" fill="#94a3b8">PT</text>
+
+  <rect x="1060" y="182" width="68" height="30" rx="4" fill="rgba(79,209,197,0.08)" stroke="rgba(79,209,197,0.18)" stroke-width="0.5"/>
+  <text x="1094" y="202" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="13" font-weight="600" fill="#4fd1c5">PAUT</text>
+
+  <!-- Right side: Key services -->
+  <text x="920" y="260" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="10" font-weight="500" fill="#475569" letter-spacing="3">ATUAÇÃO</text>
+
+  <text x="920" y="288" font-family="'DM Sans', 'Helvetica Neue', sans-serif" font-size="14" fill="#94a3b8">
+    <tspan x="920" dy="0">◇ Auditorias Selo ASME</tspan>
+    <tspan x="920" dy="24">◈ PED 2014/68/EU · RTPO</tspan>
+    <tspan x="920" dy="24">◆ Qualificação SNT-TC-1A</tspan>
+    <tspan x="920" dy="24">◊ Procedimentos de END</tspan>
+    <tspan x="920" dy="24">▣ Transição Digital (CR/DR)</tspan>
+  </text>
+
+  <!-- Website URL -->
+  <text x="920" y="440" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="11" font-weight="400" fill="#475569" letter-spacing="1">
+    simplendt.com.br
+  </text>
+
+  <!-- Location -->
+  <text x="80" y="540" font-family="'JetBrains Mono', 'SF Mono', monospace" font-size="11" font-weight="400" fill="#334155" letter-spacing="2">
+    SÃO PAULO · BRASIL · SIMPLENDT.COM.BR
+  </text>
+
+  <!-- Bottom accent line -->
+  <rect x="0" y="626" width="1200" height="4" fill="url(#bottomLine)"/>
+</svg>

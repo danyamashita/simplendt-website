@@ -91,7 +91,7 @@ simplendt/
 ## SEO Rules — CRITICAL
 
 ### Every HTML page MUST have:
-1. Unique `<title>` tag — max 60 chars, include primary keyword + "Simple NDT"
+1. Unique `<title>` tag — max 60 chars, include primary keyword + "SimpleNDT"
 2. Unique `<meta name="description">` — max 155 chars, include keywords + CTA
 3. `<meta name="keywords">` — 5-7 relevant terms
 4. Canonical URL: `<link rel="canonical" href="https://simplendt.com.br/...">`
@@ -109,7 +109,7 @@ simplendt/
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "Simple NDT",
+  "name": "SimpleNDT",
   "description": "NDT Level 3 Consulting — ASME, PED/RTPO, SNT-TC-1A, ISO 9712",
   "url": "https://simplendt.com.br",
   "telephone": "+5511991612503",
@@ -137,7 +137,7 @@ simplendt/
   "@type": "Article",
   "headline": "...",
   "author": { "@type": "Person", "name": "Dan Yamashita" },
-  "publisher": { "@type": "Organization", "name": "Simple NDT" },
+  "publisher": { "@type": "Organization", "name": "SimpleNDT" },
   "datePublished": "YYYY-MM-DD",
   "dateModified": "YYYY-MM-DD"
 }

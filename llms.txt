@@ -1,0 +1,33 @@
+# SimpleNDT
+> NDT Level 3 consulting by Dan Yamashita. ASNT and PCN (ISO 9712) Level 3 certified. São Paulo, Brazil.
+
+## Services
+- [Procedimentos de END](https://simplendt.com.br/servicos/procedimentos.html): NDT procedures per ASME Section V, API, AWS, PED harmonized standards
+- [Qualificação de Pessoal](https://simplendt.com.br/servicos/qualificacoes.html): Personnel qualification per SNT-TC-1A and ISO 9712 — exams, Written Practice, certification
+- [Auditorias ASME](https://simplendt.com.br/servicos/auditorias-asme.html): ASME stamp audit preparation — U, U2, S, R, PP stamps
+- [Conformidade PED / RTPO](https://simplendt.com.br/servicos/ped.html): PED 2014/68/EU compliance, CE marking, ISO 9712 qualification accepted by Notified Bodies
+- [Phased Array PAUT](https://simplendt.com.br/servicos/phased-array.html): PAUT procedures, beam plotting, scan plan development per ASME Code Case 2235
+- [Treinamento END](https://simplendt.com.br/servicos/treinamento.html): NDT training Level 1 and 2, SNT-TC-1A hour requirements, 6 methods
+
+## English Version
+- [NDT Procedures](https://simplendt.com.br/en/services/procedures.html)
+- [Personnel Qualification](https://simplendt.com.br/en/services/qualifications.html)
+- [ASME Audits](https://simplendt.com.br/en/services/asme-audits.html)
+- [PED / RTPO Compliance](https://simplendt.com.br/en/services/ped.html)
+- [Phased Array PAUT](https://simplendt.com.br/en/services/phased-array.html)
+- [NDT Training](https://simplendt.com.br/en/services/training.html)
+
+## Blog
+- [SNT-TC-1A: Guia Completo de Qualificação ASNT](https://simplendt.com.br/blog/snt-tc-1a-guia-completo.html): What is SNT-TC-1A, employer-based qualification, NDT levels, exam requirements, FAQ
+- [SNT-TC-1A: Complete ASNT Qualification Guide](https://simplendt.com.br/en/blog/snt-tc-1a-complete-guide.html)
+
+## About
+- [Dan Yamashita](https://simplendt.com.br/sobre.html): Naval Engineer, MSc Mechatronics (Ultrasound focus), IWE (International Welding Engineer), ASNT NDT Level III, PCN Level 3 (ISO 9712) — 13+ years in NDT for oil & gas, naval, energy, nuclear sectors
+
+## Certifications
+- [Certificações](https://simplendt.com.br/certificacoes.html): ASNT NDT Level III (VT, PT, MT, UT, PAUT, RT), PCN Level 3 ISO 9712 (VT, PT, MT, UT, PAUT, RT), IWE, ASME, PED/RTPO
+
+## Contact
+- WhatsApp: +5511991612503
+- Email: contato@simplendt.com.br
+- Location: São Paulo, SP, Brazil
