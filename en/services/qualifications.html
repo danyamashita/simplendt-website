@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personnel Qualification | Simple NDT</title>
+
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<nav>
+  <a href="/en/" class="nav-logo">
+    <div class="nav-logo-mark">S</div>
+    <span class="nav-logo-text">Simple NDT</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/en/">Home</a></li>
+    <li><a href="/en/services/procedures.html" class="active">Services</a></li>
+    <li><a href="/en/about.html" >About</a></li>
+    <li><a href="/en/blog/" >Blog</a></li>
+    <li><a href="/en/contact.html" >Contact</a></li>
+  </ul>
+  <a href="/" class="nav-lang">EN / PT</a>
+</nav>
+
+<div class="page-header"><div class="page-header-content">
+  <div class="breadcrumb"><a href="/en/">Home</a> / <a href="/en/services/qualifications.html">Services</a> / <span>Qualifications</span></div>
+  <h1>Personnel<br>Qualification</h1>
+  <p class="page-sub">Level I and II qualification and certification per SNT-TC-1A, with ASNT Level III authority across all six methods.</p>
+  <div class="page-tags"><span class="page-tag">SNT-TC-1A</span><span class="page-tag">CP-189</span><span class="page-tag">ASNT</span><span class="page-tag">6 Methods</span></div>
+</div></div>
+<div class="content-section"><div class="content-inner reveal">
+  <h2>Why qualify your inspectors</h2>
+  <p>NDT personnel qualification is a <strong>mandatory requirement</strong> in virtually every fabrication and inspection code. Level I and II inspectors can only perform examinations if qualified and recommended by a certified Level III in the applicable method.</p>
+  <p>The process includes: training and experience verification, general/specific/practical examinations, qualification report and certification recommendation to the employer.</p>
+  <h3>Available methods</h3>
+  <div class="standards-grid">
+    <div class="standard-item"><span class="standard-code">VT</span><span class="standard-name">Visual Testing</span></div>
+    <div class="standard-item"><span class="standard-code">PT</span><span class="standard-name">Penetrant Testing</span></div>
+    <div class="standard-item"><span class="standard-code">MT</span><span class="standard-name">Magnetic Particle Testing</span></div>
+    <div class="standard-item"><span class="standard-code">UT</span><span class="standard-name">Ultrasonic Testing</span></div>
+    <div class="standard-item"><span class="standard-code">PAUT</span><span class="standard-name">Phased Array</span></div>
+    <div class="standard-item"><span class="standard-code">RT</span><span class="standard-name">Radiographic Testing</span></div>
+  </div>
+</div></div>
+<div class="other-services"><div class="other-services-inner"><div class="other-services-title">OTHER SERVICES</div><div class="other-services-grid"><a href="/en/services/procedures.html" class="other-service-link"><span>NDT Procedures</span><span class="arrow">→</span></a>
+          <a href="/en/services/phased-array.html" class="other-service-link"><span>Phased Array (PAUT)</span><span class="arrow">→</span></a>
+          <a href="/en/services/asme-audits.html" class="other-service-link"><span>ASME Audits</span><span class="arrow">→</span></a>
+          <a href="/en/services/training.html" class="other-service-link"><span>Training</span><span class="arrow">→</span></a>
+          <a href="/en/services/ped.html" class="other-service-link"><span>PED / RTPO Compliance</span><span class="arrow">→</span></a></div></div></div>
+<div class="cta-band"><div class="cta-band-content"><h2>Need to qualify inspectors?</h2><p>Tell us the methods and number of candidates. We respond within 24 hours.</p><div class="cta-buttons"><a href="https://wa.me/+5511991612503" class="btn btn-primary" target="_blank">WhatsApp <span class="btn-arrow">→</span></a><a href="mailto:contato@simplendt.com.br" class="btn btn-secondary">contato@simplendt.com.br</a></div></div></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">Simple NDT</div>
+        <p class="footer-brand-desc">Level III NDT Consulting. ASME, PED/RTPO, ASNT, ISO 9712.</p>
+      </div>
+      <div class="footer-columns">
+        <div class="footer-col">
+          <div class="footer-col-title">SERVICES</div>
+          <a href="/en/services/procedures.html">Procedures</a>
+          <a href="/en/services/qualifications.html">Qualifications</a>
+          <a href="/en/services/phased-array.html">Phased Array</a>
+          <a href="/en/services/asme-audits.html">ASME Audits</a>
+          <a href="/en/services/training.html">Training</a>
+          <a href="/en/services/ped.html">PED/RTPO Compliance</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">COMPANY</div>
+          <a href="/en/about.html">About</a>
+          <a href="/en/certifications.html">Certifications</a>
+          <a href="/en/blog/">Blog</a>
+          <a href="/en/contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Simple NDT. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/in/danyamashita/" target="_blank">LinkedIn</a>
+        <a href="https://wa.me/+5511991612503" target="_blank">WhatsApp</a>
+        <a href="mailto:contato@simplendt.com.br">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+let lastScroll = 0;
+const navEl = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  const c = window.scrollY;
+  navEl.style.transform = (c > lastScroll && c > 100) ? 'translateY(-100%)' : 'translateY(0)';
+  lastScroll = c;
+}, { passive: true });
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
+});
+</script>
+</body>
+</html>

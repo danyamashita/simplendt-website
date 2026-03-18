@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Artigos Técnicos | Simple NDT</title>
+
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">S</div>
+    <span class="nav-logo-text">Simple NDT</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/servicos/procedimentos.html" >Serviços</a></li>
+    <li><a href="/sobre.html" >Sobre</a></li>
+    <li><a href="/blog/" class="active">Blog</a></li>
+    <li><a href="/contato.html" >Contato</a></li>
+  </ul>
+  <a href="/en/" class="nav-lang">PT / EN</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-content">
+    <div class="breadcrumb"><a href="/">Home</a> / <span>Blog</span></div>
+    <h1>Artigos Técnicos</h1>
+    <p class="page-sub">Conteúdo sobre Ensaios Não Destrutivos, códigos, certificações e boas práticas. Por Dan Yamashita, Nível 3 ASNT/PCN.</p>
+  </div>
+</div>
+
+<div class="content-section">
+  <div class="content-inner">
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <a href="/blog/snt-tc-1a-guia-completo.html" class="other-service-link" style="padding:28px 24px; flex-direction:column; align-items:flex-start; gap:12px;">
+        <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+          <span class="page-tag">SNT-TC-1A · ASNT · Certificação</span>
+          <span class="arrow">→</span>
+        </div>
+        <span style="font-size:19px; font-weight:500; letter-spacing:-0.3px; color:var(--text-primary);">SNT-TC-1A: Guia Completo sobre Qualificação e Certificação ASNT</span>
+        <span style="font-size:14px; color:var(--text-secondary); font-weight:300; line-height:1.6;">O que é a SNT-TC-1A, como funciona o sistema de certificação baseado no empregador, níveis de pessoal, requisitos de treinamento, exames e as perguntas mais frequentes.</span>
+      </a>
+    </div>
+    <p style="margin-top:48px; font-size:14px; color:var(--text-tertiary); text-align:center;">Mais artigos em breve.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">Simple NDT</div>
+        <p class="footer-brand-desc">Consultoria Nível 3 em Ensaios Não Destrutivos. ASME, PED/RTPO, ASNT, ISO 9712.</p>
+      </div>
+      <div class="footer-columns">
+        <div class="footer-col">
+          <div class="footer-col-title">SERVIÇOS</div>
+          <a href="/servicos/procedimentos.html">Procedimentos</a>
+          <a href="/servicos/qualificacoes.html">Qualificações</a>
+          <a href="/servicos/phased-array.html">Phased Array</a>
+          <a href="/servicos/auditorias-asme.html">Auditorias ASME</a>
+          <a href="/servicos/treinamento.html">Treinamento</a>
+          <a href="/servicos/ped.html">Conformidade PED/RTPO</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">EMPRESA</div>
+          <a href="/sobre.html">Sobre</a>
+          <a href="/certificacoes.html">Certificações</a>
+          <a href="/blog/">Blog</a>
+          <a href="/contato.html">Contato</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Simple NDT. Todos os direitos reservados.</span>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/in/danyamashita/" target="_blank">LinkedIn</a>
+        <a href="https://wa.me/+5511991612503" target="_blank">WhatsApp</a>
+        <a href="mailto:contato@simplendt.com.br">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+let lastScroll = 0;
+const navEl = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  const c = window.scrollY;
+  navEl.style.transform = (c > lastScroll && c > 100) ? 'translateY(-100%)' : 'translateY(0)';
+  lastScroll = c;
+}, { passive: true });
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
+});
+</script>
+</body>
+</html>
