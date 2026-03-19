@@ -142,6 +142,12 @@
 
 # --- EN blog ---
 [[redirects]]
+  from = "/en/blog/ped-2014-68-eu-rtpo-ndt"
+  to = "/en/blog/ped-2014-68-eu-rtpo-ndt.html"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/en/blog/snt-tc-1a-complete-guide"
   to = "/en/blog/snt-tc-1a-complete-guide.html"
   status = 301
