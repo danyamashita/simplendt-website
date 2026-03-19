@@ -15,3 +15,4 @@ Allow: /
 
 Sitemap: https://www.simplendt.com.br/sitemap.xml
 LLMs-Txt: https://www.simplendt.com.br/llms.txt
+IndexNow-Key: ed41ce4de3814a698ca39686fff99ce2
