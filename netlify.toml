@@ -73,6 +73,12 @@
 
 # --- PT-BR blog ---
 [[redirects]]
+  from = "/blog/ped-2014-68-eu-rtpo-end"
+  to = "/blog/ped-2014-68-eu-rtpo-end.html"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/blog/snt-tc-1a-guia-completo"
   to = "/blog/snt-tc-1a-guia-completo.html"
   status = 301
