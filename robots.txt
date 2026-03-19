@@ -14,3 +14,4 @@ User-agent: PerplexityBot
 Allow: /
 
 Sitemap: https://www.simplendt.com.br/sitemap.xml
+LLMs-Txt: https://www.simplendt.com.br/llms.txt
