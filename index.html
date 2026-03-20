@@ -1835,9 +1835,10 @@
 
     function spawnTick(ts) {
       spawnTimer++;
+      const mobile = W < 768;
 
       // Emissão contínua de borda
-      if (spawnTimer % 15 === 0) {
+      if (spawnTimer % (mobile ? 32 : 15) === 0) {
         const side = Math.floor(Math.random() * 4);
         let ox, oy, angle;
         switch (side) {
@@ -1850,7 +1851,7 @@
       }
 
       // Emissão a partir das fontes internas
-      if (spawnTimer % 38 === 0) {
+      if (spawnTimer % (mobile ? 80 : 38) === 0) {
         const src = sources[Math.floor(Math.random() * sources.length)];
         emit(src.x, src.y, Math.random() * Math.PI * 2);
       }
@@ -1860,7 +1861,7 @@
         lastBurst = ts;
         const bx = W * (0.15 + Math.random() * 0.7);
         const by = H * (0.15 + Math.random() * 0.7);
-        const count = 2 + Math.floor(Math.random() * 3);
+        const count = mobile ? 1 : 2 + Math.floor(Math.random() * 3);
         for (let i = 0; i < count; i++) {
           emit(bx, by, Math.random() * Math.PI * 2);
         }
@@ -1914,8 +1915,9 @@
         if (tracks[i].isDead()) tracks.splice(i, 1);
       }
 
-      // Limite de memória: máximo 120 trilhas simultâneas
-      if (tracks.length > 120) tracks.splice(0, tracks.length - 120);
+      // Limite de memória: máximo 120 trilhas (desktop) / 50 (mobile)
+      const maxTracks = W < 768 ? 50 : 120;
+      if (tracks.length > maxTracks) tracks.splice(0, tracks.length - maxTracks);
 
       requestAnimationFrame(loop);
     }
