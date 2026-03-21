@@ -345,14 +345,28 @@
       }
     }
 
+    .hero-title-wrap {
+      display: grid;
+      margin-bottom: 20px;
+    }
+
     .hero-title {
+      grid-area: 1/1;
       font-size: clamp(36px, 5.2vw, 68px);
       font-weight: 600;
       line-height: 1.05;
       letter-spacing: -2.5px;
-      margin-bottom: 20px;
+      transition: opacity 0.65s ease;
+    }
+
+    .hero-title.layer-a {
       opacity: 0;
       animation: fadeUp 1s var(--ease-out) 0.32s forwards;
+    }
+
+    .hero-title.layer-b {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .hero-title .line {
@@ -1204,6 +1218,11 @@
         padding: 0 24px;
       }
 
+      .hero-title {
+        font-size: clamp(26px, 7.5vw, 36px);
+        letter-spacing: -1.5px;
+      }
+
       .chamber-legend,
       .geiger-count {
         display: none;
@@ -1350,11 +1369,20 @@
         <span class="ew-dot"></span>
       </div>
 
-      <h1 class="hero-title">
-        <span class="line">Uma consultoria.</span>
-        <span class="line">Todos os <span class="accent">métodos</span>.</span>
-        <span class="line">Todos os códigos.</span>
-      </h1>
+      <div class="hero-title-wrap">
+        <!-- Layer A: visível no carregamento (SEO — keywords indexadas) -->
+        <h1 class="hero-title layer-a" id="heroTitleA">
+          <span class="line">END <span class="accent">Nível&nbsp;3</span>.</span>
+          <span class="line">ASNT · PCN · IWE.</span>
+          <span class="line">ASME · PED · ISO&nbsp;9712.</span>
+        </h1>
+        <!-- Layer B: invisível, pronto para crossfade -->
+        <h1 class="hero-title layer-b" id="heroTitleB" aria-hidden="true">
+          <span class="line">Uma consultoria.</span>
+          <span class="line">Todos os <span class="accent">métodos</span>.</span>
+          <span class="line">Todos os códigos.</span>
+        </h1>
+      </div>
 
       <p class="hero-sub">
         Nível 3 certificado ASNT e PCN em VT, PT, MT, UT, PAUT e RT.
@@ -1939,6 +1967,58 @@
       content.style.opacity = String(Math.max(1 - p * 1.9, 0));
     }
     window.addEventListener('scroll', onHeroScroll, { passive: true });
+
+    /* ── Rotação do título — crossfade com dois layers ──────
+       Layer A e B alternam opacity simultaneamente via transition.
+       Conteúdo é pré-carregado no layer invisível antes do fade.
+    ─────────────────────────────────────────────────────── */
+    const titleLayers = [
+      document.getElementById('heroTitleA'),
+      document.getElementById('heroTitleB'),
+    ];
+
+    const titleVariants = [
+      [
+        'END <span class="accent">Nível&nbsp;3</span>.',
+        'ASNT · PCN · IWE.',
+        'ASME · PED · ISO\u00a09712.',
+      ],
+      [
+        'Uma consultoria.',
+        'Todos os <span class="accent">métodos</span>.',
+        'Todos os códigos.',
+      ],
+    ];
+
+    let activeLayer = 0;
+    let variantIdx  = 0;
+
+    function rotateTitle() {
+      const nextVariant = (variantIdx + 1) % titleVariants.length;
+      const nextLayer   = (activeLayer + 1) % 2;
+
+      titleLayers[activeLayer].style.animation = 'none';
+      titleLayers[nextLayer].style.animation   = 'none';
+
+      titleLayers[nextLayer].innerHTML = titleVariants[nextVariant]
+        .map(l => `<span class="line">${l}</span>`)
+        .join('');
+      titleLayers[nextLayer].removeAttribute('aria-hidden');
+      titleLayers[nextLayer].style.pointerEvents = '';
+
+      titleLayers[nextLayer].style.opacity   = '1';
+      titleLayers[activeLayer].style.opacity = '0';
+      titleLayers[activeLayer].setAttribute('aria-hidden', 'true');
+      titleLayers[activeLayer].style.pointerEvents = 'none';
+
+      activeLayer = nextLayer;
+      variantIdx  = nextVariant;
+    }
+
+    setTimeout(() => {
+      rotateTitle();
+      setInterval(rotateTitle, 4000);
+    }, 3500);
 
     /* ─────────────────────────────────────────────────────
        REVEAL ON SCROLL + NAV HIDE/SHOW
