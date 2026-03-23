@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Certifications | SimpleNDT</title>
-<meta name="description" content="Dan Yamashita's certifications: ASNT NDT Level 3, PCN Level 3 (ISO 9712), ASME, PED/RTPO and IWE. Verifiable credentials for ASME and PED projects.">
+<meta name="description" content="Dan Yamashita's certifications: ASNT NDT Level 3, PCN Level 3 (ISO 9712), PED/RTPO approval and IWE. 11 valid PCN certificates — all verifiable online.">
 <meta name="keywords" content="ASNT Level 3, PCN Level 3, ISO 9712, ASME certification, PED RTPO certification, IWE welding NDT">
 <link rel="canonical" href="https://www.simplendt.com.br/en/certifications.html">
 <meta property="og:title" content="Certifications & Credentials | SimpleNDT">
-<meta property="og:description" content="ASNT NDT Level 3, PCN Level 3 (ISO 9712), ASME, PED/RTPO and IWE. Verifiable credentials for ASME and PED projects.">
+<meta property="og:description" content="ASNT NDT Level 3, PCN Level 3 (ISO 9712), PED/RTPO approval and IWE. Verifiable credentials for ASME and PED projects.">
 <meta property="og:url" content="https://www.simplendt.com.br/en/certifications.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SimpleNDT">
@@ -22,6 +22,198 @@
 <link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/certificacoes.html">
 <link rel="alternate" hreflang="x-default" href="https://www.simplendt.com.br/certificacoes.html">
 <link rel="stylesheet" href="../style.css">
+<style>
+  /* ── ASNT Badges ── */
+  .asnt-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 28px 0 12px;
+    align-items: center;
+  }
+  .asnt-badges a {
+    display: inline-block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 6px;
+  }
+  .asnt-badges a:hover {
+    transform: scale(1.06);
+    box-shadow: 0 4px 20px rgba(94,174,213,0.18);
+  }
+  .asnt-badges img {
+    display: block;
+    width: 90px;
+    height: auto;
+  }
+  .badge-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ── PCN Table ── */
+  .pcn-summary {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin: 20px 0 28px;
+  }
+  .pcn-summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .pcn-summary-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+  }
+  .pcn-summary-value {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .pcn-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 0 8px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .pcn-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 560px;
+  }
+  .pcn-table thead tr {
+    background: rgba(94,174,213,0.06);
+  }
+  .pcn-table th {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+  .pcn-table td {
+    padding: 11px 16px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(94,174,213,0.05);
+    vertical-align: middle;
+  }
+  .pcn-table tr:last-child td {
+    border-bottom: none;
+  }
+  .pcn-table tr:nth-child(even) td {
+    background: rgba(255,255,255,0.015);
+  }
+  .pcn-level3 td {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .pcn-level3 .cert-level {
+    color: var(--accent);
+  }
+  .cert-level {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .cert-number {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.3px;
+  }
+
+  /* ── Verify button ── */
+  .verify-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    margin-top: 20px;
+  }
+  .verify-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .verify-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── Additional quals ── */
+  .qual-group {
+    margin-bottom: 28px;
+  }
+  .qual-group-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .qual-group p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+  .qual-group p:last-child { margin-bottom: 0; }
+
+  /* ── "What it means" section ── */
+  .meaning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .meaning-item {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 22px 24px;
+    background: var(--bg-subtle);
+  }
+  .meaning-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .meaning-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -66,35 +258,262 @@
   </a>
   <ul class="nav-links">
     <li><a href="/en/">Home</a></li>
-    <li><a href="/en/services/" >Services</a></li>
-    <li><a href="/en/about.html" >About</a></li>
+    <li><a href="/en/services/">Services</a></li>
+    <li><a href="/en/about.html">About</a></li>
     <li><a href="/en/certifications.html" class="active">Certifications</a></li>
-    <li><a href="/en/blog/" >Blog</a></li>
-    <li><a href="/en/contact.html" >Contact</a></li>
+    <li><a href="/en/blog/">Blog</a></li>
+    <li><a href="/en/contact.html">Contact</a></li>
   </ul>
-  <a href="/" class="nav-lang">EN / PT</a>
-</nav>
+  <div class="nav-right">
+      <a href="/" class="nav-lang">EN / PT</a>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    </div>
+  </nav>
 
-<div class="page-header"><div class="page-header-content">
-  <div class="breadcrumb"><a href="/en/">Home</a> / <span>Certifications</span></div>
-  <h1>Certifications &<br>Credentials</h1>
-  <p class="page-sub">Details on each certification and what it means for your project.</p>
-</div></div>
-<div class="content-section"><div class="content-inner reveal">
-  <h2>ASNT Level III (SNT-TC-1A)</h2>
-  <p>Certification from the <strong>American Society for Nondestructive Testing</strong>, the most widely used standard in the Americas. Qualifies the professional to develop and approve NDE procedures, train and examine Level I and II inspectors, and interpret applicable codes.</p>
-  <p><strong>Certified methods:</strong> VT, PT, MT, UT, PAUT and RT.</p>
-  <h2 style="margin-top:48px;">PCN Level 3 (ISO 9712)</h2>
-  <p><strong>Personnel Certification in NDT</strong>, internationally recognized and accepted under PED 2014/68/EU. Independent certification scheme per ISO 9712 (not employer-based).</p>
-  <p><strong>Certified methods:</strong> VT, PT, MT, UT, PAUT and RT.</p>
-  <h2 style="margin-top:48px;">ASME Recognized</h2>
-  <p>Qualified for <strong>NDE procedures and programs per ASME Section V</strong>. Essential for manufacturers holding or pursuing ASME stamps (U, U2, S, R, PP).</p>
-  <h2 style="margin-top:48px;">PED 2014/68/EU — RTPO</h2>
-  <p>Approved for <strong>NDE procedures, qualifications and reports</strong> accepted by European Notified Bodies for pressure equipment exported to the EU. PCN/ISO 9712 certification accepted as RTPO scheme.</p>
-  <h2 style="margin-top:48px;">IWE — International Welding Engineer</h2>
-  <p><strong>International Institute of Welding (IIW)</strong> certification attesting expertise in metallurgy, welding processes, joint design and quality control. Complements NDT expertise with comprehensive understanding of the fabrication process.</p>
-</div></div>
-<div class="cta-band"><div class="cta-band-content"><h2>Need to verify credentials?</h2><p>Certification documentation available upon request.</p><div class="cta-buttons"><a href="https://wa.me/+5511991612503" class="btn btn-primary" target="_blank">WhatsApp <span class="btn-arrow">→</span></a></div></div></div>
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <a href="/en/">Home</a>
+  <a href="/en/services/">Services</a>
+  <a href="/en/about.html">About</a>
+  <a href="/en/certifications.html">Certifications</a>
+  <a href="/en/blog/">Blog</a>
+  <a href="/en/contact.html">Contact</a>
+  <a href="/" class="mobile-lang">PT / EN</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-content">
+    <div class="breadcrumb"><a href="/en/">Home</a> / <span>Certifications</span></div>
+    <h1>Certifications &amp;<br>Credentials</h1>
+    <p class="page-sub">Details on each certification and what it means for your project.</p>
+  </div>
+</div>
+
+<!-- BLOCK 1: ASNT -->
+<div class="content-section">
+  <div class="content-inner reveal">
+    <h2>ASNT NDT Level III</h2>
+    <p>Certification issued by the <strong>American Society for Nondestructive Testing</strong>. Qualifies for establishing techniques, interpreting codes and standards, and qualifying NDE personnel per SNT-TC-1A and CP-189.</p>
+    <p><strong>Certified methods:</strong> VT, PT, MT, UT, PAUT and RT.</p>
+    <p>The ASNT Level III certification is accepted by codes such as ASME, AWS, API and ASTM. For a detailed overview of SNT-TC-1A, read the <a href="/en/blog/snt-tc-1a-complete-guide.html" style="color:var(--accent);">complete guide to SNT-TC-1A</a>.</p>
+
+    <div class="asnt-badges">
+      <a href="https://bcert.me/sqgsjycco" target="_blank" rel="noopener" aria-label="Verify ASNT VT Level III">
+        <img src="/assets/images/badge-VT.png" alt="ASNT Visual Testing Level III" width="90" height="90">
+      </a>
+      <a href="https://bcert.me/sotjfgsol" target="_blank" rel="noopener" aria-label="Verify ASNT PT Level III">
+        <img src="/assets/images/badge-PT.png" alt="ASNT Liquid Penetrant Testing Level III" width="90" height="90">
+      </a>
+      <a href="https://bcert.me/sjfqzpmsx" target="_blank" rel="noopener" aria-label="Verify ASNT MT Level III">
+        <img src="/assets/images/badge-MT.png" alt="ASNT Magnetic Particle Testing Level III" width="90" height="90">
+      </a>
+      <a href="https://bcert.me/spgsochkh" target="_blank" rel="noopener" aria-label="Verify ASNT UT Level III">
+        <img src="/assets/images/badge-UT.png" alt="ASNT Ultrasonic Testing Level III" width="90" height="90">
+      </a>
+      <a href="https://bcert.me/szpxmgcpg" target="_blank" rel="noopener" aria-label="Verify ASNT RT Level III">
+        <img src="/assets/images/badge-RT.png" alt="ASNT Radiographic Testing Level III" width="90" height="90">
+      </a>
+    </div>
+    <p class="badge-note">Click any badge to verify the certification directly on the ASNT website ↗</p>
+  </div>
+</div>
+
+<!-- BLOCK 2: PCN -->
+<div class="content-section alt">
+  <div class="content-inner reveal">
+    <h2>PCN Level 2 &amp; 3 — ISO 9712</h2>
+    <p>Certification by the <strong>PCN (Personnel Certification in Non-Destructive Testing)</strong> scheme per EN ISO 9712, administered by BINDT. International recognition for inspections under European standards and PED requirements.</p>
+
+    <div class="pcn-summary">
+      <div class="pcn-summary-item">
+        <span class="pcn-summary-label">Level 3</span>
+        <span class="pcn-summary-value">VT · PT · MT · UT</span>
+      </div>
+      <div class="pcn-summary-item">
+        <span class="pcn-summary-label">Level 2</span>
+        <span class="pcn-summary-value">VT · PT · MT · UT · RT · PAUT</span>
+      </div>
+      <div class="pcn-summary-item">
+        <span class="pcn-summary-label">PCN Number</span>
+        <span class="pcn-summary-value">340677</span>
+      </div>
+      <div class="pcn-summary-item">
+        <span class="pcn-summary-label">Total</span>
+        <span class="pcn-summary-value">11 valid certificates</span>
+      </div>
+    </div>
+
+    <div class="pcn-table-wrap">
+      <table class="pcn-table">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Sector</th>
+            <th>Level</th>
+            <th>Certificate</th>
+            <th>Expiry</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Phased Array (PAUT)</td>
+            <td>Pre &amp; In-service (Multi)</td>
+            <td><span class="cert-level">2</span></td>
+            <td><span class="cert-number">E023S22820931</span></td>
+            <td>10/05/2028</td>
+          </tr>
+          <tr>
+            <td>Visual Testing (VT)</td>
+            <td>Pre &amp; In-service (Multi)</td>
+            <td><span class="cert-level">2</span></td>
+            <td><span class="cert-number">E023S22326492</span></td>
+            <td>19/10/2028</td>
+          </tr>
+          <tr class="pcn-level3">
+            <td>Visual Testing (VT)</td>
+            <td>Pre &amp; In-service (Multi)</td>
+            <td><span class="cert-level">3</span></td>
+            <td><span class="cert-number">E023S22336330</span></td>
+            <td>23/11/2028</td>
+          </tr>
+          <tr>
+            <td>Radiography (RT)</td>
+            <td>Weldments</td>
+            <td><span class="cert-level">2</span></td>
+            <td><span class="cert-number">E023S62527330</span></td>
+            <td>14/11/2028</td>
+          </tr>
+          <tr>
+            <td>Basic Radiation Safety (BRS)</td>
+            <td>Radiation</td>
+            <td><span class="cert-level">1</span></td>
+            <td><span class="cert-number">E023S83817331</span></td>
+            <td>14/11/2028</td>
+          </tr>
+          <tr>
+            <td>Magnetic Particle (MT)</td>
+            <td>Pre &amp; In-service (Multi)</td>
+            <td><span class="cert-level">2</span></td>
+            <td><span class="cert-number">E023S22127346</span></td>
+            <td>26/02/2029</td>
+          </tr>
+          <tr class="pcn-level3">
+            <td>Magnetic Particle (MT)</td>
+            <td>Pre &amp; In-service (Multi)</td>
+            <td><span class="cert-level">3</span></td>
+            <td><span class="cert-number">E023S22137554</span></td>
+            <td>26/02/2029</td>
+          </tr>
+          <tr>
+            <td>Ultrasonic Testing (UT)</td>
+            <td>Weldments</td>
+            <td><span class="cert-level">2</span></td>
+            <td><span class="cert-number">E023S62427421</span></td>
+            <td>04/03/2029</td>
+          </tr>
+          <tr class="pcn-level3">
+            <td>Ultrasonic Testing (UT)</td>
+            <td>Weldments</td>
+            <td><span class="cert-level">3</span></td>
+            <td><span class="cert-number">E023S62437537</span></td>
+            <td>20/03/2029</td>
+          </tr>
+          <tr>
+            <td>Liquid Penetrant (PT)</td>
+            <td>Pre &amp; In-service (Multi)</td>
+            <td><span class="cert-level">2</span></td>
+            <td><span class="cert-number">E023S22227670</span></td>
+            <td>21/02/2029</td>
+          </tr>
+          <tr class="pcn-level3">
+            <td>Liquid Penetrant (PT)</td>
+            <td>Pre &amp; In-service (Multi)</td>
+            <td><span class="cert-level">3</span></td>
+            <td><span class="cert-number">E023S22237536</span></td>
+            <td>26/02/2029</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <a href="https://www.bindt.org/Certification/pcn-certificate-verification/" target="_blank" rel="noopener" class="verify-btn">
+      Verify on BINDT ↗
+    </a>
+    <p class="verify-note">On the verification page, search by surname "Yamashita".</p>
+  </div>
+</div>
+
+<!-- BLOCK 3: PED/RTPO -->
+<div class="content-section">
+  <div class="content-inner reveal">
+    <h2>PED 2014/68/EU Approval</h2>
+    <p>Approved as <strong>RTPO (Recognised Third-Party Organisation approved personnel)</strong> per Pressure Equipment Directive 2014/68/EU, Article 20. Issued by <strong>LRQA-CASL</strong> based on PCN/BINDT certification.</p>
+    <p>Qualified for non-destructive testing of permanent joints in Category III and IV pressure equipment for CE marking. Inspections carried out by SimpleNDT are accepted by European Notified Bodies without the need for requalification.</p>
+
+    <a href="https://www.inspectioncasl.com/verify-bindt-certification/" target="_blank" rel="noopener" class="verify-btn">
+      Verify PED/RTPO ↗
+    </a>
+    <p class="verify-note">Search for "340677" and select "Show All entries".</p>
+  </div>
+</div>
+
+<!-- BLOCK 4: Additional qualifications -->
+<div class="content-section alt">
+  <div class="content-inner reveal">
+    <h2>Additional qualifications</h2>
+
+    <div class="qual-group">
+      <div class="qual-group-title">SNT-TC-1A</div>
+      <p><strong style="color:var(--text-primary); font-weight:500;">Phased Array (PAUT)</strong> — Qualified per ASME Section V requirements</p>
+      <p><strong style="color:var(--text-primary); font-weight:500;">Digital Radiography (DR)</strong> — 40-hour training at Hellier/USA in 2026</p>
+    </div>
+
+    <div class="qual-group">
+      <div class="qual-group-title">IWE</div>
+      <p>International Welding Engineer — diploma issued by the IIW (International Institute of Welding)</p>
+    </div>
+
+    <div class="qual-group">
+      <div class="qual-group-title">Academic background</div>
+      <p><strong style="color:var(--text-primary); font-weight:500;">Naval Engineering</strong> — Escola Politécnica, University of São Paulo</p>
+      <p><strong style="color:var(--text-primary); font-weight:500;">M.Sc. Mechatronics Engineering</strong> — Composite material characterization by ultrasound</p>
+    </div>
+  </div>
+</div>
+
+<!-- What certifications mean for the client -->
+<div class="content-section">
+  <div class="content-inner reveal">
+    <h2>What certifications mean for your project</h2>
+    <div class="meaning-grid">
+      <div class="meaning-item">
+        <div class="meaning-label">ASME Stamp</div>
+        <p class="meaning-text">The ASNT Level III certification meets the SNT-TC-1A requirements for the Level 3 responsible for the personnel qualification program.</p>
+      </div>
+      <div class="meaning-item">
+        <div class="meaning-label">PED / CE Marking</div>
+        <p class="meaning-text">PCN Level 2/3 certification per ISO 9712 is recognized under the European PED directive for pressure equipment inspections requiring CE marking.</p>
+      </div>
+      <div class="meaning-item">
+        <div class="meaning-label">Brazilian NR-13</div>
+        <p class="meaning-text">The certifications meet the competency requirements defined in NR-13 for NDE personnel involved in the inspection of boilers, pressure vessels and pipelines.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-band">
+  <div class="cta-band-content">
+    <h2>Need to verify credentials?</h2>
+    <p>Certification documentation available upon request.</p>
+    <div class="cta-buttons">
+      <a href="https://wa.me/+5511991612503" class="btn btn-primary" target="_blank">WhatsApp <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="footer-inner">
@@ -145,9 +564,30 @@ window.addEventListener('scroll', () => {
   navEl.style.transform = (c > lastScroll && c > 100) ? 'translateY(-100%)' : 'translateY(0)';
   lastScroll = c;
 }, { passive: true });
-document.querySelectorAll('.faq-question').forEach(q => {
-  q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
-});
+
+    /* ── Mobile menu ── */
+    const burger = document.getElementById('navBurger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function openMenu() {
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      mobileMenu.removeAttribute('aria-hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    burger.addEventListener('click', () => {
+      burger.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
 </script>
 </body>
 </html>

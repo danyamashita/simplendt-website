@@ -4,19 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <title>Sobre | SimpleNDT</title>
+  <title>Sobre Dan Yamashita | SimpleNDT</title>
   <meta name="description"
-    content="Dan Yamashita — Engenheiro Naval, Mestre em Mecatrônica, ASNT NDT Nível 3, PCN Nível 3, IWE. 13 anos em END para O&G, naval, energia e nuclear.">
+    content="Dan Yamashita — Engenheiro Naval, Mestre em Mecatrônica, ASNT NDT Nível 3, PCN Nível 3, IWE. Mais de 15 anos em END para energia eólica, ASME, PED/RTPO e infraestrutura.">
   <meta name="keywords"
     content="Dan Yamashita, consultor END nível 3, ASNT nível 3, PCN nível 3, IWE engenheiro soldagem, engenheiro naval END">
   <link rel="canonical" href="https://www.simplendt.com.br/sobre.html">
   <meta property="og:title" content="Sobre Dan Yamashita | SimpleNDT">
   <meta property="og:description"
-    content="Engenheiro Naval, ASNT NDT Nível 3, PCN Nível 3 e IWE. 13 anos de experiência em END para O&G, naval, energia e nuclear.">
+    content="Engenheiro Naval, ASNT NDT Nível 3, PCN Nível 3 e IWE. Mais de 15 anos de experiência em END para energia, ASME, PED e infraestrutura.">
   <meta property="og:url" content="https://www.simplendt.com.br/sobre.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="SimpleNDT">
@@ -28,6 +26,46 @@
   <link rel="alternate" hreflang="en" href="https://www.simplendt.com.br/en/about.html">
   <link rel="alternate" hreflang="x-default" href="https://www.simplendt.com.br/sobre.html">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .page-header.about-header {
+      background:
+        linear-gradient(to bottom, rgba(10,10,12,0.25) 0%, rgba(10,10,12,0.7) 55%, rgba(10,10,12,1) 100%),
+        url('/assets/images/foto-dy.jpeg') center 30% / cover no-repeat;
+      padding-top: 260px;
+      padding-bottom: 80px;
+    }
+    .page-header.about-header::before { display: none; }
+    @media (max-width: 768px) {
+      .page-header.about-header { padding-top: 180px; }
+    }
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .exp-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      background: var(--bg-subtle);
+    }
+    .exp-sector {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .exp-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+  </style>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -120,15 +158,31 @@
       <li><a href="/blog/">Blog</a></li>
       <li><a href="/contato.html">Contato</a></li>
     </ul>
-    <a href="/en/" class="nav-lang">PT / EN</a>
+    <div class="nav-right">
+      <a href="/en/" class="nav-lang">PT / EN</a>
+      <button class="nav-burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    </div>
   </nav>
 
-  <div class="page-header">
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <a href="/">Home</a>
+  <a href="/servicos/">Serviços</a>
+  <a href="/sobre.html">Sobre</a>
+  <a href="/certificacoes.html">Certificações</a>
+  <a href="/blog/">Blog</a>
+  <a href="/contato.html">Contato</a>
+  <a href="/en/" class="mobile-lang">EN / PT</a>
+</div>
+
+  <div class="page-header about-header">
     <div class="page-header-content">
       <div class="breadcrumb"><a href="/">Home</a> / <span>Sobre</span></div>
       <h1>Dan Yamashita</h1>
-      <p class="page-sub">Engenheiro Naval. Mestre em Engenharia Mecatrônica. Nível 3 ASNT e PCN. Engenheiro de Soldagem
-        IWE. Mais de 15 anos em Ensaios Não Destrutivos.</p>
+      <p class="page-sub">Engenheiro Naval · Nível 3 END · IWE</p>
       <div class="page-tags">
         <span class="page-tag">Engenheiro Naval</span>
         <span class="page-tag">M.Sc. Mecatrônica</span>
@@ -142,22 +196,44 @@
   <div class="content-section">
     <div class="content-inner reveal">
       <h2>Trajetória</h2>
-      <p>Dan Yamashita é Engenheiro Naval, Mestre em Engenharia Mecatrônica com pesquisa focada em ultrassom, e
-        Engenheiro de Soldagem certificado IWE (International Welding Engineer) pelo IIW.</p>
-      <p>Atua como nível 3 em Ensaios Não Destrutivos desde 2012, com experiência em <strong>soldas, fundidos, forjados
-          e materiais
-          compósitos</strong> nos setores de Oil & Gas, energia, naval e infraestrutura.</p>
-      <p>Certificado como Nível 3 pela <strong>ASNT (SNT-TC-1A)</strong> e pelo <strong>PCN (ISO 9712)</strong> em seis
-        métodos: Ensaio Visual (VT), Líquido Penetrante (PT), Partículas Magnéticas (MT), Ultrassom Convencional (UT),
-        Ultrassom Phased Array (PAUT) e Radiografia (RT).</p>
-      <p>Possui reconhecimento <strong>ASME</strong> para elaboração de procedimentos e programas de END conforme
-        Section V, e aprovação para inspeção conforme <strong>PED 2014/68/EU</strong> com certificação PCN aceita como
-        RTPO por Notified Bodies europeus.</p>
-      <p>Através da SimpleNDT, oferece consultoria técnica especializada: elaboração de procedimentos, qualificação de
-        pessoal, auditorias, treinamento e suporte técnico para empresas que precisam atender os mais exigentes padrões
-        internacionais.</p>
+      <p>Engenheiro Naval pela Escola Politécnica da USP, Mestre em Engenharia Mecatrônica com pesquisa em caracterização de materiais por ultrassom, e Engenheiro de Soldagem certificado IWE pelo IIW.</p>
+      <p>Atuo como Nível 3 em Ensaios Não Destrutivos desde 2012, com experiência em <strong>soldas, fundidos, forjados e materiais compósitos</strong>. Certificado Nível 3 pela <strong>ASNT (SNT-TC-1A)</strong> e pelo <strong>PCN (ISO 9712)</strong> em seis métodos: VT, PT, MT, UT, PAUT e RT. Possuo reconhecimento ASME para procedimentos e programas de END, e aprovação PED&nbsp;2014/68/EU como RTPO por Notified Body europeu.</p>
+      <p>Meu trabalho é garantir que o programa de END do cliente funcione: procedimentos que atendem o código, inspetores que sabem o que estão fazendo, e documentação que sobrevive a qualquer auditoria.</p>
+      <p>A SimpleNDT existe para isso — um ponto de contato que resolve.</p>
+    </div>
+  </div>
 
-      <h3>Formação</h3>
+  <div class="content-section alt">
+    <div class="content-inner reveal">
+      <h2>Experiência</h2>
+      <div class="exp-grid">
+        <div class="exp-item">
+          <div class="exp-sector">Energia Eólica</div>
+          <p class="exp-text">Auditorias de qualidade em fabricantes de torres e componentes a serviço de OEMs internacionais do setor eólico. Qualificação de pessoal e procedimentos de END para fabricação de estruturas soldadas de grande porte.</p>
+        </div>
+        <div class="exp-item">
+          <div class="exp-sector">Selo ASME</div>
+          <p class="exp-text">Nível 3 externo responsável pelo programa de END em fabricantes com selo ASME (U, U2, S, R, PP). Elaboração de procedimentos conforme Section V, qualificação de inspetores por SNT-TC-1A, preparação e acompanhamento de auditorias de certificação e recertificação.</p>
+        </div>
+        <div class="exp-item">
+          <div class="exp-sector">PED / Marcação CE</div>
+          <p class="exp-text">Inspeções como Nível 2 PCN (ISO&nbsp;9712) para conformidade com a diretiva PED&nbsp;2014/68/EU. Radiografia, líquido penetrante e PAUT em equipamentos de pressão, qualificação de EPS e soldadores. Relatórios aceitos por Notified Bodies europeus.</p>
+        </div>
+        <div class="exp-item">
+          <div class="exp-sector">Empresas de Inspeção</div>
+          <p class="exp-text">Suporte técnico de Nível 3 para empresas de inspeção com atuação nacional e internacional. Elaboração de procedimentos especializados e qualificação de pessoal em técnicas convencionais e avançadas.</p>
+        </div>
+        <div class="exp-item">
+          <div class="exp-sector">Infraestrutura Industrial</div>
+          <p class="exp-text">Projetos de construção e montagem industrial de grande porte nos setores de oil &amp; gas, naval e infraestrutura.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="content-inner reveal">
+      <h2>Formação</h2>
       <p><strong>Engenharia Naval</strong> — Universidade de São Paulo - Escola Politécnica</p>
       <p><strong>Mestrado em Engenharia Mecatrônica</strong> — Caracterização de materiais compósitos por ultrassom</p>
       <p><strong>IWE - International Welding Engineer</strong> — IIW</p>
@@ -168,19 +244,13 @@
     <div class="content-inner reveal">
       <h2>Certificações</h2>
       <div class="standards-grid">
-        <div class="standard-item"><span class="standard-code">ASNT III</span><span class="standard-name">Level III em
-            VT, PT, MT, UT, PAUT e RT (SNT-TC-1A)</span></div>
-        <div class="standard-item"><span class="standard-code">PCN 3</span><span class="standard-name">Level 3 em VT,
-            PT, MT, UT, PAUT e RT (ISO 9712)</span></div>
-        <div class="standard-item"><span class="standard-code">ASME</span><span class="standard-name">Reconhecido para
-            procedimentos e programas de END</span></div>
-        <div class="standard-item"><span class="standard-code">PED/RTPO</span><span class="standard-name">Aprovado
-            conforme PED 2014/68/EU</span></div>
-        <div class="standard-item"><span class="standard-code">IWE</span><span class="standard-name">International
-            Welding Engineer (IIW)</span></div>
+        <div class="standard-item"><span class="standard-code">ASNT III</span><span class="standard-name">Level III em VT, PT, MT, UT, PAUT e RT (SNT-TC-1A)</span></div>
+        <div class="standard-item"><span class="standard-code">PCN 3</span><span class="standard-name">Level 3 em VT, PT, MT, UT — Level 2 em todos os seis métodos (ISO&nbsp;9712)</span></div>
+        <div class="standard-item"><span class="standard-code">ASME</span><span class="standard-name">Reconhecido para procedimentos e programas de END</span></div>
+        <div class="standard-item"><span class="standard-code">PED/RTPO</span><span class="standard-name">Aprovado conforme PED&nbsp;2014/68/EU via LRQA Ireland</span></div>
+        <div class="standard-item"><span class="standard-code">IWE</span><span class="standard-name">International Welding Engineer (IIW)</span></div>
       </div>
-      <p style="margin-top: 24px;"><a href="/certificacoes.html" class="btn btn-secondary"
-          style="display:inline-flex;">Ver detalhes das certificações <span class="btn-arrow">→</span></a></p>
+      <p style="margin-top: 24px;"><a href="/certificacoes.html" class="btn btn-secondary" style="display:inline-flex;">Ver detalhes das certificações <span class="btn-arrow">→</span></a></p>
     </div>
   </div>
 
@@ -188,18 +258,12 @@
     <div class="content-inner reveal">
       <h2>Setores de atuação</h2>
       <div class="standards-grid">
-        <div class="standard-item"><span class="standard-code">O&G</span><span class="standard-name">Oil & Gas</span>
-        </div>
-        <div class="standard-item"><span class="standard-code">Energia</span><span class="standard-name">Geração e
-            transmissão</span></div>
-        <div class="standard-item"><span class="standard-code">Naval</span><span class="standard-name">Construção e
-            reparo naval</span></div>
-        <div class="standard-item"><span class="standard-code">Nuclear</span><span class="standard-name">Equipamentos
-            nucleares</span></div>
-        <div class="standard-item"><span class="standard-code">Infra</span><span class="standard-name">Infraestrutura e
-            construção civil</span></div>
-        <div class="standard-item"><span class="standard-code">Fab</span><span class="standard-name">Fabricação e
-            montagem industrial</span></div>
+        <div class="standard-item"><span class="standard-code">O&amp;G</span><span class="standard-name">Oil &amp; Gas</span></div>
+        <div class="standard-item"><span class="standard-code">Energia</span><span class="standard-name">Geração e transmissão</span></div>
+        <div class="standard-item"><span class="standard-code">Naval</span><span class="standard-name">Construção e reparo naval</span></div>
+        <div class="standard-item"><span class="standard-code">Nuclear</span><span class="standard-name">Equipamentos nucleares</span></div>
+        <div class="standard-item"><span class="standard-code">Infra</span><span class="standard-name">Infraestrutura e construção civil</span></div>
+        <div class="standard-item"><span class="standard-code">Fab</span><span class="standard-name">Fabricação e montagem industrial</span></div>
       </div>
     </div>
   </div>
@@ -207,11 +271,9 @@
   <div class="cta-band">
     <div class="cta-band-content">
       <h2>Entrar em contato</h2>
-      <p>Procedimentos, qualificações, auditorias ou treinamento. Um ponto de contato para todo o seu programa de END.
-      </p>
+      <p>Procedimentos, qualificações, auditorias ou treinamento. Um ponto de contato para todo o seu programa de END.</p>
       <div class="cta-buttons">
-        <a href="https://wa.me/+5511991612503" class="btn btn-primary" target="_blank">Falar no WhatsApp <span
-            class="btn-arrow">→</span></a>
+        <a href="https://wa.me/+5511991612503" class="btn btn-primary" target="_blank">Falar no WhatsApp <span class="btn-arrow">→</span></a>
         <a href="mailto:contato@simplendt.com.br" class="btn btn-secondary">contato@simplendt.com.br</a>
       </div>
     </div>
@@ -222,8 +284,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <div class="footer-brand-name">SimpleNDT</div>
-          <p class="footer-brand-desc">Consultoria Nível 3 em Ensaios Não Destrutivos. ASME, PED/RTPO, ASNT, ISO 9712.
-          </p>
+          <p class="footer-brand-desc">Consultoria Nível 3 em Ensaios Não Destrutivos. ASME, PED/RTPO, ASNT, ISO 9712.</p>
         </div>
         <div class="footer-columns">
           <div class="footer-col">
@@ -267,10 +328,31 @@
       navEl.style.transform = (c > lastScroll && c > 100) ? 'translateY(-100%)' : 'translateY(0)';
       lastScroll = c;
     }, { passive: true });
-    document.querySelectorAll('.faq-question').forEach(q => {
-      q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
+  
+    /* ── Mobile menu ── */
+    const burger = document.getElementById('navBurger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function openMenu() {
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      mobileMenu.removeAttribute('aria-hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    burger.addEventListener('click', () => {
+      burger.classList.contains('open') ? closeMenu() : openMenu();
     });
-  </script>
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+</script>
 </body>
 
 </html>

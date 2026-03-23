@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>About | SimpleNDT</title>
-<meta name="description" content="Dan Yamashita — Naval Engineer, MSc Mechatronics, ASNT NDT Level 3, PCN Level 3, IWE. 13 years in NDT for O&G, marine, power generation and nuclear.">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>About Dan Yamashita | SimpleNDT</title>
+<meta name="description" content="Dan Yamashita — Naval Engineer, MSc Mechatronics, ASNT NDT Level 3, PCN Level 3, IWE. NDT Level 3 consulting for ASME, PED/RTPO and ISO 9712.">
 <meta name="keywords" content="Dan Yamashita, NDT Level 3 consultant, ASNT Level 3, PCN Level 3, IWE welding engineer, naval engineer NDT">
 <link rel="canonical" href="https://www.simplendt.com.br/en/about.html">
 <meta property="og:title" content="About Dan Yamashita | SimpleNDT">
-<meta property="og:description" content="Naval Engineer, ASNT NDT Level 3, PCN Level 3 and IWE. 13 years in NDT for O&G, marine, power generation and nuclear.">
+<meta property="og:description" content="Naval Engineer, ASNT NDT Level 3, PCN Level 3 and IWE. NDT Level 3 consulting for ASME, PED/RTPO and ISO 9712.">
 <meta property="og:url" content="https://www.simplendt.com.br/en/about.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SimpleNDT">
@@ -22,6 +22,46 @@
 <link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/sobre.html">
 <link rel="alternate" hreflang="x-default" href="https://www.simplendt.com.br/sobre.html">
 <link rel="stylesheet" href="../style.css">
+<style>
+  .page-header.about-header {
+    background:
+      linear-gradient(to bottom, rgba(10,10,12,0.25) 0%, rgba(10,10,12,0.7) 55%, rgba(10,10,12,1) 100%),
+      url('/assets/images/foto-dy.jpeg') center 30% / cover no-repeat;
+    padding-top: 260px;
+    padding-bottom: 80px;
+  }
+  .page-header.about-header::before { display: none; }
+  @media (max-width: 768px) {
+    .page-header.about-header { padding-top: 180px; }
+  }
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .exp-item {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    background: var(--bg-subtle);
+  }
+  .exp-sector {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .exp-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -107,20 +147,37 @@
   </a>
   <ul class="nav-links">
     <li><a href="/en/">Home</a></li>
-    <li><a href="/en/services/" >Services</a></li>
+    <li><a href="/en/services/">Services</a></li>
     <li><a href="/en/about.html" class="active">About</a></li>
-    <li><a href="/en/certifications.html" >Certifications</a></li>
-    <li><a href="/en/blog/" >Blog</a></li>
-    <li><a href="/en/contact.html" >Contact</a></li>
+    <li><a href="/en/certifications.html">Certifications</a></li>
+    <li><a href="/en/blog/">Blog</a></li>
+    <li><a href="/en/contact.html">Contact</a></li>
   </ul>
-  <a href="/" class="nav-lang">EN / PT</a>
-</nav>
+  <div class="nav-right">
+      <a href="/" class="nav-lang">EN / PT</a>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    </div>
+  </nav>
 
-<div class="page-header">
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <a href="/en/">Home</a>
+  <a href="/en/services/">Services</a>
+  <a href="/en/about.html">About</a>
+  <a href="/en/certifications.html">Certifications</a>
+  <a href="/en/blog/">Blog</a>
+  <a href="/en/contact.html">Contact</a>
+  <a href="/" class="mobile-lang">PT / EN</a>
+</div>
+
+<div class="page-header about-header">
   <div class="page-header-content">
     <div class="breadcrumb"><a href="/en/">Home</a> / <span>About</span></div>
     <h1>Dan Yamashita</h1>
-    <p class="page-sub">Naval Engineer. Master's in Mechatronics Engineering. ASNT and PCN Level III. International Welding Engineer. 13+ years in NDT.</p>
+    <p class="page-sub">Naval Engineer · NDT Level 3 · IWE</p>
     <div class="page-tags">
       <span class="page-tag">Naval Engineer</span>
       <span class="page-tag">M.Sc. Mechatronics</span>
@@ -134,16 +191,47 @@
 <div class="content-section">
   <div class="content-inner reveal">
     <h2>Background</h2>
-    <p>Dan Yamashita is a Naval Engineer, holds a Master's degree in Mechatronics Engineering with research focused on ultrasonics, and is a certified International Welding Engineer (IWE) by the IIW.</p>
-    <p>Working in Nondestructive Testing since 2012, with experience in <strong>welds, castings, forgings and composite materials</strong> across Oil &amp; Gas, energy, naval and infrastructure sectors.</p>
-    <p>Certified Level III by <strong>ASNT (SNT-TC-1A)</strong> and <strong>PCN (ISO 9712)</strong> in six methods: Visual Testing (VT), Liquid Penetrant (PT), Magnetic Particle (MT), Conventional Ultrasound (UT), Phased Array Ultrasound (PAUT) and Radiography (RT).</p>
-    <p>Holds <strong>ASME</strong> recognition for NDE procedures and programs per Section V, and <strong>PED 2014/68/EU</strong> approval with PCN certification accepted as RTPO by European Notified Bodies.</p>
-    <p>Through SimpleNDT, provides specialized technical consulting: procedure development, personnel qualification, audits, training and technical support for companies that need to meet the most demanding international standards.</p>
+    <p>Naval Engineer from the University of São Paulo – Escola Politécnica, Master's in Mechatronics Engineering with research in ultrasonic material characterization, and certified International Welding Engineer (IWE) by the IIW.</p>
+    <p>I have been working as an NDT Level 3 since 2012, with experience in <strong>welds, castings, forgings and composite materials</strong>. Certified Level 3 by <strong>ASNT (SNT-TC-1A)</strong> and <strong>PCN (ISO 9712)</strong> in six methods: VT, PT, MT, UT, PAUT and RT. I hold ASME recognition for NDE procedures and programs, and PED&nbsp;2014/68/EU approval as RTPO by a European Notified Body.</p>
+    <p>My work is to ensure the client's NDE program functions properly: procedures that meet the code, inspectors who know what they are doing, and documentation that survives any audit.</p>
+    <p>SimpleNDT exists for that — one point of contact that delivers.</p>
+  </div>
+</div>
 
-    <h3>Education</h3>
-    <p><strong>Naval Engineering</strong> — [University]</p>
-    <p><strong>Master's in Mechatronics Engineering</strong> — Research in ultrasonics</p>
-    <p><strong>IWE - International Welding Engineer</strong> — IIW</p>
+<div class="content-section alt">
+  <div class="content-inner reveal">
+    <h2>Experience</h2>
+    <div class="exp-grid">
+      <div class="exp-item">
+        <div class="exp-sector">Wind Energy</div>
+        <p class="exp-text">Quality audits at tower and component manufacturers on behalf of international OEMs in the wind energy sector. Personnel qualification and NDE procedures for large welded structures.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-sector">ASME Stamp</div>
+        <p class="exp-text">External Level 3 responsible for the NDE program at ASME stamp holders (U, U2, S, R, PP). Procedure development per Section V, inspector qualification per SNT-TC-1A, preparation and support for certification and recertification audits.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-sector">PED / CE Marking</div>
+        <p class="exp-text">Inspections as PCN Level 2 (ISO&nbsp;9712) for compliance with PED&nbsp;2014/68/EU. Radiography, liquid penetrant and PAUT on pressure equipment, WPS and welder qualification. Reports accepted by European Notified Bodies.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-sector">Inspection Companies</div>
+        <p class="exp-text">Level 3 technical support for inspection companies operating nationally and internationally. Development of specialized procedures and personnel qualification in conventional and advanced techniques.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-sector">Infrastructure &amp; Industrial</div>
+        <p class="exp-text">Large-scale industrial construction and assembly projects in oil &amp; gas, marine and infrastructure sectors.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-section">
+  <div class="content-inner reveal">
+    <h2>Education</h2>
+    <p><strong>Naval Engineering</strong> — University of São Paulo – Escola Politécnica</p>
+    <p><strong>M.Sc. Mechatronics Engineering</strong> — Composite material characterization by ultrasound</p>
+    <p><strong>IWE — International Welding Engineer</strong> — IIW</p>
   </div>
 </div>
 
@@ -152,9 +240,9 @@
     <h2>Certifications</h2>
     <div class="standards-grid">
       <div class="standard-item"><span class="standard-code">ASNT III</span><span class="standard-name">Level III in VT, PT, MT, UT, PAUT and RT (SNT-TC-1A)</span></div>
-      <div class="standard-item"><span class="standard-code">PCN 3</span><span class="standard-name">Level 3 in VT, PT, MT, UT, PAUT and RT (ISO 9712)</span></div>
+      <div class="standard-item"><span class="standard-code">PCN 3</span><span class="standard-name">Level 3 in VT, PT, MT, UT — Level 2 in all six methods (ISO&nbsp;9712)</span></div>
       <div class="standard-item"><span class="standard-code">ASME</span><span class="standard-name">Recognized for NDE procedures and programs</span></div>
-      <div class="standard-item"><span class="standard-code">PED/RTPO</span><span class="standard-name">Approved per PED 2014/68/EU</span></div>
+      <div class="standard-item"><span class="standard-code">PED/RTPO</span><span class="standard-name">Approved per PED&nbsp;2014/68/EU via LRQA Ireland</span></div>
       <div class="standard-item"><span class="standard-code">IWE</span><span class="standard-name">International Welding Engineer (IIW)</span></div>
     </div>
     <p style="margin-top: 24px;"><a href="/en/certifications.html" class="btn btn-secondary" style="display:inline-flex;">View certification details <span class="btn-arrow">→</span></a></p>
@@ -177,7 +265,7 @@
 
 <div class="cta-band">
   <div class="cta-band-content">
-    <h2>Let's work together?</h2>
+    <h2>Get in touch</h2>
     <p>Procedures, qualifications, audits or training. One point of contact for your entire NDE program.</p>
     <div class="cta-buttons">
       <a href="https://wa.me/+5511991612503" class="btn btn-primary" target="_blank">WhatsApp <span class="btn-arrow">→</span></a>
@@ -235,9 +323,30 @@ window.addEventListener('scroll', () => {
   navEl.style.transform = (c > lastScroll && c > 100) ? 'translateY(-100%)' : 'translateY(0)';
   lastScroll = c;
 }, { passive: true });
-document.querySelectorAll('.faq-question').forEach(q => {
-  q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
-});
+
+    /* ── Mobile menu ── */
+    const burger = document.getElementById('navBurger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function openMenu() {
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      mobileMenu.removeAttribute('aria-hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    burger.addEventListener('click', () => {
+      burger.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
 </script>
 </body>
 </html>

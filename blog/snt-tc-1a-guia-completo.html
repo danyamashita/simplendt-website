@@ -155,8 +155,25 @@
     <li><a href="/blog/" class="active">Blog</a></li>
     <li><a href="/contato.html" >Contato</a></li>
   </ul>
-  <a href="/en/" class="nav-lang">PT / EN</a>
-</nav>
+  <div class="nav-right">
+      <a href="/en/" class="nav-lang">PT / EN</a>
+      <button class="nav-burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    </div>
+  </nav>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <a href="/">Home</a>
+  <a href="/servicos/">Serviços</a>
+  <a href="/sobre.html">Sobre</a>
+  <a href="/certificacoes.html">Certificações</a>
+  <a href="/blog/">Blog</a>
+  <a href="/contato.html">Contato</a>
+  <a href="/en/" class="mobile-lang">EN / PT</a>
+</div>
 
 <div class="page-header">
   <div class="page-header-content">
@@ -373,6 +390,30 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll('.faq-question').forEach(q => {
   q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
 });
+
+    /* ── Mobile menu ── */
+    const burger = document.getElementById('navBurger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function openMenu() {
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      mobileMenu.removeAttribute('aria-hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    burger.addEventListener('click', () => {
+      burger.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
 </script>
 </body>
 </html>

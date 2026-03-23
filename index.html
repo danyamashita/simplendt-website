@@ -243,6 +243,92 @@
       color: var(--accent);
     }
 
+    /* ========== HAMBURGER + MOBILE MENU ========== */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 1100;
+    }
+
+    .nav-burger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text-secondary);
+      border-radius: 2px;
+      transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+    }
+
+    .nav-burger.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+      background: var(--text-primary);
+    }
+
+    .nav-burger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-burger.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+      background: var(--text-primary);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(4, 5, 12, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      padding: 10px 0;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a:active {
+      color: var(--accent);
+    }
+
+    .mobile-menu .mobile-lang {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-tertiary);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 4px;
+      margin-top: 20px;
+      letter-spacing: 1px;
+    }
+
     /* ========== HERO — CÂMARA DE WILSON ========== */
     .hero {
       position: relative;
@@ -1206,6 +1292,10 @@
         display: none;
       }
 
+      .nav-burger {
+        display: flex;
+      }
+
       section {
         padding: 80px 24px;
       }
@@ -1350,8 +1440,24 @@
     </ul>
     <div class="nav-right">
       <a href="/en/" class="nav-lang">PT / EN</a>
+      <button class="nav-burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="#simplicity" class="mobile-nav-link">Por que SimpleNDT</a>
+    <a href="#services" class="mobile-nav-link">Serviços</a>
+    <a href="/sobre.html" class="mobile-nav-link">Sobre</a>
+    <a href="/certificacoes.html" class="mobile-nav-link">Certificações</a>
+    <a href="/blog/" class="mobile-nav-link">Blog</a>
+    <a href="/contato.html" class="mobile-nav-link">Contato</a>
+    <a href="/en/" class="mobile-lang">EN / PT</a>
+  </div>
 
   <!-- HERO — Wilson Cloud Chamber -->
   <section class="hero" id="hero">
@@ -1373,8 +1479,8 @@
         <!-- Layer A: visível no carregamento (SEO — keywords indexadas) -->
         <h1 class="hero-title layer-a" id="heroTitleA">
           <span class="line">END <span class="accent">Nível&nbsp;3</span>.</span>
-          <span class="line">ASNT · PCN · IWE.</span>
-          <span class="line">ASME · PED · ISO&nbsp;9712.</span>
+          <span class="line">ASNT · PCN · ASME.</span>
+          <span class="line">SNT-TC-1A · PED · ISO&nbsp;9712.</span>
         </h1>
         <!-- Layer B: invisível, pronto para crossfade -->
         <h1 class="hero-title layer-b" id="heroTitleB" aria-hidden="true">
@@ -1980,8 +2086,8 @@
     const titleVariants = [
       [
         'END <span class="accent">Nível&nbsp;3</span>.',
-        'ASNT · PCN · IWE.',
-        'ASME · PED · ISO\u00a09712.',
+        'ASNT · PCN · ASME.',
+        'SNT-TC-1A · PED · ISO\u00a09712.',
       ],
       [
         'Uma consultoria.',
@@ -1991,14 +2097,14 @@
     ];
 
     let activeLayer = 0;
-    let variantIdx  = 0;
+    let variantIdx = 0;
 
     function rotateTitle() {
       const nextVariant = (variantIdx + 1) % titleVariants.length;
-      const nextLayer   = (activeLayer + 1) % 2;
+      const nextLayer = (activeLayer + 1) % 2;
 
       titleLayers[activeLayer].style.animation = 'none';
-      titleLayers[nextLayer].style.animation   = 'none';
+      titleLayers[nextLayer].style.animation = 'none';
 
       titleLayers[nextLayer].innerHTML = titleVariants[nextVariant]
         .map(l => `<span class="line">${l}</span>`)
@@ -2006,19 +2112,48 @@
       titleLayers[nextLayer].removeAttribute('aria-hidden');
       titleLayers[nextLayer].style.pointerEvents = '';
 
-      titleLayers[nextLayer].style.opacity   = '1';
+      titleLayers[nextLayer].style.opacity = '1';
       titleLayers[activeLayer].style.opacity = '0';
       titleLayers[activeLayer].setAttribute('aria-hidden', 'true');
       titleLayers[activeLayer].style.pointerEvents = 'none';
 
       activeLayer = nextLayer;
-      variantIdx  = nextVariant;
+      variantIdx = nextVariant;
     }
 
     setTimeout(() => {
       rotateTitle();
       setInterval(rotateTitle, 4000);
     }, 3500);
+
+    /* ── Mobile menu ────────────────────────────────────── */
+    const burger     = document.getElementById('navBurger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function openMenu() {
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      mobileMenu.removeAttribute('aria-hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    burger.addEventListener('click', () => {
+      burger.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    // Fecha ao clicar em qualquer link do menu
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
 
     /* ─────────────────────────────────────────────────────
        REVEAL ON SCROLL + NAV HIDE/SHOW
