@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Phased Array vs Radiografia ASME: Guia Completo PAUT | SimpleNDT</title>
+<meta name="description" content="Guia técnico sobre substituição de radiografia por Phased Array (PAUT) conforme ASME: vantagens, custos, qualificação de procedimento e requisitos do Nível 3.">
+<meta name="keywords" content="Phased Array PAUT, radiografia RT, ASME BPVC, Code Case 2235, scan plan, Demonstração de Performance, Nível 3 Phased Array, ASME Section V Article 4">
+<link rel="canonical" href="https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html">
+<meta property="og:title" content="Phased Array vs Radiografia ASME: Guia Completo PAUT | SimpleNDT">
+<meta property="og:description" content="Guia técnico sobre substituição de radiografia por Phased Array (PAUT) conforme ASME: vantagens, custos, qualificação de procedimento e requisitos do Nível 3.">
+<meta property="og:url" content="https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="SimpleNDT">
+<meta property="og:image" content="https://www.simplendt.com.br/assets/images/simplendt-og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SimpleNDT — Consultoria Nível 3 END">
+<link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html">
+<link rel="alternate" hreflang="en" href="https://www.simplendt.com.br/en/blog/phased-array-replacing-radiography-asme.html">
+<link rel="alternate" hreflang="x-default" href="https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "SimpleNDT",
+  "description": "NDT Level 3 Consulting — ASME, PED/RTPO, SNT-TC-1A, ISO 9712",
+  "url": "https://www.simplendt.com.br",
+  "telephone": "+5511991612503",
+  "email": "contato@simplendt.com.br",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "addressCountry": "BR"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Dan Yamashita",
+    "jobTitle": "NDT Level 3 Consultant"
+  },
+  "areaServed": ["BR", "Global"],
+  "knowsAbout": ["NDT", "ASME", "PED", "RTPO", "SNT-TC-1A", "ISO 9712", "Phased Array", "Radiography"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Phased Array (PAUT) em Substituição à Radiografia: Guia Completo conforme ASME",
+  "description": "Guia técnico sobre substituição de radiografia por Phased Array (PAUT) conforme ASME: vantagens, custos, qualificação de procedimento e requisitos do Nível 3.",
+  "url": "https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html",
+  "datePublished": "2026-03-24",
+  "dateModified": "2026-03-24",
+  "author": {
+    "@type": "Person",
+    "name": "Dan Yamashita",
+    "url": "https://www.simplendt.com.br/sobre.html",
+    "sameAs": "https://www.linkedin.com/in/danyamashita/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "SimpleNDT",
+    "url": "https://www.simplendt.com.br"
+  },
+  "inLanguage": "pt-BR",
+  "about": ["Phased Array", "PAUT", "Radiografia", "ASME BPVC", "Code Case 2235", "Nível 3"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O ASME permite substituir radiografia por Phased Array em qualquer situação?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. A substituição é permitida sob condições específicas do ASME BPVC Section V, Article 4, Mandatory Appendix IX. Exige técnicas avançadas (PAUT e/ou TOFD) com varredura encodada e uma Demonstração de Performance (PDQ) formal. Há também restrições de espessura mínima: 6 mm para ASME VIII Div. 2 e 13 mm para ASME Section I."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual método é melhor para obter o selo ASME: radiografia ou Phased Array?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende do contexto. Para certificação com produção variada e baixo volume, a radiografia é mais prática. O Phased Array é mais vantajoso em produção seriada com configurações repetitivas, onde o investimento na qualificação do procedimento se justifica pelo ganho de produtividade e eliminação da radiação ionizante."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Preciso de um Nível 3 específico em Phased Array ou basta Nível 3 em UT convencional?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Para atender aos requisitos do ASME, o Nível 3 responsável pelo programa de PAUT deve demonstrar competência específica no método. Ser Nível 3 apenas em UT convencional não é suficiente para aprovar scan plans, validar Demonstrações de Performance e certificar Níveis II em Phased Array."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "O que acontece se meu Nível 3 não cumprir os requisitos ASME para PAUT?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Toda a cadeia de certificação de pessoal fica comprometida. Se o Authorized Inspector constatar que o Nível 3 não possui qualificação demonstrável em PAUT, os laudos emitidos por Níveis II certificados por esse profissional podem ser invalidados retroativamente, resultando em findings graves ou suspensão do selo ASME."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Por que tão poucos Níveis 3 no Brasil são qualificados em PAUT conforme ASME?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Porque o processo é circular: para se qualificar em PAUT como Nível 3 no esquema SNT-TC-1A, é preciso ser avaliado por outro Nível 3 já qualificado no método. A solução prática é buscar a qualificação diretamente nos EUA, onde a infraestrutura e os profissionais qualificados já existem."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "A qualificação de procedimento PAUT vale para qualquer espessura e material?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. Cada combinação de material, faixa de espessura e configuração de junta é uma Variável Essencial conforme a Tabela T-421 do ASME V Art. 4. Mudar qualquer uma dessas variáveis exige uma nova Demonstração de Performance com mockups específicos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Posso usar ultrassom convencional manual para substituir a radiografia conforme ASME?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. O ASME restringe a substituição exclusivamente a técnicas avançadas com varredura encodada e registro digital contínuo — PAUT e/ou TOFD. O ultrassom convencional manual não possui a rastreabilidade e a reprodutibilidade exigidas pelo código."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simplendt.com.br/"},
+    {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.simplendt.com.br/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "Phased Array vs Radiografia ASME: Guia Completo PAUT"}
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">S</div>
+    <span class="nav-logo-text">SimpleNDT</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/servicos/">Serviços</a></li>
+    <li><a href="/sobre.html">Sobre</a></li>
+    <li><a href="/certificacoes.html">Certificações</a></li>
+    <li><a href="/blog/" class="active">Blog</a></li>
+    <li><a href="/contato.html">Contato</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/en/blog/phased-array-replacing-radiography-asme.html" class="nav-lang">PT / EN</a>
+    <button class="nav-burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <a href="/">Home</a>
+  <a href="/servicos/">Serviços</a>
+  <a href="/sobre.html">Sobre</a>
+  <a href="/certificacoes.html">Certificações</a>
+  <a href="/blog/">Blog</a>
+  <a href="/contato.html">Contato</a>
+  <a href="/en/blog/phased-array-replacing-radiography-asme.html" class="mobile-lang">EN / PT</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-content">
+    <div class="breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / <span>PAUT vs RT</span></div>
+    <h1>Phased Array (PAUT) em Substituição à Radiografia: Guia Completo conforme ASME</h1>
+    <p class="page-sub">Requisitos, custos, qualificação de procedimento e o dilema do Nível 3 no Brasil.</p>
+    <div class="page-tags">
+      <span class="page-tag">Phased Array PAUT</span>
+      <span class="page-tag">Radiografia RT</span>
+      <span class="page-tag">ASME BPVC</span>
+      <span class="page-tag">Code Case 2235</span>
+      <span class="page-tag">Nível 3 ASNT</span>
+    </div>
+  </div>
+</div>
+
+<div class="content-section">
+  <div class="content-inner reveal">
+    <p style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); letter-spacing:1px; margin-bottom:32px;">POR DAN YAMASHITA · NÍVEL 3 ASNT/PCN · SIMPLE NDT · <time datetime="2026-03-24">24 MAR 2026</time></p>
+
+    <h2>O que é Ultrassom Phased Array (PAUT)</h2>
+    <p>O Ultrassom Phased Array (PAUT) é uma técnica avançada de ensaio não destrutivo que utiliza transdutores multielementos para gerar e direcionar feixes ultrassônicos eletronicamente. Diferente do ultrassom convencional — que usa um único cristal emitindo um feixe fixo — o PAUT controla individualmente dezenas de elementos piezelétricos, aplicando atrasos programáveis (<em>time delays</em>) que permitem focalizar, defletir e varrer o feixe em múltiplos ângulos simultaneamente.</p>
+    <p>O resultado prático: uma única varredura de PAUT produz imagens setoriais (S-scan) ou lineares (E-scan) em tempo real, cobrindo todo o volume da solda com resolução e rastreabilidade superiores ao ultrassom manual. Quando combinado com encoders e scanners mecanizados, o PAUT gera registros digitais completos — os chamados <em>raw data</em> — que podem ser reanalisados a qualquer momento.</p>
+    <p>A técnica é normatizada pelo ASME BPVC, Section V, Article 4, com apêndices mandatórios dedicados ao Phased Array. A possibilidade formal de substituir a radiografia pelo PAUT em vasos de pressão foi introduzida pelo histórico <strong>Code Case 2235</strong> e hoje está incorporada diretamente na ASME BPVC Section VIII, Division 2, Parágrafo 7.5.5.</p>
+
+    <h2>RT vs. PAUT: Vantagens e Desvantagens</h2>
+    <p>A escolha entre radiografia e Phased Array não é uma questão de superioridade absoluta. Cada técnica tem domínios onde é inerentemente superior.</p>
+
+    <h3>Onde a Radiografia (RT) é superior</h3>
+    <p>A radiografia é mais confiável na detecção de <strong>defeitos volumétricos</strong> como porosidades agrupadas e inclusões de escória. O contraste de densidade que esses defeitos geram na imagem é inconfundível. O filme (ou imagem digital DR/CR) fornece um registro visual permanente, intuitivo e de fácil interpretação — inclusive para auditores que não dominam acústica. A RT também é menos sensível à rugosidade superficial e à geometria da peça.</p>
+    <p>Outro ponto raramente discutido: a curva de aprendizado do intérprete de RT é mais curta. Um Nível II competente em radiografia aprende a avaliar filmes em meses. A interpretação de dados volumétricos de PAUT (C-scan, S-scan, B-scan sobrepostos) exige maturidade técnica significativamente maior.</p>
+
+    <h3>Onde o Phased Array (PAUT) é superior</h3>
+    <p>O PAUT é dramaticamente superior na detecção de <strong>defeitos planares</strong> — trincas, falta de fusão e falta de penetração. Esses são exatamente os defeitos que a mecânica da fratura classifica como críticos para a integridade estrutural. Uma trinca com abertura de décimos de milímetro pode ser completamente invisível à radiografia se o feixe de raios-X não incidir perfeitamente paralelo ao plano da falha. Para o PAUT, essa mesma trinca é um espelho acústico.</p>
+    <p>Adicionalmente, o PAUT oferece: resultados em tempo real, capacidade de <strong>dimensionamento</strong> (sizing) direto de defeitos, ausência de radiação ionizante e inspeção paralela à produção sem paralisação do chão de fábrica.</p>
+
+    <h3>Resumo comparativo</h3>
+    <div style="overflow-x:auto; margin: 24px 0;">
+      <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border);">
+            <th style="text-align:left; padding:10px 12px; color:var(--text-secondary); font-family:var(--font-mono); font-size:11px; letter-spacing:1px; text-transform:uppercase;">Critério</th>
+            <th style="text-align:left; padding:10px 12px; color:var(--text-secondary); font-family:var(--font-mono); font-size:11px; letter-spacing:1px; text-transform:uppercase;">Radiografia (RT)</th>
+            <th style="text-align:left; padding:10px 12px; color:var(--text-secondary); font-family:var(--font-mono); font-size:11px; letter-spacing:1px; text-transform:uppercase;">Phased Array (PAUT)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border-light);"><td style="padding:10px 12px; color:var(--text-primary);">Defeitos volumétricos (porosidade, escória)</td><td style="padding:10px 12px; color:var(--accent);">Superior</td><td style="padding:10px 12px; color:var(--text-secondary);">Adequado</td></tr>
+          <tr style="border-bottom:1px solid var(--border-light);"><td style="padding:10px 12px; color:var(--text-primary);">Defeitos planares (trinca, falta de fusão)</td><td style="padding:10px 12px; color:var(--text-secondary);">Limitada</td><td style="padding:10px 12px; color:var(--accent);">Superior</td></tr>
+          <tr style="border-bottom:1px solid var(--border-light);"><td style="padding:10px 12px; color:var(--text-primary);">Registro permanente e auditável</td><td style="padding:10px 12px; color:var(--text-secondary);">Filme/imagem digital</td><td style="padding:10px 12px; color:var(--text-secondary);">Raw data digital</td></tr>
+          <tr style="border-bottom:1px solid var(--border-light);"><td style="padding:10px 12px; color:var(--text-primary);">Radiação ionizante</td><td style="padding:10px 12px; color:var(--text-secondary);">Sim (Ir-192, Se-75, Raio-X)</td><td style="padding:10px 12px; color:var(--accent);">Não</td></tr>
+          <tr style="border-bottom:1px solid var(--border-light);"><td style="padding:10px 12px; color:var(--text-primary);">Resultados em tempo real</td><td style="padding:10px 12px; color:var(--text-secondary);">Não</td><td style="padding:10px 12px; color:var(--accent);">Sim</td></tr>
+          <tr style="border-bottom:1px solid var(--border-light);"><td style="padding:10px 12px; color:var(--text-primary);">Dimensionamento de defeito (sizing)</td><td style="padding:10px 12px; color:var(--text-secondary);">Não direto</td><td style="padding:10px 12px; color:var(--accent);">Sim</td></tr>
+          <tr style="border-bottom:1px solid var(--border-light);"><td style="padding:10px 12px; color:var(--text-primary);">Impacto na produção (isolamento de área)</td><td style="padding:10px 12px; color:var(--text-secondary);">Alto</td><td style="padding:10px 12px; color:var(--accent);">Nenhum</td></tr>
+          <tr><td style="padding:10px 12px; color:var(--text-primary);">Sensibilidade à rugosidade/geometria</td><td style="padding:10px 12px; color:var(--accent);">Baixa</td><td style="padding:10px 12px; color:var(--text-secondary);">Média a alta</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Custos: Investimento Inicial vs. Custo Operacional</h2>
+    <p>A análise de custos entre RT e PAUT se inverte dependendo de onde se olha.</p>
+
+    <h3>Custo de equipamento (CAPEX)</h3>
+    <p>O PAUT exige investimento inicial significativamente maior. Equipamentos com capacidade para substituição de RT conforme ASME (Olympus OmniScan, Eddyfi Gekko/Mantis ou equivalentes) custam tipicamente de US$ 50.000 a US$ 150.000. Um setup completo com scanner, encoder e software de beam plotting pode facilmente superar US$ 200.000. Em comparação, uma fonte de Irídio-192 com colimador ou um gerador de Raio-X portátil exige tipicamente entre US$ 30.000 e US$ 80.000.</p>
+
+    <h3>Custo operacional (OPEX)</h3>
+    <p>É aqui que a conta vira. O custo por metro de solda inspecionada com PAUT é drasticamente inferior: sem filmes, sem produtos químicos, sem reposição periódica de fontes radioativas (meia-vida do Ir-192: ~74 dias), sem dosimetria, sem monitoração ambiental e sem paralisação de fábrica para isolamento. Uma equipe de PAUT é tipicamente menor e opera continuamente.</p>
+
+    <h3>Impacto na produtividade</h3>
+    <p>Estimativas de chão de fábrica apontam que uma equipe de PAUT inspeciona cerca de <strong>60 soldas por turno de 10 horas</strong>, enquanto uma equipe de RT atinge aproximadamente <strong>30 soldas no mesmo período</strong> — metade da produtividade. A diferença vem do tempo morto da radiografia: montagem, isolamento de área, exposição, processamento e avaliação do filme.</p>
+
+    <h2>Qualificação de Procedimento: RT vs. PAUT — Uma Diferença Drástica</h2>
+    <p>Este é o ponto que separa a teoria da prática e onde muitos fabricantes se surpreendem.</p>
+
+    <h3>Radiografia: qualificação contínua e simplificada</h3>
+    <p>A "qualificação" da radiografia é, na prática, contínua e autoverificável. O ASME BPVC Section V, Article 2 exige que cada exposição contenha um Indicador de Qualidade de Imagem (IQI). Se o filme revela o furo ou arame exigido com a densidade óptica correta, o procedimento demonstrou sua sensibilidade naquela exposição. Não há exigência de blocos com trincas artificiais. Não há Demonstração de Performance formal. Para uma fábrica em processo de certificação do selo ASME, a demonstração ao AI é relativamente simples.</p>
+
+    <h3>Phased Array: Demonstração de Performance formal (PDQ)</h3>
+    <p>Para substituir a radiografia, o ASME BPVC Section V, Article 4, Mandatory Appendix IX exige uma <strong>Demonstração de Performance (PDQ)</strong> formal. Na prática:</p>
+    <ol style="display:flex; flex-direction:column; gap:10px; margin: 16px 0 16px 20px; color:var(--text-secondary);">
+      <li><strong style="color:var(--text-primary);">Fabricar blocos de demonstração (mockups)</strong> — réplicas da junta de produção (mesmo material, espessura, configuração de chanfro e processo de soldagem).</li>
+      <li><strong style="color:var(--text-primary);">Inserir defeitos artificiais</strong> — no mínimo 3 falhas (superficiais e subsuperficiais) com dimensões controladas.</li>
+      <li><strong style="color:var(--text-primary);">Executar a varredura e provar detecção</strong> — o operador deve detectar e dimensionar as falhas dentro de tolerâncias milimétricas (tipicamente ±0,5 mm para altura).</li>
+    </ol>
+    <p>Além disso, o PAUT possui uma extensa lista de <strong>Variáveis Essenciais</strong> (Tabela T-421 do ASME V Art. 4). Qualquer mudança em configuração de junta, ângulos, leis focais, transdutor ou método de dimensionamento exige que <strong>todo o processo de demonstração seja refeito</strong>.</p>
+
+    <h3>Quando cada método faz mais sentido</h3>
+    <p><strong>A radiografia é mais adequada para:</strong> processos de certificação ASME com produção variada e baixo volume, onde a demonstração ao AI precisa ser rápida; peças não seriadas com grande variedade de configurações de junta.</p>
+    <p><strong>O Phased Array é mais adequado para:</strong> fabricação seriada com alto volume de soldas em configurações repetitivas; projetos sob ASME Section VIII, Division 2, onde a avaliação por mecânica da fratura exige dimensionamento preciso; ambientes onde a radiação ionizante é restritiva (plataformas offshore, plantas em operação, refinarias).</p>
+    <p>Para fabricantes que precisam de <a href="/servicos/phased-array.html" style="color:var(--accent);">procedimentos de PAUT conforme ASME V</a>, a SimpleNDT elabora documentação completa incluindo scan plan, beam plotting e qualificação de pessoal.</p>
+
+    <h2>O Nível 3 para Phased Array sob ASME: O Dilema do Ovo e da Galinha</h2>
+    <p>Este é um dos pontos mais críticos — e menos discutidos — da implementação do PAUT conforme ASME.</p>
+
+    <h3>Responsabilidades do Nível 3 em PAUT</h3>
+    <p>Conforme o ASME BPVC, o Nível 3 responsável pelo programa de PAUT acumula: desenvolvimento e aprovação do procedimento de exame e do <strong>Scan Plan</strong> (modelagem acústica e geométrica da cobertura do feixe sobre a junta); especificação dos blocos de calibração e demonstração; condução ou supervisão da PDQ; e <a href="/servicos/qualificacoes.html" style="color:var(--accent);">qualificação e certificação de pessoal</a> Nível I e II em Phased Array.</p>
+
+    <h3>O requisito ASME para o Nível 3</h3>
+    <p>O ASME BPVC Section V e a SNT-TC-1A exigem que o Nível 3 responsável pelo programa de PAUT demonstre <strong>competência específica no método</strong>. Ser Nível 3 apenas em UT convencional não é suficiente para aprovar scan plans, validar PDQs e certificar Níveis II em Phased Array.</p>
+    <p>Aqui surge o dilema: para um profissional Nível 3 se submeter ao exame prático de Nível II em PAUT — necessário para demonstrar competência no método — ele precisa ser avaliado por outro Nível 3 que já cumpra os requisitos ASME para Phased Array. E onde está esse outro Nível 3? É, na essência, um <strong>dilema do ovo e da galinha</strong>.</p>
+
+    <h3>A solução: ir à fonte</h3>
+    <p>A saída para esse impasse é buscar a qualificação diretamente nos centros de exame que detêm a infraestrutura e os profissionais já qualificados — o que, na prática, significa <strong>ir aos Estados Unidos</strong> para se submeter aos exames em condições que atendam integralmente aos requisitos ASME e ASNT.</p>
+    <p>Foi o caminho que a SimpleNDT adotou. Dan Yamashita realizou os exames de Phased Array nos EUA, obtendo dupla certificação Nível 3 — ASNT (SNT-TC-1A) e PCN (ISO 9712) — em UT convencional e Phased Array, em conformidade integral com os requisitos do código ASME.</p>
+    <p>O ponto relevante é estrutural: na cadeia employer-based da SNT-TC-1A, <strong>toda a legitimidade do programa de PAUT de uma empresa depende da qualificação do seu Nível 3.</strong> Se o Nível 3 não cumpre os requisitos, toda a cadeia abaixo — Níveis II e I — fica comprometida. É exatamente isso que auditores verificam durante a <a href="/servicos/auditorias-asme.html" style="color:var(--accent);">auditoria de selo ASME</a>.</p>
+
+  </div>
+</div>
+
+<div class="faq-section">
+  <div class="faq-inner">
+    <div class="faq-title">PERGUNTAS FREQUENTES</div>
+
+    <div class="faq-item open">
+      <div class="faq-question">
+        <span>O ASME permite substituir radiografia por Phased Array em qualquer situação?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Não. A substituição é permitida sob condições específicas do ASME BPVC Section V, Article 4, Mandatory Appendix IX. O Code Case 2235 foi o marco original, hoje incorporado na Div. 2, Par. 7.5.5. A substituição exige técnicas avançadas (PAUT e/ou TOFD) com varredura encodada e uma Demonstração de Performance (PDQ) formal. Há restrições de espessura mínima: 6 mm (¼ in.) para ASME VIII Div. 2 e 13 mm (½ in.) para ASME Section I, com Code Cases disponíveis para a faixa de 6 a 13 mm.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Qual método é melhor para obter o selo ASME: radiografia ou Phased Array?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Depende do contexto. Para certificação com produção variada e baixo volume, a radiografia é mais prática porque a qualificação do procedimento é mais simples. O Phased Array é mais vantajoso em produção seriada com configurações repetitivas, onde o investimento na qualificação do procedimento se justifica pelo ganho de produtividade e pela eliminação da radiação ionizante.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Preciso de um Nível 3 específico em Phased Array ou basta Nível 3 em UT convencional?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Para atender aos requisitos do ASME, o Nível 3 responsável pelo programa de PAUT deve demonstrar competência específica no método. Ser Nível 3 apenas em UT convencional não é suficiente para aprovar scan plans, validar Demonstrações de Performance e certificar Níveis II em Phased Array. Essa é uma das não conformidades mais comuns em auditorias ASME envolvendo PAUT.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>O que acontece se meu Nível 3 não cumprir os requisitos ASME para PAUT?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Toda a cadeia de certificação de pessoal fica comprometida. Se o Authorized Inspector constatar que o Nível 3 não possui qualificação demonstrável em PAUT, os laudos emitidos por Níveis II certificados por esse profissional podem ser invalidados retroativamente. Isso pode resultar em findings graves na auditoria e, no pior caso, na suspensão do selo ASME.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Por que tão poucos Níveis 3 no Brasil são qualificados em PAUT conforme ASME?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Porque o processo é circular: para se qualificar em PAUT como Nível 3 no esquema SNT-TC-1A, é preciso ser avaliado por outro Nível 3 já qualificado no método. Como o PAUT é uma especialização relativamente recente e o mercado brasileiro historicamente se apoiou mais na radiografia, poucos profissionais iniciaram o ciclo. A solução prática é buscar a qualificação diretamente nos EUA.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>O Phased Array é sempre mais caro que a radiografia?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Não. O PAUT tem custo de equipamento (CAPEX) maior, mas custo operacional (OPEX) drasticamente menor. Para alto volume de soldas, o PAUT é significativamente mais barato por metro inspecionado. Para baixo volume ou peças unitárias, a radiografia pode ser mais econômica considerando que não exige o investimento em qualificação de procedimento específico por configuração de junta.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>A qualificação de procedimento PAUT vale para qualquer espessura e material?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Não. Cada combinação de material, faixa de espessura e configuração de junta é uma Variável Essencial conforme a Tabela T-421 do ASME V Art. 4. Mudar qualquer uma dessas variáveis exige uma nova Demonstração de Performance com mockups específicos. Por isso o PAUT é mais econômico em produção seriada — a qualificação é feita uma vez e aplicada a centenas de juntas idênticas.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>Posso usar ultrassom convencional manual para substituir a radiografia conforme ASME?</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Não. O ASME restringe a substituição exclusivamente a técnicas avançadas com varredura encodada e registro digital contínuo — PAUT e/ou TOFD. O ultrassom convencional manual não possui a rastreabilidade e a reprodutibilidade exigidas pelo código para substituir o registro permanente que a radiografia fornece.</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="cta-band">
+  <div class="cta-band-content">
+    <h2>Avaliando a transição de RT para PAUT — ou precisa de um Nível 3 qualificado em PAUT conforme ASME?</h2>
+    <p>Procedimentos, scan plans, Demonstração de Performance e qualificação de pessoal. Nível 3 ASNT e PCN com exames realizados nos EUA.</p>
+    <div class="cta-buttons">
+      <a href="/servicos/phased-array.html" class="btn btn-primary">Ver serviço de Phased Array <span class="btn-arrow">→</span></a>
+      <a href="https://wa.me/+5511991612503" class="btn btn-secondary" target="_blank">Falar no WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">SimpleNDT</div>
+        <p class="footer-brand-desc">Consultoria Nível 3 em Ensaios Não Destrutivos. ASME, PED/RTPO, ASNT, ISO 9712.</p>
+      </div>
+      <div class="footer-columns">
+        <div class="footer-col">
+          <div class="footer-col-title">SERVIÇOS</div>
+          <a href="/servicos/">Procedimentos</a>
+          <a href="/servicos/qualificacoes.html">Qualificações</a>
+          <a href="/servicos/phased-array.html">Phased Array</a>
+          <a href="/servicos/auditorias-asme.html">Auditorias ASME</a>
+          <a href="/servicos/treinamento.html">Treinamento</a>
+          <a href="/servicos/ped.html">Conformidade PED/RTPO</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">EMPRESA</div>
+          <a href="/sobre.html">Sobre</a>
+          <a href="/certificacoes.html">Certificações</a>
+          <a href="/blog/">Blog</a>
+          <a href="/contato.html">Contato</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 SimpleNDT. Todos os direitos reservados.</span>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/in/danyamashita/" target="_blank">LinkedIn</a>
+        <a href="https://wa.me/+5511991612503" target="_blank">WhatsApp</a>
+        <a href="mailto:contato@simplendt.com.br">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll(".reveal").forEach(el => { observer.observe(el); const r = el.getBoundingClientRect(); if (r.top < window.innerHeight && r.bottom >= 0) el.classList.add("visible"); });
+let lastScroll = 0;
+const navEl = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  const c = window.scrollY;
+  navEl.style.transform = (c > lastScroll && c > 100) ? 'translateY(-100%)' : 'translateY(0)';
+  lastScroll = c;
+}, { passive: true });
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
+});
+const burger = document.getElementById('navBurger');
+const mobileMenu = document.getElementById('mobileMenu');
+function openMenu() { burger.classList.add('open'); burger.setAttribute('aria-expanded','true'); mobileMenu.classList.add('open'); mobileMenu.removeAttribute('aria-hidden'); document.body.style.overflow='hidden'; }
+function closeMenu() { burger.classList.remove('open'); burger.setAttribute('aria-expanded','false'); mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+burger.addEventListener('click', () => { burger.classList.contains('open') ? closeMenu() : openMenu(); });
+mobileMenu.querySelectorAll('a').forEach(link => { link.addEventListener('click', closeMenu); });
+</script>
+</body>
+</html>
