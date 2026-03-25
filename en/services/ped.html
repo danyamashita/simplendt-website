@@ -47,28 +47,7 @@
 }
 </script>
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What's the difference between ASNT and PCN for PED purposes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "PED requires ISO 9712 or equivalent qualification. PCN is an ISO 9712 certification scheme accepted as RTPO. ASNT (SNT-TC-1A) is employer-based and generally not accepted alone for PED. SimpleNDT holds both certifications."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "We already have ASME. Do we need something different for PED?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Personnel qualification requirements differ: ASME accepts SNT-TC-1A, but PED requires ISO 9712. Procedures must also reference European harmonized standards (EN) rather than ASME Section V. SimpleNDT can adapt your existing program to meet both."
-      }
-    }
-  ]
-}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is an RTPO?","acceptedAnswer":{"@type":"Answer","text":"RTPO (Recognized Third-Party Organization) is an organization recognized by an EU Member State to approve NDT personnel under PED 2014/68/EU, based on certification schemes such as PCN per EN ISO 9712. The RTPO validates that the NDT professional holds adequate personal certification to perform examinations on pressure equipment under PED."}},{"@type":"Question","name":"Is SNT-TC-1A certification accepted for PED?","acceptedAnswer":{"@type":"Answer","text":"Not for categories III and IV. SNT-TC-1A is an employer-based scheme without personal certification issued by an accredited third-party body. PED requires personal certification by an independent body under an ISO 9712 or equivalent scheme, approved by an RTPO or Notified Body."}},{"@type":"Question","name":"Is SNQC (ABENDI) accepted for PED?","acceptedAnswer":{"@type":"Answer","text":"No, despite being based on ISO 9712. ABENDI is not an RTPO recognized by an EU Member State and is not a Notified Body under PED. The directive requires NDT personnel approval by a recognized RTPO or NB — such as PCN (UK), COFREND (France), or other European schemes with formal recognition. Having ISO 9712 is necessary but not sufficient — what matters is who issued the certification."}},{"@type":"Question","name":"Which PED categories require RTPO-approved personnel?","acceptedAnswer":{"@type":"Answer","text":"Categories III and IV require that NDT personnel on permanent joints be approved by an RTPO or Notified Body, based on ISO 9712 or equivalent certification. Categories I and II have less restrictive requirements, but RTPO-approved ISO 9712 certification remains best practice."}},{"@type":"Question","name":"Does SimpleNDT act as RTPO-approved Level 3?","acceptedAnswer":{"@type":"Answer","text":"Yes. Dan Yamashita holds PCN Level 3 and Level 2 (ISO 9712) certification in five methods, with approval under the PED scheme. This allows acting as NDT technical responsible for Brazilian manufacturers exporting pressure equipment to the EU with CE marking."}}]}
 </script>
 <script type="application/ld+json">
 {
@@ -98,7 +77,7 @@
     <li><a href="/en/contact.html" >Contact</a></li>
   </ul>
   <div class="nav-right">
-      <a href="/" class="nav-lang">EN / PT</a>
+      <a href="/servicos/ped.html" class="nav-lang">EN / PT</a>
       <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
       <span></span>
       <span></span>
@@ -114,7 +93,7 @@
   <a href="/en/certifications.html">Certifications</a>
   <a href="/en/blog/">Blog</a>
   <a href="/en/contact.html">Contact</a>
-  <a href="/" class="mobile-lang">PT / EN</a>
+  <a href="/servicos/ped.html" class="mobile-lang">PT / EN</a>
 </div>
 
 <div class="page-header"><div class="page-header-content">
@@ -124,25 +103,56 @@
   <div class="page-tags"><span class="page-tag">PED 2014/68/EU</span><span class="page-tag">RTPO</span><span class="page-tag">CE</span><span class="page-tag">ISO 9712</span><span class="page-tag">PCN</span></div>
 </div></div>
 <div class="content-section"><div class="content-inner reveal">
-  <h2>What is PED and RTPO</h2>
-  <p>The <strong>Pressure Equipment Directive (PED 2014/68/EU)</strong> regulates the design, manufacture and conformity assessment of pressure equipment marketed in the European Union. Manufacturers outside the EU exporting to Europe must fully comply with PED requirements, including NDT performed by personnel qualified per ISO 9712.</p>
-  <p><strong>RTPO (Recognized Third-Party Organization)</strong> validates NDT personnel qualification under the PED. The PCN (ISO 9712) certification is accepted as an RTPO scheme, ensuring inspectors and procedures meet European requirements.</p>
-  <p>SimpleNDT holds <strong>PCN/ISO 9712 Level 3</strong> certification in six methods, meaning procedures, qualifications and reports are accepted by European Notified Bodies for CE marking.</p>
-</div></div>
-<div class="content-section alt"><div class="content-inner reveal">
-  <h2>What’s included</h2>
-  <div class="standards-grid">
-    <div class="standard-item"><span class="standard-code">Procedures</span><span class="standard-name">Per harmonized standards (EN 12062, EN ISO 17640)</span></div>
-    <div class="standard-item"><span class="standard-code">Qualification</span><span class="standard-name">Inspectors qualified per ISO 9712 (PCN) — RTPO scheme</span></div>
-    <div class="standard-item"><span class="standard-code">Reports</span><span class="standard-name">Per method and equipment, accepted by Notified Bodies</span></div>
-    <div class="standard-item"><span class="standard-code">Consulting</span><span class="standard-name">PED-compliant NDE program implementation</span></div>
-    <div class="standard-item"><span class="standard-code">6 Methods</span><span class="standard-name">VT, PT, MT, UT, PAUT and RT — all PCN Level 3</span></div>
-    <div class="standard-item"><span class="standard-code">CE Marking</span><span class="standard-name">NDE documentation ready for CE technical file</span></div>
+
+  <h2>What is PED and what it requires for NDT</h2>
+  <p>The <strong>PED 2014/68/EU</strong> is the European directive governing the manufacture and conformity assessment of pressure equipment for the EU market. To obtain <strong>CE marking</strong>, NDT on permanent joints must be performed by qualified personnel — and for <strong>categories III and IV</strong>, that personnel must be approved by an <strong>RTPO (Recognized Third-Party Organization)</strong> or Notified Body, based on ISO 9712 certification.</p>
+
+  <h2>What this means in practice</h2>
+  <p>Two certifications common in Brazil <strong>do not satisfy</strong> PED categories III and IV:</p>
+  <ul style="display:flex; flex-direction:column; gap:10px; margin: 16px 0 16px 20px; color:var(--text-secondary);">
+    <li><strong style="color:var(--text-primary);">SNT-TC-1A</strong> — employer-based scheme, without personal certification issued by an accredited third-party body</li>
+    <li><strong style="color:var(--text-primary);">SNQC/ABENDI</strong> — follows ISO 9712, but ABENDI is not an RTPO recognized by any EU Member State</li>
+  </ul>
+  <p>What matters for PED is not just holding ISO 9712, but <strong>who</strong> issued the certification — the body must be recognized as an RTPO or Notified Body under the directive.</p>
+
+  <h2>How SimpleNDT covers this</h2>
+  <p>Dan Yamashita holds <strong>PCN Level 3 (ISO 9712)</strong> certification with approval under the PED scheme, in addition to ASNT Level III. This covers American (ASME, AWS) and European (PED, CE) requirements simultaneously — a single Level 3 for both frameworks.</p>
+  <ul style="display:flex; flex-direction:column; gap:10px; margin: 16px 0 16px 20px; color:var(--text-secondary);">
+    <li><strong style="color:var(--text-primary);">NDT procedures</strong> per European harmonized standards (EN ISO 17636, 17640, 3452-1)</li>
+    <li><strong style="color:var(--text-primary);">Inspections as PCN Level 2</strong> in RT, PT and UT for pressure equipment</li>
+    <li><strong style="color:var(--text-primary);">WPS and welder qualification</strong> per ISO 15614-1 and ISO 9606-1</li>
+    <li><strong style="color:var(--text-primary);">Report sign-off</strong> and technical interface with the Notified Body</li>
+    <li><strong style="color:var(--text-primary);">Audit support</strong> for PED conformity assessments</li>
+  </ul>
+
+  <div style="margin-top:40px; padding:24px 28px; border:1px solid var(--accent-dim); border-left:3px solid var(--accent); border-radius:6px; background:rgba(79,209,197,0.03);">
+    <div style="font-family:’JetBrains Mono’,monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">Technical article</div>
+    <p style="margin:0 0 16px; color:var(--text-secondary); font-size:15px; line-height:1.7;">PED categories, the role of the RTPO, why SNT-TC-1A and SNQC do not satisfy categories III and IV, harmonized standards, and WPS/welder qualification.</p>
+    <a href="/en/blog/ped-2014-68-eu-rtpo-ndt.html" style="display:inline-flex; align-items:center; gap:8px; color:var(--accent); font-weight:500; font-size:15px; text-decoration:none; border-bottom:1px solid rgba(79,209,197,0.3); padding-bottom:2px;">PED 2014/68/EU and RTPO: complete guide to NDT for pressure equipment →</a>
   </div>
 </div></div>
-<div class="faq-section"><div class="faq-inner"><div class="faq-title">FAQ</div>
-  <div class="faq-item open"><div class="faq-question"><span>What’s the difference between ASNT and PCN for PED purposes?</span><span class="faq-toggle">+</span></div><div class="faq-answer">PED requires ISO 9712 or equivalent qualification. PCN is an ISO 9712 certification scheme accepted as RTPO. ASNT (SNT-TC-1A) is employer-based and generally not accepted alone for PED. SimpleNDT holds both certifications.</div></div>
-  <div class="faq-item"><div class="faq-question"><span>We already have ASME. Do we need something different for PED?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Yes. Personnel qualification requirements differ: ASME accepts SNT-TC-1A, but PED requires ISO 9712. Procedures must also reference European harmonized standards (EN) rather than ASME Section V. SimpleNDT can adapt your existing program to meet both.</div></div>
+<div class="faq-section"><div class="faq-inner">
+  <div class="faq-title">FREQUENTLY ASKED QUESTIONS</div>
+  <div class="faq-item open">
+    <div class="faq-question"><span>What is an RTPO?</span><span class="faq-toggle">+</span></div>
+    <div class="faq-answer">RTPO (Recognized Third-Party Organization) is an organization recognized by an EU Member State to approve NDT personnel under PED 2014/68/EU, based on certification schemes such as PCN per EN ISO 9712. The RTPO validates that the NDT professional holds adequate personal certification to perform examinations on pressure equipment under PED.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question"><span>Is SNT-TC-1A certification accepted for PED?</span><span class="faq-toggle">+</span></div>
+    <div class="faq-answer">Not for categories III and IV. SNT-TC-1A is an employer-based scheme without personal certification issued by an accredited third-party body. PED requires personal certification by an independent body under an ISO 9712 or equivalent scheme, approved by an RTPO or Notified Body.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question"><span>Is SNQC (ABENDI) accepted for PED?</span><span class="faq-toggle">+</span></div>
+    <div class="faq-answer">No, despite being based on ISO 9712. ABENDI is not an RTPO recognized by an EU Member State and is not a Notified Body under PED. The directive requires NDT personnel approval by a recognized RTPO or NB — such as PCN (UK), COFREND (France), or other European schemes with formal recognition. Having ISO 9712 is necessary but not sufficient — what matters is who issued the certification.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question"><span>Which PED categories require RTPO-approved personnel?</span><span class="faq-toggle">+</span></div>
+    <div class="faq-answer">Categories III and IV require that NDT personnel on permanent joints be approved by an RTPO or Notified Body, based on ISO 9712 or equivalent certification. Categories I and II have less restrictive requirements, but RTPO-approved ISO 9712 certification remains best practice.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question"><span>Does SimpleNDT act as RTPO-approved Level 3?</span><span class="faq-toggle">+</span></div>
+    <div class="faq-answer">Yes. Dan Yamashita holds PCN Level 3 and Level 2 (ISO 9712) certification in five methods, with approval under the PED scheme. This allows acting as NDT technical responsible for Brazilian manufacturers exporting pressure equipment to the EU with CE marking.</div>
+  </div>
 </div></div>
 <div class="other-services"><div class="other-services-inner"><div class="other-services-title">OTHER SERVICES</div><div class="other-services-grid"><a href="/en/services/" class="other-service-link"><span>NDT Procedures</span><span class="arrow">→</span></a>
           <a href="/en/services/qualifications.html" class="other-service-link"><span>Personnel Qualification</span><span class="arrow">→</span></a>
