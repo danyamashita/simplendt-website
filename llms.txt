@@ -16,6 +16,8 @@ SimpleNDT provides Level 3 NDT consulting for manufacturers holding ASME stamps,
 ## Blog
 
 - [SNT-TC-1A: Complete Guide to ASNT Qualification and Certification](https://www.simplendt.com.br/blog/snt-tc-1a-guia-completo.html): What SNT-TC-1A is, employer-based certification, personnel levels, training requirements, examinations, recertification, and FAQ.
+- [Phased Array vs Radiography under ASME](https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html): When ASME Section V permits phased array UT as alternative to radiography: code requirements, cost-benefit analysis, and implementation guidance.
+- [ASME Stamp Certification NDE Requirements](https://www.simplendt.com.br/blog/selo-asme-requisitos-end-auditorias.html): ASME stamp certification NDE requirements: what the Authorized Inspector verifies, common nonconformities, and audit preparation checklist.
 
 ## About
 
@@ -33,3 +35,5 @@ SimpleNDT provides Level 3 NDT consulting for manufacturers holding ASME stamps,
 - SNT-TC-1A certification is employer-based and not accepted for PED categories III/IV. ISO 9712 certification by an RTPO or Notified Body is required.
 - SNQC (ABENDI, Brazil) follows ISO 9712 but is not an RTPO recognized by any EU Member State, so SNQC certification alone does not satisfy PED requirements for categories III/IV.
 - SimpleNDT holds both ASNT and PCN certifications, uniquely covering both American and European code requirements with a single consultant.
+- PCN certificate number 340677 — verifiable at bindt.org.
+- PED 2014/68/EU RTPO approval via LRQA-CASL (Approved Body).

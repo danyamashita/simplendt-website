@@ -413,6 +413,7 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@id": "https://www.simplendt.com.br/#organization",
   "@type": "ProfessionalService",
   "name": "SimpleNDT",
   "description": "NDT Level 3 Consulting — ASME, PED/RTPO, SNT-TC-1A, ISO 9712",
@@ -430,8 +431,20 @@
     "name": "Dan Yamashita",
     "jobTitle": "NDT Level 3 Consultant"
   },
-  "areaServed": ["BR", "Global"],
+  "logo": { "@type": "ImageObject", "url": "https://www.simplendt.com.br/assets/images/favicon.svg" },
+  "sameAs": ["https://www.linkedin.com/in/danyamashita/"],
+  "areaServed": [{ "@type": "Country", "name": "Brazil" }, { "@type": "Place", "name": "Worldwide" }],
   "knowsAbout": ["NDT", "ASME", "PED", "RTPO", "SNT-TC-1A", "ISO 9712", "Phased Array", "Radiography"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://www.simplendt.com.br/#website",
+  "name": "SimpleNDT",
+  "url": "https://www.simplendt.com.br",
+  "publisher": { "@id": "https://www.simplendt.com.br/#organization" }
 }
 </script>
 </head>

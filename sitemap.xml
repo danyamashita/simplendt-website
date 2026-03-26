@@ -129,6 +129,24 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.simplendt.com.br/en/blog/phased-array-replacing-radiography-asme.html"/>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.simplendt.com.br/blog/selo-asme-requisitos-end-auditorias.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/blog/selo-asme-requisitos-end-auditorias.html"/>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.simplendt.com.br/en/blog/asme-certification-nde-requirements-audits.html"/>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- ═══════════════════════════════════════════
        EN — Core pages
   ════════════════════════════════════════════ -->
@@ -253,6 +271,24 @@
     <lastmod>2025-01-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.simplendt.com.br/en/blog/phased-array-replacing-radiography-asme.html</loc>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.simplendt.com.br/en/blog/phased-array-replacing-radiography-asme.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/blog/phased-array-substituicao-radiografia-asme.html"/>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.simplendt.com.br/en/blog/asme-certification-nde-requirements-audits.html</loc>
+    <xhtml:link rel="alternate" hreflang="en"    href="https://www.simplendt.com.br/en/blog/asme-certification-nde-requirements-audits.html"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/blog/selo-asme-requisitos-end-auditorias.html"/>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>

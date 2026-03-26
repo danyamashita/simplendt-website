@@ -25,16 +25,39 @@
   <link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/sobre.html">
   <link rel="alternate" hreflang="en" href="https://www.simplendt.com.br/en/about.html">
   <link rel="alternate" hreflang="x-default" href="https://www.simplendt.com.br/sobre.html">
-  <link rel="stylesheet" href="style.css">
+  <link rel="preload" href="/style.css" as="style">
+  <link rel="preload" href="/assets/fonts/outfit-v15-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/outfit-v15-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
   <style>
     .page-header.about-header {
-      background:
-        linear-gradient(to bottom, rgba(10,10,12,0.25) 0%, rgba(10,10,12,0.7) 55%, rgba(10,10,12,1) 100%),
-        url('/assets/images/foto-dy.jpeg') center 30% / cover no-repeat;
+      position: relative;
+      overflow: hidden;
       padding-top: 260px;
       padding-bottom: 80px;
     }
     .page-header.about-header::before { display: none; }
+    .page-header.about-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,12,0.25) 0%, rgba(10,10,12,0.7) 55%, rgba(10,10,12,1) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .about-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      z-index: 0;
+    }
+    .page-header.about-header .page-header-content {
+      position: relative;
+      z-index: 2;
+    }
     @media (max-width: 768px) {
       .page-header.about-header { padding-top: 180px; }
     }
@@ -69,6 +92,7 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@id": "https://www.simplendt.com.br/#organization",
   "@type": "ProfessionalService",
   "name": "SimpleNDT",
   "description": "NDT Level 3 Consulting — ASME, PED/RTPO, SNT-TC-1A, ISO 9712",
@@ -86,7 +110,9 @@
     "name": "Dan Yamashita",
     "jobTitle": "NDT Level 3 Consultant"
   },
-  "areaServed": ["BR", "Global"],
+  "logo": { "@type": "ImageObject", "url": "https://www.simplendt.com.br/assets/images/favicon.svg" },
+  "sameAs": ["https://www.linkedin.com/in/danyamashita/"],
+  "areaServed": [{ "@type": "Country", "name": "Brazil" }, { "@type": "Place", "name": "Worldwide" }],
   "knowsAbout": ["NDT", "ASME", "PED", "RTPO", "SNT-TC-1A", "ISO 9712", "Phased Array", "Radiography"]
 }
 </script>
@@ -94,13 +120,19 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": "https://www.simplendt.com.br/#person",
   "name": "Dan Yamashita",
+  "description": "Naval Engineer, MSc Mechatronics, IWE, ASNT NDT Level III and PCN Level 3 — independent NDT consulting since 2012",
+  "image": { "@type": "ImageObject", "url": "https://www.simplendt.com.br/assets/images/foto-dy.jpeg" },
   "jobTitle": "NDT Level 3 Consultant",
   "url": "https://www.simplendt.com.br/sobre.html",
   "sameAs": "https://www.linkedin.com/in/danyamashita/",
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Escola Politécnica da Universidade de São Paulo" },
   "worksFor": {
     "@type": "Organization",
-    "name": "SimpleNDT"
+    "@id": "https://www.simplendt.com.br/#organization",
+    "name": "SimpleNDT",
+    "url": "https://www.simplendt.com.br"
   },
   "hasCredential": [
     {
@@ -120,6 +152,18 @@
       "name": "International Welding Engineer (IWE)",
       "credentialCategory": "certification",
       "recognizedBy": { "@type": "Organization", "name": "International Institute of Welding" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PED 2014/68/EU RTPO approval via LRQA-CASL",
+      "credentialCategory": "approval",
+      "recognizedBy": { "@type": "Organization", "name": "LRQA-CASL" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "ASME-recognized NDT Level III",
+      "credentialCategory": "recognition",
+      "recognizedBy": { "@type": "Organization", "name": "ASME" }
     }
   ],
   "knowsAbout": ["NDT", "ASME", "PED", "RTPO", "SNT-TC-1A", "ISO 9712", "Phased Array", "Ultrasound", "Radiography"],
@@ -179,6 +223,11 @@
 </div>
 
   <div class="page-header about-header">
+    <img src="/assets/images/foto-dy.jpeg"
+         alt="Dan Yamashita, Engenheiro Naval e Nível 3 END"
+         width="400" height="400"
+         loading="lazy"
+         class="about-photo">
     <div class="page-header-content">
       <div class="breadcrumb"><a href="/">Home</a> / <span>Sobre</span></div>
       <h1>Dan Yamashita</h1>

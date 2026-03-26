@@ -21,7 +21,10 @@
 <link rel="alternate" hreflang="pt-BR" href="https://www.simplendt.com.br/certificacoes.html">
 <link rel="alternate" hreflang="en" href="https://www.simplendt.com.br/en/certifications.html">
 <link rel="alternate" hreflang="x-default" href="https://www.simplendt.com.br/certificacoes.html">
-<link rel="stylesheet" href="style.css">
+<link rel="preload" href="/style.css" as="style">
+<link rel="preload" href="/assets/fonts/outfit-v15-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/outfit-v15-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css">
 <style>
   /* ── ASNT Badges ── */
   .asnt-badges {
@@ -217,6 +220,7 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@id": "https://www.simplendt.com.br/#organization",
   "@type": "ProfessionalService",
   "name": "SimpleNDT",
   "description": "NDT Level 3 Consulting — ASME, PED/RTPO, SNT-TC-1A, ISO 9712",
@@ -234,7 +238,9 @@
     "name": "Dan Yamashita",
     "jobTitle": "NDT Level 3 Consultant"
   },
-  "areaServed": ["BR", "Global"],
+  "logo": { "@type": "ImageObject", "url": "https://www.simplendt.com.br/assets/images/favicon.svg" },
+  "sameAs": ["https://www.linkedin.com/in/danyamashita/"],
+  "areaServed": [{ "@type": "Country", "name": "Brazil" }, { "@type": "Place", "name": "Worldwide" }],
   "knowsAbout": ["NDT", "ASME", "PED", "RTPO", "SNT-TC-1A", "ISO 9712", "Phased Array", "Radiography"]
 }
 </script>
@@ -245,6 +251,140 @@
   "itemListElement":[
     {"@type":"ListItem","position":1,"name":"Home","item":"https://www.simplendt.com.br/"},
     {"@type":"ListItem","position":2,"name":"Certificações"}
+  ]
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://www.simplendt.com.br/#person",
+  "name": "Dan Yamashita",
+  "url": "https://www.simplendt.com.br/sobre.html",
+  "hasCredential": [
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "ASNT NDT Level III — Visual Testing (VT)",
+      "credentialCategory": "certification",
+      "url": "https://bcert.me/sqgsjycco",
+      "recognizedBy": { "@type": "Organization", "name": "American Society for Nondestructive Testing", "alternateName": "ASNT" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "ASNT NDT Level III — Liquid Penetrant Testing (PT)",
+      "credentialCategory": "certification",
+      "url": "https://bcert.me/sotjfgsol",
+      "recognizedBy": { "@type": "Organization", "name": "American Society for Nondestructive Testing", "alternateName": "ASNT" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "ASNT NDT Level III — Magnetic Particle Testing (MT)",
+      "credentialCategory": "certification",
+      "url": "https://bcert.me/sjfqzpmsx",
+      "recognizedBy": { "@type": "Organization", "name": "American Society for Nondestructive Testing", "alternateName": "ASNT" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "ASNT NDT Level III — Ultrasonic Testing (UT)",
+      "credentialCategory": "certification",
+      "url": "https://bcert.me/spgsochkh",
+      "recognizedBy": { "@type": "Organization", "name": "American Society for Nondestructive Testing", "alternateName": "ASNT" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "ASNT NDT Level III — Radiographic Testing (RT)",
+      "credentialCategory": "certification",
+      "url": "https://bcert.me/szpxmgcpg",
+      "recognizedBy": { "@type": "Organization", "name": "American Society for Nondestructive Testing", "alternateName": "ASNT" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 2 — Phased Array Ultrasonic Testing (PAUT), Pre & In-service (Multi)",
+      "credentialCategory": "certification",
+      "identifier": "E023S22820931",
+      "validUntil": "2028-05-10",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 2 — Visual Testing (VT), Pre & In-service (Multi)",
+      "credentialCategory": "certification",
+      "identifier": "E023S22326492",
+      "validUntil": "2028-10-19",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 3 — Visual Testing (VT), Pre & In-service (Multi)",
+      "credentialCategory": "certification",
+      "identifier": "E023S22336330",
+      "validUntil": "2028-11-23",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 2 — Radiographic Testing (RT), Weldments",
+      "credentialCategory": "certification",
+      "identifier": "E023S62527330",
+      "validUntil": "2028-11-14",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 1 — Basic Radiation Safety (BRS), Radiation",
+      "credentialCategory": "certification",
+      "identifier": "E023S83817331",
+      "validUntil": "2028-11-14",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 2 — Magnetic Particle Testing (MT), Pre & In-service (Multi)",
+      "credentialCategory": "certification",
+      "identifier": "E023S22127346",
+      "validUntil": "2029-02-26",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 3 — Magnetic Particle Testing (MT), Pre & In-service (Multi)",
+      "credentialCategory": "certification",
+      "identifier": "E023S22137554",
+      "validUntil": "2029-02-26",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 2 — Ultrasonic Testing (UT), Weldments",
+      "credentialCategory": "certification",
+      "identifier": "E023S62427421",
+      "validUntil": "2029-03-04",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 3 — Ultrasonic Testing (UT), Weldments",
+      "credentialCategory": "certification",
+      "identifier": "E023S62437537",
+      "validUntil": "2029-03-20",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 2 — Liquid Penetrant Testing (PT), Pre & In-service (Multi)",
+      "credentialCategory": "certification",
+      "identifier": "E023S22227670",
+      "validUntil": "2029-02-21",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PCN Level 3 — Liquid Penetrant Testing (PT), Pre & In-service (Multi)",
+      "credentialCategory": "certification",
+      "identifier": "E023S22237536",
+      "validUntil": "2029-02-26",
+      "recognizedBy": { "@type": "Organization", "name": "British Institute of Non-Destructive Testing", "alternateName": "BINDT/PCN" }
+    }
   ]
 }
 </script>
