@@ -329,108 +329,70 @@
       letter-spacing: 1px;
     }
 
-    /* ========== HERO — SCROLL-DRIVEN VIDEO ========== */
-    .hero-scroll-container {
+    /* ========== HERO — CÂMARA DE WILSON ========== */
+    .hero {
       position: relative;
-      height: 400vh;
-      background: #000000;
-    }
-
-    .hero-sticky {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      background: #000000;
-    }
-
-    #heroCanvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      object-fit: cover;
-    }
-
-    /* Mobile: <video> instead of canvas */
-    .hero-video-mobile {
-      display: none;
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 1;
-    }
-
-    /* Hero intro — big brand name on load */
-    .hero-intro {
-      position: absolute;
-      inset: 0;
-      z-index: 11;
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      overflow: hidden;
+      background: #04050c;
+    }
+
+    #cloudCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
       pointer-events: none;
-      opacity: 1;
-      transition: opacity 0.5s var(--ease-out);
     }
 
-    .hero-intro.hidden {
-      opacity: 0;
+    /* Névoa da câmara — dá textura de vapor supersaturado */
+    .chamber-mist {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 50%,
+          rgba(8, 12, 30, 0) 0%,
+          rgba(4, 5, 12, 0.45) 100%);
     }
 
-    .hero-intro-name {
-      font-size: clamp(48px, 7vw, 96px);
-      font-weight: 600;
-      letter-spacing: -3px;
-      color: var(--text-primary);
-      opacity: 0;
-      animation: fadeUp 1s var(--ease-out) 0.1s forwards;
-    }
-
-    .hero-intro-tagline {
-      font-family: var(--font-mono);
-      font-size: clamp(10px, 1.2vw, 13px);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      opacity: 0;
-      animation: fadeUp 1s var(--ease-out) 0.4s forwards;
-    }
-
-    /* Vignette over video for text readability */
+    /* Vinheta nas bordas */
     .hero-vignette {
       position: absolute;
       inset: 0;
       z-index: 2;
       pointer-events: none;
       background:
-        radial-gradient(ellipse 85% 75% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.6) 100%),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, transparent 20%,
-          transparent 70%, rgba(0, 0, 0, 0.7) 100%);
+        radial-gradient(ellipse 85% 75% at 50% 50%, transparent 30%, rgba(4, 5, 12, 0.7) 100%),
+        linear-gradient(to bottom, rgba(4, 5, 12, 0.6) 0%, transparent 15%,
+          transparent 75%, rgba(4, 5, 12, 0.85) 100%);
     }
 
-    /* Text overlays — absolute within sticky container */
-    .hero-content {
+    /* Linha sutil no topo */
+    .hero-topline {
       position: absolute;
-      inset: 0;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 40px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      z-index: 3;
+      background: linear-gradient(90deg, transparent, rgba(94, 174, 213, 0.25) 50%, transparent);
       pointer-events: none;
     }
 
-    .hero-content > * {
-      pointer-events: auto;
+    /* Conteúdo central */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 860px;
+      padding: 0 40px;
+      will-change: transform, opacity;
     }
 
     .hero-eyebrow {
@@ -440,17 +402,11 @@
       font-family: var(--font-mono);
       font-size: 10px;
       letter-spacing: 2.5px;
-      color: rgba(94, 174, 213, 0.8);
+      color: rgba(94, 174, 213, 0.6);
       text-transform: uppercase;
       margin-bottom: 24px;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-    }
-
-    .hero-eyebrow.visible {
-      opacity: 1;
-      transform: translateY(0);
+      animation: fadeUp 1s var(--ease-out) 0.2s forwards;
     }
 
     .ew-dot {
@@ -462,31 +418,41 @@
     }
 
     @keyframes dotPulse {
-      0%, 100% {
+
+      0%,
+      100% {
         opacity: 1;
         box-shadow: 0 0 0 0 rgba(94, 174, 213, 0);
       }
+
       50% {
         opacity: 0.4;
         box-shadow: 0 0 0 7px rgba(94, 174, 213, 0.12);
       }
     }
 
+    .hero-title-wrap {
+      display: grid;
+      margin-bottom: 20px;
+    }
+
     .hero-title {
+      grid-area: 1/1;
       font-size: clamp(36px, 5.2vw, 68px);
       font-weight: 600;
       line-height: 1.05;
       letter-spacing: -2.5px;
-      margin-bottom: 20px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+      transition: opacity 0.65s ease;
     }
 
-    .hero-title.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .hero-title.layer-a {
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out) 0.1s forwards;
+    }
+
+    .hero-title.layer-b {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .hero-title .line {
@@ -502,20 +468,13 @@
 
     .hero-sub {
       font-size: clamp(14px, 1.6vw, 17px);
-      color: rgba(238, 238, 245, 0.75);
+      color: rgba(238, 238, 245, 0.50);
       max-width: 480px;
       margin: 0 auto 36px;
       line-height: 1.8;
       font-weight: 300;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
-    }
-
-    .hero-sub.visible {
-      opacity: 1;
-      transform: translateY(0);
+      animation: fadeUp 1s var(--ease-out) 0.46s forwards;
     }
 
     .hero-ctas {
@@ -524,13 +483,7 @@
       justify-content: center;
       flex-wrap: wrap;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-    }
-
-    .hero-ctas.visible {
-      opacity: 1;
-      transform: translateY(0);
+      animation: fadeUp 1s var(--ease-out) 0.6s forwards;
     }
 
     /* Scroll hint */
@@ -545,12 +498,8 @@
       align-items: center;
       gap: 8px;
       opacity: 0;
-      transition: opacity 0.6s var(--ease-out);
+      animation: fadeIn 1s var(--ease-out) 1.4s forwards;
       pointer-events: none;
-    }
-
-    .scroll-hint.visible {
-      opacity: 1;
     }
 
     .scroll-bar {
@@ -573,8 +522,13 @@
     }
 
     @keyframes scrollDrop {
-      0% { top: -100%; }
-      100% { top: 200%; }
+      0% {
+        top: -100%;
+      }
+
+      100% {
+        top: 200%;
+      }
     }
 
     .scroll-label {
@@ -585,62 +539,12 @@
       text-transform: uppercase;
     }
 
-    /* Preloader */
-    .hero-preloader {
-      position: fixed;
-      inset: 0;
-      z-index: 9998;
-      background: #000000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.5s var(--ease-out);
-    }
-
-    .hero-preloader.loaded {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .hero-preloader-bar {
-      width: 120px;
-      height: 2px;
-      background: rgba(94, 174, 213, 0.15);
-      border-radius: 1px;
-      overflow: hidden;
-    }
-
-    .hero-preloader-fill {
-      height: 100%;
-      width: 0%;
-      background: var(--accent);
-      border-radius: 1px;
-      transition: width 0.15s linear;
-    }
-
-    /* prefers-reduced-motion */
-    @media (prefers-reduced-motion: reduce) {
-      .hero-scroll-container {
-        height: auto;
-      }
-      .hero-sticky {
-        position: relative;
-      }
-      .hero-eyebrow,
-      .hero-title,
-      .hero-sub,
-      .hero-ctas,
-      .scroll-hint {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
     @keyframes fadeUp {
       from {
         opacity: 0;
         transform: translateY(24px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -648,8 +552,13 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     /* ========== BUTTONS ========== */
@@ -1391,64 +1300,22 @@
         padding: 80px 24px;
       }
 
-      .hero-scroll-container {
-        height: 400vh;
-      }
-
-      .hero-video-mobile {
-        display: none;
-      }
-
-      .hero-intro {
-        padding: 0 20px;
-      }
-
-      .hero-intro-name {
-        font-size: clamp(36px, 10vw, 56px);
-        letter-spacing: -1.5px;
-      }
-
-      .hero-intro-tagline {
-        font-size: 9px;
-        letter-spacing: 2px;
-        text-align: center;
-        line-height: 1.6;
+      .hero {
+        padding: 0;
       }
 
       .hero-content {
-        padding: 0 20px;
-      }
-
-      .hero-eyebrow {
-        font-size: 8px;
-        letter-spacing: 1.5px;
-        gap: 6px;
-        margin-bottom: 16px;
-        text-align: center;
+        padding: 0 24px;
       }
 
       .hero-title {
         font-size: clamp(26px, 7.5vw, 36px);
         letter-spacing: -1.5px;
-        margin-bottom: 16px;
       }
 
-      .hero-sub {
-        font-size: 13px;
-        margin-bottom: 28px;
-        max-width: 320px;
-      }
-
-      .hero-ctas {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .hero-ctas .btn {
-        width: 100%;
-        max-width: 280px;
-        justify-content: center;
+      .chamber-legend,
+      .geiger-count {
+        display: none;
       }
 
       .credentials {
@@ -1605,60 +1472,54 @@
     <a href="/en/" class="mobile-lang">EN / PT</a>
   </div>
 
-  <!-- HERO — Scroll-Driven Video -->
-  <div class="hero-scroll-container" id="heroScrollContainer">
-    <div class="hero-sticky" id="heroSticky">
+  <!-- HERO — Wilson Cloud Chamber -->
+  <section class="hero" id="hero">
 
-      <canvas id="heroCanvas" role="img" aria-label="Animação de ensaios não destrutivos controlada pelo scroll"></canvas>
-      <video class="hero-video-mobile" id="heroVideoMobile" muted playsinline preload="auto"
-        src="/public/hero_video_mobile.mp4" aria-hidden="true"></video>
+    <canvas id="cloudCanvas"></canvas>
+    <div class="chamber-mist"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-topline"></div>
 
-      <div class="hero-vignette"></div>
-
-      <!-- Intro text — visible on load, fades out on scroll -->
-      <div class="hero-intro" id="heroIntro">
-        <span class="hero-intro-name">SimpleNDT</span>
-        <span class="hero-intro-tagline">Ensaios Não Destrutivos · Consultoria Nível 3</span>
+    <!-- Conteúdo central -->
+    <div class="hero-content" id="heroContent">
+      <div class="hero-eyebrow">
+        <span class="ew-dot"></span>
+        ASNT · ASME · PED/RTPO · ISO 9712
+        <span class="ew-dot"></span>
       </div>
 
-      <div class="hero-content" id="heroContent">
-        <div class="hero-eyebrow" id="heroEyebrow">
-          <span class="ew-dot"></span>
-          ASNT · ASME · PED/RTPO · ISO 9712
-          <span class="ew-dot"></span>
-        </div>
-
-        <h1 class="hero-title" id="heroTitle">
+      <div class="hero-title-wrap">
+        <!-- Layer A: visível no carregamento (SEO — keywords indexadas) -->
+        <h1 class="hero-title layer-a" id="heroTitleA">
           <span class="line">END <span class="accent">Nível&nbsp;3</span>.</span>
           <span class="line">ASNT · PCN · ASME.</span>
           <span class="line">SNT-TC-1A · PED · ISO&nbsp;9712.</span>
         </h1>
-
-        <p class="hero-sub" id="heroSub">
-          Nível 3 certificado ASNT e PCN em VT, PT, MT, UT, PAUT e RT.
-          SNT-TC-1A, ASME, PED e ISO&nbsp;9712.
-        </p>
-
-        <div class="hero-ctas" id="heroCtas">
-          <a href="/contato.html" class="btn btn-primary">Solicitar Orçamento <span class="btn-arrow">→</span></a>
-          <a href="/servicos/" class="btn btn-ghost">Ver Serviços</a>
-        </div>
+        <!-- Layer B: invisível, pronto para crossfade -->
+        <h1 class="hero-title layer-b" id="heroTitleB" aria-hidden="true">
+          <span class="line">Uma consultoria.</span>
+          <span class="line">Todos os <span class="accent">métodos</span>.</span>
+          <span class="line">Todos os códigos.</span>
+        </h1>
       </div>
 
-      <div class="scroll-hint" id="heroScrollHint">
-        <div class="scroll-bar"></div>
-        <span class="scroll-label">scroll</span>
+      <p class="hero-sub">
+        Nível 3 certificado ASNT e PCN em VT, PT, MT, UT, PAUT e RT.
+        SNT-TC-1A, ASME, PED e ISO&nbsp;9712.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="/contato.html" class="btn btn-primary">Solicitar Orçamento <span class="btn-arrow">→</span></a>
+        <a href="/servicos/" class="btn btn-ghost">Ver Serviços</a>
       </div>
-
     </div>
-  </div>
 
-  <!-- Preloader (frames) -->
-  <div class="hero-preloader" id="heroPreloader">
-    <div class="hero-preloader-bar">
-      <div class="hero-preloader-fill" id="heroPreloaderFill"></div>
+    <div class="scroll-hint">
+      <div class="scroll-bar"></div>
+      <span class="scroll-label">scroll</span>
     </div>
-  </div>
+
+  </section>
 
   <!-- CREDENTIALS -->
   <div class="credentials">
@@ -1948,196 +1809,335 @@
 
   <script>
     /* ═══════════════════════════════════════════════════════
-       SCROLL-DRIVEN VIDEO HERO — SimpleNDT
-       Desktop: frame sequencing on <canvas> via scroll
-       Mobile: <video> with playbackRate controlled by scroll
-       Accessibility: prefers-reduced-motion → static image
+       CLOUD CHAMBER ENGINE — SimpleNDT
+       Simulação de câmara de Wilson: α, β, γ, μ deixam
+       trilhas luminosas que desvanecem.
+       Canvas 2D puro, zero dependências.
     ═══════════════════════════════════════════════════════ */
 
-    (function () {
-      'use strict';
+    const canvas = document.getElementById('cloudCanvas');
+    const ctx = canvas.getContext('2d');
+    const hero = document.getElementById('hero');
+    const content = document.getElementById('heroContent');
 
-      const isMobile = window.innerWidth < 768;
-      const TOTAL_FRAMES = isMobile ? 31 : 61;
-      const FRAME_PATH = isMobile ? '/public/frames-mobile/mob-' : '/public/frames-composite/comp-';
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W, H;
+    let tracks = [];
+    let totalEvents = 0;
+    let lastBurst = 0;
 
-      // DOM refs
-      const scrollContainer = document.getElementById('heroScrollContainer');
-      const sticky = document.getElementById('heroSticky');
-      const canvas = document.getElementById('heroCanvas');
-      const videoMobile = document.getElementById('heroVideoMobile');
-      const preloader = document.getElementById('heroPreloader');
-      const preloaderFill = document.getElementById('heroPreloaderFill');
-      const heroIntro = document.getElementById('heroIntro');
-      const heroEyebrow = document.getElementById('heroEyebrow');
-      const heroTitle = document.getElementById('heroTitle');
-      const heroSub = document.getElementById('heroSub');
-      const heroCtas = document.getElementById('heroCtas');
-      const scrollHint = document.getElementById('heroScrollHint');
+    /* ── Tipos de partícula ─────────────────────────────────
+       Baseado na física real da câmara de Wilson:
+       γ gama  → retas, compridas, finíssimas   (azul accent)
+       β beta  → curvas moderadas               (violeta)
+       α alfa  → curtas, grossas, brilhantes    (azul-branco)
+       μ múon  → raio cósmico, longo, raro      (lavanda)
+    ─────────────────────────────────────────────────────── */
+    const TYPES = {
+      gamma: {
+        prob: 0.35,
+        speedMin: 6, speedMax: 10,
+        curvMin: 0, curvMax: 0.002,
+        lenMin: 260, lenMax: 480,
+        widthCore: 0.7, widthGlow: 3,
+        alphaCore: 0.70, alphaGlow: 0.09,
+        decay: 0.0032,
+        color: [94, 174, 213],
+      },
+      beta: {
+        prob: 0.35,
+        speedMin: 3.5, speedMax: 5.5,
+        curvMin: 0.010, curvMax: 0.032,
+        lenMin: 110, lenMax: 240,
+        widthCore: 1.5, widthGlow: 5,
+        alphaCore: 0.78, alphaGlow: 0.11,
+        decay: 0.0042,
+        color: [148, 100, 240],
+      },
+      alpha: {
+        prob: 0.20,
+        speedMin: 2.5, speedMax: 4,
+        curvMin: 0.002, curvMax: 0.010,
+        lenMin: 38, lenMax: 80,
+        widthCore: 3.0, widthGlow: 7.5,
+        alphaCore: 0.88, alphaGlow: 0.16,
+        decay: 0.0058,
+        color: [195, 235, 255],
+      },
+      muon: {
+        prob: 0.10,
+        speedMin: 9, speedMax: 14,
+        curvMin: 0, curvMax: 0.001,
+        lenMin: 420, lenMax: 700,
+        widthCore: 0.8, widthGlow: 4,
+        alphaCore: 0.65, alphaGlow: 0.08,
+        decay: 0.0022,
+        color: [190, 160, 255],
+      },
+    };
 
-      // ── Text reveal thresholds (scroll progress 0-1) ──
-      const TEXT_TRIGGERS = [
-        { el: heroIntro,    showAt: -1, hideAt: 0.08, visClass: 'hidden', invert: true },
-        { el: heroEyebrow,  showAt: 0.25, hideAt: 1.01 },
-        { el: heroTitle,    showAt: 0.30, hideAt: 1.01 },
-        { el: heroSub,      showAt: 0.38, hideAt: 1.01 },
-        { el: heroCtas,     showAt: 0.44, hideAt: 1.01 },
-        { el: scrollHint,   showAt: 0.00, hideAt: 0.15 },
-      ];
-
-      // ── prefers-reduced-motion: static fallback ──
-      if (prefersReducedMotion) {
-        // Show first frame as static bg, no scroll animation
-        if (!isMobile && canvas) {
-          const ctx = canvas.getContext('2d');
-          const img = new Image();
-          img.onload = function () {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            drawCover(ctx, img, canvas.width, canvas.height);
-          };
-          img.src = FRAME_PATH + '0000.webp';
-        }
-        // Show main text, hide intro
-        TEXT_TRIGGERS.forEach(function(t) {
-          if (!t.el) return;
-          if (t.invert) { t.el.classList.add(t.visClass); }
-          else { t.el.classList.add('visible'); }
-        });
-        if (preloader) preloader.classList.add('loaded');
-        return; // exit — no scroll logic
+    /* ── Classe Track ───────────────────────────────────── */
+    class Track {
+      constructor(x, y, angle, typeName) {
+        const T = TYPES[typeName];
+        this.type = typeName;
+        this.col = T.color;
+        this.life = 1.0;
+        this.decay = T.decay * (0.8 + Math.random() * 0.4);
+        this.speed = T.speedMin + Math.random() * (T.speedMax - T.speedMin);
+        const curvMag = T.curvMin + Math.random() * (T.curvMax - T.curvMin);
+        this.curv = curvMag * (Math.random() < 0.5 ? 1 : -1);
+        this.maxLen = T.lenMin + Math.random() * (T.lenMax - T.lenMin);
+        this.wCore = T.widthCore;
+        this.wGlow = T.widthGlow;
+        this.aCore = T.alphaCore;
+        this.aGlow = T.alphaGlow;
+        this.angle = angle;
+        this.cx = x;
+        this.cy = y;
+        this.growing = true;
+        this.traveled = 0;
+        this.pts = [{ x, y }];
       }
 
-      // ── Frame Sequencing (desktop + mobile) ──
-      {
-        const ctx = canvas.getContext('2d');
-        const frames = [];
-        let loadedCount = 0;
-        let preloaderDismissed = false;
-
-        // Preload all frames
-        for (let i = 0; i < TOTAL_FRAMES; i++) {
-          const img = new Image();
-          img.src = FRAME_PATH + String(i).padStart(4, '0') + '.webp';
-          img.onload = function () {
-            loadedCount++;
-            if (preloaderFill) {
-              preloaderFill.style.width = Math.round((loadedCount / TOTAL_FRAMES) * 100) + '%';
-            }
-            // Dismiss preloader at 50%
-            if (!preloaderDismissed && loadedCount >= Math.ceil(TOTAL_FRAMES * 0.5)) {
-              preloaderDismissed = true;
-              if (preloader) preloader.classList.add('loaded');
-              setTimeout(function () {
-                if (preloader) preloader.style.display = 'none';
-              }, 600);
-            }
-          };
-          frames.push(img);
+      update() {
+        if (this.growing) {
+          this.angle += this.curv;
+          this.cx += Math.cos(this.angle) * this.speed;
+          this.cy += Math.sin(this.angle) * this.speed;
+          this.pts.push({ x: this.cx, y: this.cy });
+          this.traveled += this.speed;
+          if (this.traveled >= this.maxLen) this.growing = false;
         }
-
-        // Resize canvas
-        function resizeCanvas() {
-          canvas.width = canvas.offsetWidth;
-          canvas.height = canvas.offsetHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // Draw frame with cover-fit
-        function drawCover(cx, img, cw, ch) {
-          if (!img.naturalWidth) return;
-          var imgRatio = img.naturalWidth / img.naturalHeight;
-          var canvasRatio = cw / ch;
-          var sw, sh, sx, sy;
-          if (canvasRatio > imgRatio) {
-            sw = img.naturalWidth;
-            sh = sw / canvasRatio;
-            sx = 0;
-            sy = (img.naturalHeight - sh) / 2;
-          } else {
-            sh = img.naturalHeight;
-            sw = sh * canvasRatio;
-            sx = (img.naturalWidth - sw) / 2;
-            sy = 0;
-          }
-          cx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
-        }
-
-        // Scroll handler — rAF throttled
-        let ticking = false;
-        let lastFrameIdx = -1;
-
-        function onScroll() {
-          if (!ticking) {
-            requestAnimationFrame(updateFrame);
-            ticking = true;
-          }
-        }
-
-        function updateFrame() {
-          ticking = false;
-          const rect = scrollContainer.getBoundingClientRect();
-          const scrollableHeight = scrollContainer.offsetHeight - window.innerHeight;
-          const scrolled = -rect.top;
-          const progress = Math.max(0, Math.min(1, scrolled / scrollableHeight));
-
-          // Draw frame
-          const frameIdx = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
-          if (frameIdx !== lastFrameIdx && frames[frameIdx] && frames[frameIdx].complete) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawCover(ctx, frames[frameIdx], canvas.width, canvas.height);
-            lastFrameIdx = frameIdx;
-          }
-
-          // Text reveals
-          TEXT_TRIGGERS.forEach(function (t) {
-            if (!t.el) return;
-            if (t.invert) {
-              // Inverted: starts visible, adds hideClass when past hideAt
-              if (progress >= t.hideAt) {
-                t.el.classList.add(t.visClass);
-              } else {
-                t.el.classList.remove(t.visClass);
-              }
-            } else {
-              if (progress >= t.showAt && progress < t.hideAt) {
-                t.el.classList.add('visible');
-              } else {
-                t.el.classList.remove('visible');
-              }
-            }
-          });
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        // Initial draw
-        onScroll();
-
+        this.life -= this.decay;
       }
 
-      // Draw cover-fit for reduced-motion path
-      function drawCoverStatic(cx, img, cw, ch) {
-        if (!img.naturalWidth) return;
-        var imgRatio = img.naturalWidth / img.naturalHeight;
-        var canvasRatio = cw / ch;
-        var sw, sh, sx, sy;
-        if (canvasRatio > imgRatio) {
-          sw = img.naturalWidth;
-          sh = sw / canvasRatio;
-          sx = 0;
-          sy = (img.naturalHeight - sh) / 2;
-        } else {
-          sh = img.naturalHeight;
-          sw = sh * canvasRatio;
-          sx = (img.naturalWidth - sw) / 2;
-          sy = 0;
+      draw() {
+        if (this.pts.length < 2 || this.life <= 0) return;
+        const [r, g, b] = this.col;
+        const l = this.life;
+
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // Camada 1: glow largo e tênue
+        ctx.beginPath();
+        ctx.moveTo(this.pts[0].x, this.pts[0].y);
+        for (let i = 1; i < this.pts.length; i++)
+          ctx.lineTo(this.pts[i].x, this.pts[i].y);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${this.aGlow * l})`;
+        ctx.lineWidth = this.wGlow;
+        ctx.stroke();
+
+        // Camada 2: núcleo fino e brilhante
+        ctx.beginPath();
+        ctx.moveTo(this.pts[0].x, this.pts[0].y);
+        for (let i = 1; i < this.pts.length; i++)
+          ctx.lineTo(this.pts[i].x, this.pts[i].y);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${this.aCore * l})`;
+        ctx.lineWidth = this.wCore;
+        ctx.stroke();
+
+        // Flash na ponta durante crescimento
+        if (this.growing && l > 0.3) {
+          const tip = this.pts[this.pts.length - 1];
+          const tipAlpha = (l - 0.3) / 0.7;
+          ctx.beginPath();
+          ctx.arc(tip.x, tip.y, this.wGlow * 0.7, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${r},${g},${b},${tipAlpha * 0.5})`;
+          ctx.fill();
         }
-        cx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
       }
 
-    })();
+      isDead() { return this.life <= 0; }
+    }
+
+    /* ── Emitir nova partícula ──────────────────────────── */
+    function emit(fromX, fromY, angle) {
+      const rnd = Math.random();
+      let type;
+      if (rnd < 0.35) type = 'gamma';
+      else if (rnd < 0.70) type = 'beta';
+      else if (rnd < 0.90) type = 'alpha';
+      else type = 'muon';
+
+      tracks.push(new Track(fromX, fromY, angle, type));
+      totalEvents++;
+    }
+
+    /* ── Fontes internas (deriva térmica) ───────────────── */
+    const sources = [
+      { x: 0, y: 0, vx: 0, vy: 0 },
+      { x: 0, y: 0, vx: 0.3, vy: 0.15 },
+      { x: 0, y: 0, vx: -0.2, vy: 0.25 },
+    ];
+
+    function initSources() {
+      sources[0].x = W * 0.50; sources[0].y = H * 0.48;
+      sources[1].x = W * 0.25; sources[1].y = H * 0.55;
+      sources[2].x = W * 0.75; sources[2].y = H * 0.40;
+    }
+
+    /* ── Spawn ──────────────────────────────────────────── */
+    let spawnTimer = 0;
+
+    function spawnTick(ts) {
+      spawnTimer++;
+      const mobile = W < 768;
+
+      // Emissão contínua de borda
+      if (spawnTimer % (mobile ? 32 : 15) === 0) {
+        const side = Math.floor(Math.random() * 4);
+        let ox, oy, angle;
+        switch (side) {
+          case 0: ox = Math.random() * W; oy = -5; angle = Math.PI / 2 + (Math.random() - 0.5) * 0.6; break;
+          case 1: ox = W + 5; oy = Math.random() * H; angle = Math.PI + (Math.random() - 0.5) * 0.6; break;
+          case 2: ox = Math.random() * W; oy = H + 5; angle = -Math.PI / 2 + (Math.random() - 0.5) * 0.6; break;
+          default: ox = -5; oy = Math.random() * H; angle = (Math.random() - 0.5) * 0.6; break;
+        }
+        emit(ox, oy, angle);
+      }
+
+      // Emissão a partir das fontes internas
+      if (spawnTimer % (mobile ? 80 : 38) === 0) {
+        const src = sources[Math.floor(Math.random() * sources.length)];
+        emit(src.x, src.y, Math.random() * Math.PI * 2);
+      }
+
+      // Burst ocasional (evento de decaimento)
+      if (ts - lastBurst > 5500 + Math.random() * 6000) {
+        lastBurst = ts;
+        const bx = W * (0.15 + Math.random() * 0.7);
+        const by = H * (0.15 + Math.random() * 0.7);
+        const count = mobile ? 1 : 2 + Math.floor(Math.random() * 3);
+        for (let i = 0; i < count; i++) {
+          emit(bx, by, Math.random() * Math.PI * 2);
+        }
+        flashPoints.push({ x: bx, y: by, r: 0, life: 1 });
+      }
+
+      // Deriva térmica das fontes
+      sources.forEach(s => {
+        s.x += s.vx; s.y += s.vy;
+        if (s.x < 0 || s.x > W) s.vx *= -1;
+        if (s.y < 0 || s.y > H) s.vy *= -1;
+      });
+    }
+
+    /* ── Flash de ionização ─────────────────────────────── */
+    let flashPoints = [];
+    function drawFlashes() {
+      flashPoints = flashPoints.filter(f => f.life > 0);
+      flashPoints.forEach(f => {
+        f.r += 3;
+        f.life -= 0.06;
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(94,174,213,${f.life * 0.5})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+    }
+
+    /* ── Resize ─────────────────────────────────────────── */
+    function resize() {
+      W = canvas.width = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      initSources();
+    }
+    resize();
+    window.addEventListener('resize', () => { resize(); tracks = []; });
+
+    /* ── Loop principal ─────────────────────────────────── */
+    function loop(ts) {
+      // Trail leve — persiste trilhas (câmara de Wilson)
+      ctx.fillStyle = 'rgba(4,5,12,0.24)';
+      ctx.fillRect(0, 0, W, H);
+
+      spawnTick(ts);
+      drawFlashes();
+
+      for (let i = tracks.length - 1; i >= 0; i--) {
+        tracks[i].update();
+        tracks[i].draw();
+        if (tracks[i].isDead()) tracks.splice(i, 1);
+      }
+
+      // Limite de memória: máximo 120 trilhas (desktop) / 50 (mobile)
+      const maxTracks = W < 768 ? 50 : 120;
+      if (tracks.length > maxTracks) tracks.splice(0, tracks.length - maxTracks);
+
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    /* ── Scroll parallax (hero content only) ──────────────
+       Aplica leve translateY e fade no conteúdo ao rolar.
+       Não interfere com o canvas nem com outros listeners.
+    ─────────────────────────────────────────────────────── */
+    let rafHero = false;
+    function onHeroScroll() {
+      if (!rafHero) { requestAnimationFrame(doHeroScroll); rafHero = true; }
+    }
+    function doHeroScroll() {
+      rafHero = false;
+      const sy = scrollY;
+      const p = Math.min(sy / hero.offsetHeight, 1);
+      content.style.transform = `translateY(${sy * 0.06}px)`;
+      content.style.opacity = String(Math.max(1 - p * 1.9, 0));
+    }
+    window.addEventListener('scroll', onHeroScroll, { passive: true });
+
+    /* ── Rotação do título — crossfade com dois layers ──────
+       Layer A e B alternam opacity simultaneamente via transition.
+       Conteúdo é pré-carregado no layer invisível antes do fade.
+    ─────────────────────────────────────────────────────── */
+    const titleLayers = [
+      document.getElementById('heroTitleA'),
+      document.getElementById('heroTitleB'),
+    ];
+
+    const titleVariants = [
+      [
+        'END <span class="accent">Nível&nbsp;3</span>.',
+        'ASNT · PCN · ASME.',
+        'SNT-TC-1A · PED · ISO\u00a09712.',
+      ],
+      [
+        'Uma consultoria.',
+        'Todos os <span class="accent">métodos</span>.',
+        'Todos os códigos.',
+      ],
+    ];
+
+    let activeLayer = 0;
+    let variantIdx = 0;
+
+    function rotateTitle() {
+      const nextVariant = (variantIdx + 1) % titleVariants.length;
+      const nextLayer = (activeLayer + 1) % 2;
+
+      titleLayers[activeLayer].style.animation = 'none';
+      titleLayers[nextLayer].style.animation = 'none';
+
+      titleLayers[nextLayer].innerHTML = titleVariants[nextVariant]
+        .map(l => `<span class="line">${l}</span>`)
+        .join('');
+      titleLayers[nextLayer].removeAttribute('aria-hidden');
+      titleLayers[nextLayer].style.pointerEvents = '';
+
+      titleLayers[nextLayer].style.opacity = '1';
+      titleLayers[activeLayer].style.opacity = '0';
+      titleLayers[activeLayer].setAttribute('aria-hidden', 'true');
+      titleLayers[activeLayer].style.pointerEvents = 'none';
+
+      activeLayer = nextLayer;
+      variantIdx = nextVariant;
+    }
+
+    setTimeout(() => {
+      rotateTitle();
+      setInterval(rotateTitle, 4000);
+    }, 3500);
 
     /* ── Mobile menu ────────────────────────────────────── */
     const burger     = document.getElementById('navBurger');
@@ -2202,7 +2202,18 @@
     window.addEventListener('load', revealElements);
     revealElements();
 
-    // Nav always visible (no hide on scroll)
+    // Nav hide/show on scroll
+    let lastScroll = 0;
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      const current = window.scrollY;
+      if (current > lastScroll && current > 100) {
+        navEl.style.transform = 'translateY(-100%)';
+      } else {
+        navEl.style.transform = 'translateY(0)';
+      }
+      lastScroll = current;
+    }, { passive: true });
   </script>
 
 </body>
