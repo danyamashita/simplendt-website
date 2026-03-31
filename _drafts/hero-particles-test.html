@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleNDT — Particles Hero Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #060810;
+      --text:       #eeeef5;
+      --text-dim:   rgba(238,238,245,0.52);
+      --text-ghost: rgba(238,238,245,0.22);
+      --accent:     #5eaed5;
+      --border:     rgba(255,255,255,0.07);
+      --font:       'Outfit', -apple-system, sans-serif;
+      --mono:       'Space Mono', monospace;
+      --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+      --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { font-size:16px; -webkit-font-smoothing:antialiased; background:var(--bg); scroll-behavior:smooth; }
+    body { font-family:var(--font); background:var(--bg); color:var(--text); overflow-x:hidden; }
+    ::selection { background:var(--accent); color:var(--bg); }
+
+    .test-label {
+      position:fixed; top:12px; right:16px; z-index:10000;
+      font-family:var(--mono); font-size:10px; color:var(--accent);
+      background:rgba(6,8,16,0.92); border:1px solid rgba(94,174,213,0.2);
+      border-radius:4px; padding:4px 10px; letter-spacing:1px; pointer-events:none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      padding:0 52px; height:68px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .nav-logo-mark {
+      width:30px; height:30px; border:1.5px solid rgba(94,174,213,0.55);
+      border-radius:7px; display:flex; align-items:center; justify-content:center;
+      font-family:var(--mono); font-size:11px; font-weight:700; color:var(--accent);
+    }
+    .nav-logo-text { font-weight:600; font-size:15px; color:rgba(238,238,245,0.88); }
+    .nav-right { display:flex; align-items:center; gap:36px; }
+    .nav-link { font-size:13px; color:var(--text-dim); text-decoration:none; transition:color 0.3s; }
+    .nav-link:hover { color:var(--text); }
+    .nav-cta {
+      font-size:13px; font-weight:500; color:var(--bg);
+      background:var(--accent); padding:9px 22px; border-radius:6px;
+      text-decoration:none; transition:all 0.3s;
+    }
+    .nav-cta:hover { background:#7ec4e8; transform:translateY(-1px); }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    .hero {
+      position:relative; min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden; background:var(--bg);
+    }
+
+    /* Canvas — ocupa tudo */
+    #particleCanvas {
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      z-index:1;
+    }
+
+    /* Vinheta radial suave sobre o canvas */
+    .hero-vignette {
+      position:absolute; inset:0; z-index:2; pointer-events:none;
+      background:radial-gradient(ellipse 80% 80% at 50% 50%,
+        transparent 30%,
+        rgba(6,8,16,0.6) 100%);
+    }
+
+    /* Linha de brilho no topo */
+    .hero-topglow {
+      position:absolute; top:0; left:0; right:0; height:1px; z-index:3;
+      background:linear-gradient(90deg, transparent, rgba(94,174,213,0.3) 50%, transparent);
+      pointer-events:none;
+    }
+
+    /* ── Conteúdo ── */
+    .hero-content {
+      position:relative; z-index:10;
+      text-align:center; max-width:860px; padding:0 40px;
+      will-change:transform,opacity;
+    }
+
+    /* Badge / eyebrow */
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:10px;
+      font-family:var(--mono); font-size:10px; letter-spacing:2.5px;
+      color:rgba(94,174,213,0.65); text-transform:uppercase;
+      margin-bottom:40px;
+      opacity:0; animation:fadeUp 1s var(--ease-out) 0.15s forwards;
+    }
+    .ew-dot {
+      width:5px; height:5px; border-radius:50%; background:var(--accent);
+      animation:dotPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(94,174,213,0); }
+      50%      { opacity:0.5; box-shadow:0 0 0 6px rgba(94,174,213,0.15); }
+    }
+
+    /* Título */
+    .hero-title {
+      font-size:clamp(48px, 7.8vw, 100px);
+      font-weight:600; line-height:1.0; letter-spacing:-3.5px;
+      margin-bottom:30px;
+      opacity:0; animation:fadeUp 1s var(--ease-out) 0.3s forwards;
+    }
+    .hero-title .line { display:block; }
+    .hero-title .accent {
+      color:transparent;
+      background:linear-gradient(135deg, #5eaed5 0%, #7ec4e8 50%, #aaddf5 100%);
+      -webkit-background-clip:text; background-clip:text;
+    }
+
+    /* Subtítulo */
+    .hero-sub {
+      font-size:clamp(14px,1.6vw,17px); color:var(--text-dim);
+      max-width:480px; margin:0 auto 52px;
+      line-height:1.8; font-weight:300;
+      opacity:0; animation:fadeUp 1s var(--ease-out) 0.45s forwards;
+    }
+
+    /* CTAs */
+    .hero-ctas {
+      display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+      opacity:0; animation:fadeUp 1s var(--ease-out) 0.6s forwards;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:9px;
+      padding:13px 28px; border-radius:8px;
+      font-family:var(--font); font-size:14px; font-weight:500;
+      text-decoration:none; border:none; cursor:pointer;
+      transition:all 0.35s var(--ease); letter-spacing:0.1px;
+      position:relative; overflow:hidden;
+    }
+    .btn-primary { background:var(--accent); color:var(--bg); }
+    .btn-primary:hover {
+      background:#7ec4e8; transform:translateY(-2px);
+      box-shadow:0 10px 40px rgba(94,174,213,0.35);
+    }
+    .btn-ghost {
+      background:rgba(255,255,255,0.05); color:var(--text-dim);
+      border:1px solid var(--border); backdrop-filter:blur(8px);
+    }
+    .btn-ghost:hover {
+      background:rgba(255,255,255,0.09); color:var(--text);
+      border-color:rgba(94,174,213,0.25);
+    }
+    .btn-arrow { display:inline-block; transition:transform 0.3s var(--ease); }
+    .btn:hover .btn-arrow { transform:translateX(5px); }
+
+    /* ── Contador de nós ativo (canto) ── */
+    .network-info {
+      position:absolute; bottom:32px; right:52px; z-index:10;
+      font-family:var(--mono); font-size:10px; color:var(--text-ghost);
+      letter-spacing:1px; pointer-events:none;
+      opacity:0; animation:fadeIn 1s var(--ease-out) 1.2s forwards;
+    }
+    .network-info span { color:rgba(94,174,213,0.45); }
+
+    /* ── Scroll hint ── */
+    .scroll-hint {
+      position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+      z-index:10; display:flex; flex-direction:column; align-items:center; gap:8px;
+      opacity:0; animation:fadeIn 1s var(--ease-out) 1.4s forwards; pointer-events:none;
+    }
+    .scroll-bar {
+      width:1px; height:44px;
+      background:linear-gradient(to bottom, rgba(94,174,213,0.5), transparent);
+      overflow:hidden; position:relative;
+    }
+    .scroll-bar::after {
+      content:''; position:absolute; top:-100%; left:0; width:100%; height:100%;
+      background:linear-gradient(to bottom, transparent, rgba(94,174,213,0.9), transparent);
+      animation:scrollDrop 2s ease-in-out infinite;
+    }
+    @keyframes scrollDrop { 0%{top:-100%} 100%{top:200%} }
+    .scroll-label {
+      font-family:var(--mono); font-size:9px; letter-spacing:3px;
+      color:var(--text-ghost); text-transform:uppercase;
+    }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    /* ── Next section ── */
+    .next-section {
+      min-height:50vh; display:flex; align-items:center; justify-content:center;
+      background:#07080f; border-top:1px solid rgba(255,255,255,0.04);
+      padding:80px 52px;
+    }
+    .next-inner { text-align:center; max-width:600px; }
+    .next-label { font-family:var(--mono); font-size:11px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+    .next-inner h2 { font-size:clamp(24px,3vw,38px); font-weight:600; letter-spacing:-1.5px; line-height:1.2; margin-bottom:16px; }
+    .next-inner p { font-size:15px; color:var(--text-dim); line-height:1.8; font-weight:300; }
+
+    @media (max-width:768px) {
+      nav { padding:0 20px; }
+      .hero-content { padding:0 20px; }
+      .network-info { display:none; }
+      .nav-right .nav-link { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="test-label">⚠ TEST · hero-particles-test.html</div>
+
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">S</div>
+      <span class="nav-logo-text">SimpleNDT</span>
+    </a>
+    <div class="nav-right">
+      <a href="#" class="nav-link">Serviços</a>
+      <a href="#" class="nav-link">Sobre</a>
+      <a href="#" class="nav-cta">Contato</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+
+    <canvas id="particleCanvas"></canvas>
+    <div class="hero-vignette"></div>
+    <div class="hero-topglow"></div>
+
+    <div class="hero-content" id="heroContent">
+      <div class="hero-eyebrow">
+        <span class="ew-dot"></span>
+        Consultoria END · Nível 3
+        <span class="ew-dot"></span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line">Uma consultoria.</span>
+        <span class="line">Todos os <span class="accent">métodos</span>.</span>
+        <span class="line">Todos os códigos.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Nível 3 certificado ASNT e PCN em VT, PT, MT, UT, PAUT e RT.
+        Procedimentos, qualificações, auditorias e treinamento —
+        ASME, PED e ISO&nbsp;9712.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary">Solicitar Orçamento <span class="btn-arrow">→</span></a>
+        <a href="#next" class="btn btn-ghost">Ver Serviços</a>
+      </div>
+    </div>
+
+    <div class="network-info">
+      <span id="nodeCount">—</span> NÓS · <span id="connCount">—</span> CONEXÕES
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-bar"></div>
+      <span class="scroll-label">scroll</span>
+    </div>
+
+  </section>
+
+  <div class="next-section" id="next">
+    <div class="next-inner">
+      <div class="next-label">Transição de Scroll</div>
+      <h2>Rede de partículas reage ao mouse</h2>
+      <p>Mova o cursor pela hero section para ver as partículas reagirem. Role de volta para ver o efeito completo.</p>
+    </div>
+  </div>
+
+  <script>
+  /* ═══════════════════════════════════════════════════════
+     PARTICLE NETWORK ENGINE — SimpleNDT Hero
+     Canvas 2D puro. ~80 partículas, conexões por proximidade,
+     reação ao mouse. Zero dependências.
+  ═══════════════════════════════════════════════════════ */
+
+  const canvas  = document.getElementById('particleCanvas');
+  const ctx     = canvas.getContext('2d');
+  const content = document.getElementById('heroContent');
+  const hero    = document.getElementById('hero');
+
+  // ── Config ────────────────────────────────────────────
+  const CFG = {
+    count:       85,       // total de partículas
+    maxDist:     145,      // distância máxima para conexão (px)
+    speed:       0.28,     // velocidade base
+    mouseRadius: 130,      // raio de influência do mouse
+    mouseForce:  0.025,    // força de repulsão do mouse
+    baseAlpha:   0.55,     // opacidade base das partículas
+    lineAlpha:   0.18,     // opacidade máxima das linhas
+    // Cores da paleta SimpleNDT
+    colorA:  [94,  174, 213], // accent
+    colorB:  [126, 196, 232], // accent-light
+    colorC:  [40,  90,  160], // azul profundo
+  };
+
+  // ── Estado ────────────────────────────────────────────
+  let W = 0, H = 0;
+  let mouse = { x: -999, y: -999, inside: false };
+  let particles = [];
+  let frameCount = 0;
+
+  // ── Resize ───────────────────────────────────────────
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  window.addEventListener('resize', () => { resize(); });
+  resize();
+
+  // ── Partícula ─────────────────────────────────────────
+  class Particle {
+    constructor() { this.reset(true); }
+
+    reset(initial = false) {
+      this.x  = Math.random() * W;
+      this.y  = initial ? Math.random() * H : (Math.random() > 0.5 ? -5 : H + 5);
+      // Velocidade: direção aleatória lenta
+      const angle = Math.random() * Math.PI * 2;
+      const spd   = CFG.speed * (0.4 + Math.random() * 0.8);
+      this.vx = Math.cos(angle) * spd;
+      this.vy = Math.sin(angle) * spd;
+      // Tamanho: maioria pequena, alguns maiores (nós de ancoragem)
+      this.r   = Math.random() < 0.12 ? 2.5 + Math.random() * 1.5 : 1 + Math.random() * 1.2;
+      // Cor: variação entre os três tons
+      const t  = Math.random();
+      this.col = t < 0.5 ? CFG.colorA : t < 0.8 ? CFG.colorB : CFG.colorC;
+      // Opacidade individual
+      this.alpha  = CFG.baseAlpha * (0.5 + Math.random() * 0.6);
+      this.alphaTarget = this.alpha;
+      // Pulse (nós especiais pulsam)
+      this.pulse  = Math.random() < 0.18;
+      this.phase  = Math.random() * Math.PI * 2;
+      this.phaseSpeed = 0.02 + Math.random() * 0.025;
+    }
+
+    update() {
+      this.phase += this.phaseSpeed;
+
+      // Repulsão do mouse
+      const dx = this.x - mouse.x;
+      const dy = this.y - mouse.y;
+      const d  = Math.sqrt(dx*dx + dy*dy);
+      if (d < CFG.mouseRadius && mouse.inside) {
+        const force = (1 - d / CFG.mouseRadius) * CFG.mouseForce * 4;
+        this.vx += (dx / d) * force;
+        this.vy += (dy / d) * force;
+        this.alphaTarget = Math.min(1, this.alpha * 1.6);
+      } else {
+        this.alphaTarget = this.alpha;
+      }
+
+      // Fricção: limita velocidade máxima
+      const speed = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+      if (speed > CFG.speed * 3) {
+        this.vx *= 0.95;
+        this.vy *= 0.95;
+      }
+
+      // Move
+      this.x += this.vx;
+      this.y += this.vy;
+
+      // Wrap (rebobina nas bordas)
+      const pad = 20;
+      if (this.x < -pad) this.x = W + pad;
+      if (this.x > W + pad) this.x = -pad;
+      if (this.y < -pad) this.y = H + pad;
+      if (this.y > H + pad) this.y = -pad;
+    }
+
+    draw() {
+      const [r,g,b] = this.col;
+
+      // Pulso
+      let radius = this.r;
+      let alpha  = this.alphaTarget;
+      if (this.pulse) {
+        const p  = (Math.sin(this.phase) + 1) / 2; // 0→1
+        radius += p * 1.2;
+        alpha  *= (0.7 + p * 0.5);
+
+        // Halo do nó especial
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, radius + 4 + p * 6, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${0.05 * p})`;
+        ctx.fill();
+      }
+
+      // Partícula
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.fill();
+    }
+  }
+
+  // ── Init partículas ───────────────────────────────────
+  function init() {
+    particles = [];
+    for (let i = 0; i < CFG.count; i++) particles.push(new Particle());
+  }
+  init();
+
+  // ── Desenhar conexões ─────────────────────────────────
+  let connCount = 0;
+  function drawConnections() {
+    connCount = 0;
+    const n = particles.length;
+    for (let i = 0; i < n - 1; i++) {
+      const a = particles[i];
+      for (let j = i + 1; j < n; j++) {
+        const b  = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d > CFG.maxDist) continue;
+
+        // Opacidade cai com a distância
+        const t     = 1 - d / CFG.maxDist;
+        const alpha = CFG.lineAlpha * t * t;   // quadrático — cai suave
+        const [r,g,br] = a.col;
+
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(${r},${g},${br},${alpha})`;
+        ctx.lineWidth   = 0.7;
+        ctx.stroke();
+        connCount++;
+      }
+    }
+  }
+
+  // ── Linha especial: mouse → partículas próximas ───────
+  function drawMouseLines() {
+    if (!mouse.inside) return;
+    particles.forEach(p => {
+      const dx = p.x - mouse.x;
+      const dy = p.y - mouse.y;
+      const d  = Math.sqrt(dx*dx + dy*dy);
+      if (d > CFG.mouseRadius) return;
+      const t     = 1 - d / CFG.mouseRadius;
+      const alpha = 0.25 * t * t;
+      const [r,g,b] = p.col;
+
+      ctx.beginPath();
+      ctx.moveTo(mouse.x, mouse.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth   = 0.6;
+      ctx.stroke();
+    });
+
+    // Cursor — pequeno ponto no centro
+    ctx.beginPath();
+    ctx.arc(mouse.x, mouse.y, 2, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(94,174,213,0.35)`;
+    ctx.fill();
+  }
+
+  // ── Loop principal ────────────────────────────────────
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Fundo ligeiramente gradiente (centro um toque mais claro)
+    const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H)*0.7);
+    grad.addColorStop(0, 'rgba(12,16,28,0.95)');
+    grad.addColorStop(1, 'rgba(6,8,16,1)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    drawConnections();
+    drawMouseLines();
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    frameCount++;
+    // Atualiza contador a cada 30 frames
+    if (frameCount % 30 === 0) {
+      const nc = document.getElementById('nodeCount');
+      const cc = document.getElementById('connCount');
+      if (nc) nc.textContent = particles.length;
+      if (cc) cc.textContent = connCount;
+    }
+
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // ── Mouse ─────────────────────────────────────────────
+  hero.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    mouse.inside = true;
+  });
+  hero.addEventListener('mouseleave', () => { mouse.inside = false; });
+
+  // ── Scroll parallax no conteúdo ───────────────────────
+  let raf = false;
+  function onScroll() {
+    if (!raf) { requestAnimationFrame(doScroll); raf = true; }
+  }
+  function doScroll() {
+    const sy = scrollY;
+    const p  = Math.min(sy / hero.offsetHeight, 1);
+    content.style.transform = `translateY(${sy * 0.07}px)`;
+    content.style.opacity   = Math.max(1 - p * 1.8, 0);
+    raf = false;
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+
+  // ── Resize: reinicializa grid ─────────────────────────
+  window.addEventListener('resize', () => { resize(); init(); });
+
+  </script>
+</body>
+</html>

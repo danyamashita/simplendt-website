@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleNDT — Hero Parallax Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Design Tokens (identicos ao site principal) ─── */
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #101012;
+      --bg-card: #141416;
+      --surface: #1a1a1c;
+      --border: #1f1f23;
+      --border-hover: #2a2a30;
+      --text-primary: #f0f0f5;
+      --text-secondary: #8a8a96;
+      --text-tertiary: #5c5c68;
+      --accent: #5eaed5;
+      --accent-light: #7ec4e8;
+      --accent-dim: rgba(94, 174, 213, 0.08);
+      --accent-glow: rgba(94, 174, 213, 0.22);
+      --accent-subtle: rgba(94, 174, 213, 0.04);
+      --white: #ffffff;
+      --font-main: 'Outfit', -apple-system, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: var(--bg);
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Noise overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    /* ─── DEBUG LABEL ─── */
+    .test-label {
+      position: fixed;
+      top: 12px;
+      right: 16px;
+      z-index: 10000;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent);
+      background: rgba(10,10,10,0.85);
+      border: 1px solid var(--border-hover);
+      border-radius: 4px;
+      padding: 4px 10px;
+      letter-spacing: 1px;
+      pointer-events: none;
+    }
+
+    /* ─── NAV (mesmo do site) ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      border-bottom: 1px solid var(--border);
+      transition: transform 0.4s var(--ease), background 0.4s var(--ease);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 28px; height: 28px;
+      border: 1.5px solid var(--accent);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      color: var(--accent); letter-spacing: -0.5px;
+    }
+    .nav-logo-text { font-weight: 600; font-size: 16px; color: var(--text-primary); letter-spacing: 0.5px; }
+
+    /* ═══════════════════════════════════════════
+       HERO — PARALLAX REDESIGN
+    ═══════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* ── Layer 0: Grid de fundo (movimento lento) ── */
+    .hero-grid {
+      position: absolute;
+      inset: -20%;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.18;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 10%, transparent 70%);
+      will-change: transform;
+      transition: transform 0.1s linear;
+    }
+
+    /* ── Layer 1: Orb central (movimento medio) ── */
+    .hero-orb {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse, rgba(94,174,213,0.12) 0%, rgba(94,174,213,0.04) 40%, transparent 70%);
+      filter: blur(40px);
+      border-radius: 50%;
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    /* ── Layer 2: Orb secundário (movimento rápido, mouse) ── */
+    .hero-orb-secondary {
+      position: absolute;
+      top: 30%; left: 60%;
+      width: 400px; height: 400px;
+      background: radial-gradient(ellipse, rgba(94,174,213,0.07) 0%, transparent 70%);
+      filter: blur(60px);
+      border-radius: 50%;
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    /* ── Layer 3: Partículas flutuantes ── */
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0;
+      will-change: transform, opacity;
+      animation: particleFloat linear infinite;
+    }
+
+    @keyframes particleFloat {
+      0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.2; }
+      100% { opacity: 0; transform: translateY(-100vh) scale(1.2); }
+    }
+
+    /* ── Layer 4: Linhas de varredura (scan lines) ── */
+    .hero-scanline {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .scanline {
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(94,174,213,0.15) 30%, rgba(94,174,213,0.3) 50%, rgba(94,174,213,0.15) 70%, transparent 100%);
+      animation: scanMove 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      opacity: 0;
+    }
+
+    .scanline:nth-child(2) { animation-delay: 3s; }
+    .scanline:nth-child(3) { animation-delay: 6s; }
+
+    @keyframes scanMove {
+      0%   { top: 0%;   opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 0.4; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* ── Layer 5: Elementos geométricos flutuantes ── */
+    .hero-geo {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .geo-element {
+      position: absolute;
+      border: 1px solid rgba(94, 174, 213, 0.12);
+      border-radius: 4px;
+      will-change: transform;
+      animation: geoFloat ease-in-out infinite;
+    }
+
+    .geo-element::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(94, 174, 213, 0.06);
+      border-radius: 2px;
+    }
+
+    .geo-1 { width: 60px; height: 60px; top: 15%; left: 8%; animation-duration: 12s; animation-delay: 0s; }
+    .geo-2 { width: 40px; height: 40px; top: 25%; right: 12%; animation-duration: 15s; animation-delay: -4s; }
+    .geo-3 { width: 80px; height: 80px; bottom: 20%; left: 15%; animation-duration: 18s; animation-delay: -8s; }
+    .geo-4 { width: 30px; height: 30px; bottom: 30%; right: 8%; animation-duration: 10s; animation-delay: -2s; }
+    .geo-5 { width: 50px; height: 50px; top: 50%; left: 5%; animation-duration: 14s; animation-delay: -6s; }
+    .geo-6 { width: 35px; height: 35px; top: 40%; right: 6%; animation-duration: 16s; animation-delay: -10s; }
+
+    @keyframes geoFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33%       { transform: translateY(-18px) rotate(3deg); }
+      66%       { transform: translateY(10px) rotate(-2deg); }
+    }
+
+    /* ── Layer 6: Linhas de conexão (crosshairs) ── */
+    .crosshair {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.18;
+    }
+
+    .crosshair::before,
+    .crosshair::after {
+      content: '';
+      position: absolute;
+      background: var(--accent);
+    }
+
+    .crosshair::before { width: 1px; height: 20px; top: -10px; left: 50%; transform: translateX(-50%); }
+    .crosshair::after  { height: 1px; width: 20px; left: -10px; top: 50%; transform: translateY(-50%); }
+
+    .ch-1 { top: 18%; left: 20%; }
+    .ch-2 { top: 65%; right: 22%; }
+    .ch-3 { bottom: 15%; left: 40%; }
+
+    /* ── Dados flutuantes (estética de painel técnico) ── */
+    .data-chip {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 10px;
+      background: rgba(10,10,10,0.6);
+      letter-spacing: 0.5px;
+      pointer-events: none;
+      will-change: transform, opacity;
+      animation: dataChipFloat ease-in-out infinite;
+      backdrop-filter: blur(4px);
+    }
+
+    .data-chip .chip-dot {
+      display: inline-block;
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-right: 5px;
+      vertical-align: middle;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .dc-1 { top: 20%; left: 6%; animation-duration: 9s; animation-delay: 0s; }
+    .dc-2 { top: 35%; right: 5%; animation-duration: 11s; animation-delay: -3s; }
+    .dc-3 { bottom: 28%; left: 5%; animation-duration: 13s; animation-delay: -6s; }
+    .dc-4 { bottom: 18%; right: 7%; animation-duration: 10s; animation-delay: -1s; }
+
+    @keyframes dataChipFloat {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    /* ── Conteúdo hero ── */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 880px;
+      will-change: transform;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+      margin-bottom: 40px;
+      animation: fadeUp 0.9s var(--ease-out) both;
+      background: var(--accent-subtle);
+    }
+
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6.5vw, 78px);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -2.5px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.9s var(--ease-out) 0.12s both;
+    }
+
+    .hero h1 .accent { color: var(--accent-light); }
+
+    .hero-sub {
+      font-size: clamp(16px, 1.8vw, 19px);
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto 48px;
+      line-height: 1.75;
+      font-weight: 300;
+      animation: fadeUp 0.9s var(--ease-out) 0.24s both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.9s var(--ease-out) 0.36s both;
+    }
+
+    /* ── Métricas abaixo dos CTAs ── */
+    .hero-metrics {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.9s var(--ease-out) 0.48s both;
+      position: relative;
+    }
+
+    .hero-metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-family: var(--font-mono);
+      font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-value .metric-accent { color: var(--accent); }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.5px;
+      font-weight: 400;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    /* Separador entre métricas */
+    .metric-sep {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+      margin: 4px 0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.35s var(--ease);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary { background: var(--accent); color: var(--bg); }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      border-color: var(--text-tertiary);
+      background: var(--surface);
+      transform: translateY(-2px);
+    }
+
+    .btn-arrow { transition: transform 0.3s var(--ease); }
+    .btn:hover .btn-arrow { transform: translateX(4px); }
+
+    /* ─── SCROLL INDICATOR ─── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s var(--ease-out) 1.2s both;
+      pointer-events: none;
+    }
+
+    .scroll-indicator span {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); transform-origin: top; }
+      50%       { opacity: 1;   transform: scaleY(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ─── SECTION SEGUINTE (para testar scroll parallax) ─── */
+    .next-section {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+      padding: 80px 48px;
+    }
+
+    .next-section-inner {
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .next-section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .next-section h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 600;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .next-section p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ─── CURSOR GLOW (opcional, desktop) ─── */
+    .cursor-glow {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(94,174,213,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+      transition: left 0.15s ease, top 0.15s ease;
+      will-change: left, top;
+    }
+
+    /* ─── RESPONSIVO ─── */
+    @media (max-width: 768px) {
+      .hero { padding: 100px 24px 60px; }
+      nav { padding: 0 24px; }
+      .hero-metrics { gap: 24px; padding-top: 32px; margin-top: 40px; flex-wrap: wrap; }
+      .data-chip { display: none; }
+      .geo-element { display: none; }
+      .cursor-glow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Debug label -->
+  <div class="test-label">⚠ TEST · hero-parallax-test.html</div>
+
+  <!-- Cursor glow (desktop only) -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- Nav -->
+  <nav id="mainNav">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">S</div>
+      <span class="nav-logo-text">SimpleNDT</span>
+    </a>
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary);letter-spacing:1px;">PARALLAX PREVIEW</span>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+
+    <!-- L0: Grid parallax (mais lento) -->
+    <div class="hero-grid" id="heroGrid"></div>
+
+    <!-- L1: Orb principal -->
+    <div class="hero-orb" id="heroOrb"></div>
+
+    <!-- L2: Orb secundário (mouse) -->
+    <div class="hero-orb-secondary" id="heroOrbSecondary"></div>
+
+    <!-- L3: Partículas -->
+    <div class="hero-particles" id="heroParticles"></div>
+
+    <!-- L4: Scan lines -->
+    <div class="hero-scanline">
+      <div class="scanline"></div>
+      <div class="scanline"></div>
+      <div class="scanline"></div>
+    </div>
+
+    <!-- L5: Elementos geométricos -->
+    <div class="hero-geo">
+      <div class="geo-element geo-1"></div>
+      <div class="geo-element geo-2"></div>
+      <div class="geo-element geo-3"></div>
+      <div class="geo-element geo-4"></div>
+      <div class="geo-element geo-5"></div>
+      <div class="geo-element geo-6"></div>
+    </div>
+
+    <!-- Crosshairs -->
+    <div class="crosshair ch-1"></div>
+    <div class="crosshair ch-2"></div>
+    <div class="crosshair ch-3"></div>
+
+    <!-- Data chips -->
+    <div class="data-chip dc-1"><span class="chip-dot"></span>ASNT·LEVEL·III</div>
+    <div class="data-chip dc-2"><span class="chip-dot"></span>ISO·9712·PCN</div>
+    <div class="data-chip dc-3"><span class="chip-dot"></span>ASME·SEC·V</div>
+    <div class="data-chip dc-4"><span class="chip-dot"></span>PED·RTPO</div>
+
+    <!-- Conteúdo principal -->
+    <div class="hero-content" id="heroContent">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        ASNT · ASME · PED/RTPO · ISO 9712
+      </div>
+
+      <h1>Uma consultoria.<br>Todos os <span class="accent">métodos</span>.<br>Todos os códigos.</h1>
+
+      <p class="hero-sub">
+        Nível 3 certificado ASNT e PCN em VT, PT, MT, UT, PAUT e RT.
+        Procedimentos, qualificações, auditorias e treinamento em conformidade
+        com ASME, PED e ISO 9712. Simples assim.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary">Solicitar Orçamento <span class="btn-arrow">→</span></a>
+        <a href="#next" class="btn btn-secondary">Ver Serviços</a>
+      </div>
+
+      <!-- Métricas animadas -->
+      <div class="hero-metrics">
+        <div class="hero-metric">
+          <div class="metric-value"><span class="counter" data-target="15" data-suffix="+">0</span><span class="metric-accent">+</span></div>
+          <div class="metric-label">Anos de Exp.</div>
+        </div>
+        <div class="metric-sep"></div>
+        <div class="hero-metric">
+          <div class="metric-value"><span class="counter" data-target="6" data-suffix="">0</span><span class="metric-accent"> métodos</span></div>
+          <div class="metric-label">END certificados</div>
+        </div>
+        <div class="metric-sep"></div>
+        <div class="hero-metric">
+          <div class="metric-value"><span class="counter" data-target="4" data-suffix="">0</span><span class="metric-accent"> normas</span></div>
+          <div class="metric-label">Int'l standards</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <span>scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+
+  </section>
+
+  <!-- Seção seguinte para testar scroll -->
+  <div class="next-section" id="next">
+    <div class="next-section-inner">
+      <div class="next-section-label">VALIDAÇÃO DE SCROLL</div>
+      <h2>O parallax funciona ao rolar a página</h2>
+      <p>Esta seção existe apenas para validar que os efeitos de parallax e transição ao scroll estão corretos. Role de volta ao topo para ver a hero section completa.</p>
+    </div>
+  </div>
+
+  <script>
+    /* ══════════════════════════════════════════════
+       PARALLAX ENGINE — SimpleNDT Hero Test
+       Puro vanilla JS, sem dependências externas
+    ══════════════════════════════════════════════ */
+
+    const hero        = document.getElementById('hero');
+    const heroGrid    = document.getElementById('heroGrid');
+    const heroOrb     = document.getElementById('heroOrb');
+    const heroOrbSec  = document.getElementById('heroOrbSecondary');
+    const heroContent = document.getElementById('heroContent');
+    const cursorGlow  = document.getElementById('cursorGlow');
+    const nav         = document.getElementById('mainNav');
+
+    // ── 1. Parallax ao scroll ──────────────────
+    let scrollY = 0;
+    let lastScrollY = 0;
+    let ticking = false;
+
+    function onScroll() {
+      scrollY = window.scrollY;
+      if (!ticking) {
+        requestAnimationFrame(applyScrollParallax);
+        ticking = true;
+      }
+    }
+
+    function applyScrollParallax() {
+      const heroH = hero.offsetHeight;
+      const progress = Math.min(scrollY / heroH, 1); // 0 → 1 conforme rola
+
+      // Grid: desce mais devagar (parallax profundo)
+      heroGrid.style.transform = `translateY(${scrollY * 0.25}px)`;
+
+      // Orb: sobe ligeiramente mais rápido
+      heroOrb.style.transform = `translate(-50%, calc(-50% + ${scrollY * -0.15}px))`;
+      heroOrb.style.opacity = 1 - progress * 1.2;
+
+      // Orb secundário: sobe mais rápido + fade
+      heroOrbSec.style.transform = `translateY(${scrollY * -0.3}px)`;
+      heroOrbSec.style.opacity = 1 - progress * 1.5;
+
+      // Conteúdo: sobe suavemente + fade out
+      heroContent.style.transform = `translateY(${scrollY * 0.08}px)`;
+      heroContent.style.opacity = 1 - progress * 1.4;
+
+      // Elementos geométricos: velocidades diferentes
+      document.querySelectorAll('.geo-element').forEach((el, i) => {
+        const speed = 0.1 + i * 0.04;
+        el.style.transform += ` translateY(${scrollY * speed * (i % 2 === 0 ? 1 : -1)}px)`;
+      });
+
+      // Nav: esconde ao rolar, mostra ao subir
+      if (scrollY > lastScrollY && scrollY > 80) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      lastScrollY = scrollY;
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ── 2. Parallax ao mouse ───────────────────
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let rafMouse = null;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function animateMouse() {
+      currentX = lerp(currentX, mouseX, 0.06);
+      currentY = lerp(currentY, mouseY, 0.06);
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Normaliza: -1 → +1 a partir do centro
+      const nx = (currentX / vw - 0.5) * 2;
+      const ny = (currentY / vh - 0.5) * 2;
+
+      // Grid: movimento muito sutil
+      if (!scrollY) {
+        heroGrid.style.transform = `translate(${nx * 12}px, ${ny * 8}px)`;
+      }
+
+      // Orb principal: segue o mouse suavemente
+      heroOrb.style.transform = `translate(calc(-50% + ${nx * 40}px), calc(-50% + ${ny * 30}px))`;
+
+      // Orb secundário: velocidade maior, efeito de profundidade
+      heroOrbSec.style.transform = `translate(${nx * -60}px, ${ny * -40}px)`;
+
+      // Conteúdo: movimento mínimo (profundidade)
+      if (!scrollY) {
+        heroContent.style.transform = `translate(${nx * 4}px, ${ny * 3}px)`;
+      }
+
+      // Cursor glow: segue o cursor exato
+      cursorGlow.style.left = currentX + 'px';
+      cursorGlow.style.top  = currentY + 'px';
+
+      // Geo elements: parallax individual
+      document.querySelectorAll('.geo-element').forEach((el, i) => {
+        const speed = 0.4 + i * 0.15;
+        const dir   = i % 2 === 0 ? 1 : -1;
+        el.style.transform = `translate(${nx * speed * dir * 20}px, ${ny * speed * 15}px) rotate(${nx * 3}deg)`;
+      });
+
+      // Data chips: parallax leve
+      document.querySelectorAll('.data-chip').forEach((el, i) => {
+        const speed = 0.2 + i * 0.1;
+        el.style.transform = `translateY(${ny * speed * 10}px) translateX(${nx * speed * 8}px)`;
+      });
+
+      rafMouse = requestAnimationFrame(animateMouse);
+    }
+
+    if (!isMobile) {
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      animateMouse();
+    }
+
+    // ── 3. Geração de partículas ───────────────
+    const particlesContainer = document.getElementById('heroParticles');
+    const PARTICLE_COUNT = 28;
+
+    function createParticle() {
+      const el = document.createElement('div');
+      el.classList.add('particle');
+
+      const size   = Math.random() * 2.5 + 0.5; // 0.5–3px
+      const left   = Math.random() * 100;
+      const delay  = Math.random() * 12;
+      const dur    = 10 + Math.random() * 16;
+      const opBase = 0.3 + Math.random() * 0.5;
+
+      el.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${left}%;
+        bottom: -10px;
+        animation-duration: ${dur}s;
+        animation-delay: -${delay}s;
+        opacity: ${opBase};
+      `;
+
+      particlesContainer.appendChild(el);
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) createParticle();
+
+    // ── 4. Counter animado ────────────────────
+    const counters = document.querySelectorAll('.counter');
+
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const duration = 1800;
+      const start = performance.now();
+
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    // Inicia contadores quando o hero entra na viewport
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          counters.forEach(animateCounter);
+          counterObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    counterObserver.observe(hero);
+
+    // ── 5. Fade-in suave dos geo ao iniciar ───
+    document.querySelectorAll('.geo-element, .data-chip, .crosshair').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transition = 'opacity 1s ease';
+      setTimeout(() => { el.style.opacity = ''; }, 600 + i * 120);
+    });
+
+    // ── 6. Tilt sutil no hero-badge (hover) ───
+    const badge = document.querySelector('.hero-badge');
+    if (badge) {
+      badge.addEventListener('mouseenter', () => {
+        badge.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+        badge.style.transform = 'scale(1.04)';
+        badge.style.boxShadow = '0 0 20px rgba(94,174,213,0.15)';
+      });
+      badge.addEventListener('mouseleave', () => {
+        badge.style.transform = '';
+        badge.style.boxShadow = '';
+      });
+    }
+
+  </script>
+</body>
+</html>

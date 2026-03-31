@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleNDT — Verificação de Certificado</title>
+  <style>
+    :root {
+      --bg: #0a0e14;
+      --surface: #12171e;
+      --surface-2: #1a2029;
+      --text: #f0f0f5;
+      --text-dim: #8a94a6;
+      --accent: #5eaed5;
+      --green: #059669;
+      --green-bg: rgba(5, 150, 105, 0.1);
+      --yellow: #D97706;
+      --yellow-bg: rgba(217, 119, 6, 0.1);
+      --red: #DC2626;
+      --red-bg: rgba(220, 38, 38, 0.1);
+      --border: rgba(255,255,255,0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      width: 100%;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header a { text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .brand { font-size: 20px; font-weight: 700; color: var(--text); }
+    .brand span { color: var(--accent); }
+    .header-sub { font-size: 13px; color: var(--text-dim); margin-left: 12px; }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 40px 24px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-bottom: 32px;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 60px 0;
+      color: var(--text-dim);
+    }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Error */
+    .error-box {
+      background: var(--red-bg);
+      border: 1px solid var(--red);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .error-box .icon { font-size: 36px; margin-bottom: 12px; }
+    .error-box h3 { color: var(--red); margin-bottom: 8px; }
+    .error-box p { color: var(--text-dim); font-size: 14px; }
+
+    /* Result card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-status {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .card-status.ativo { background: var(--green-bg); color: var(--green); }
+    .card-status.expirado { background: var(--yellow-bg); color: var(--yellow); }
+    .card-status.revogado { background: var(--red-bg); color: var(--red); }
+    .card-status .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .card-body { padding: 24px; }
+
+    .field {
+      margin-bottom: 16px;
+    }
+    .field-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .field-value {
+      font-size: 16px;
+      color: var(--text);
+    }
+    .field-value.highlight {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .methods {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .method-tag {
+      background: rgba(94, 174, 213, 0.1);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    .card-footer {
+      padding: 16px 24px;
+      background: var(--surface-2);
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .footer {
+      margin-top: auto;
+      padding: 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="https://simplendt.com.br">
+      <span class="brand">Simple<span>NDT</span></span>
+    </a>
+    <span class="header-sub">Verificação de Certificado</span>
+  </div>
+
+  <div class="container">
+    <h1 class="title">Verificação de Certificado</h1>
+    <p class="subtitle">Confirme a autenticidade de um certificado de qualificação SNT-TC-1A emitido pela SimpleNDT.</p>
+
+    <div id="content">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Verificando certificado...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>SimpleNDT Engenharia Ltda &mdash; <a href="https://simplendt.com.br">simplendt.com.br</a></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    // Anon key — segura para uso público (RLS limita acesso)
+    const SUPABASE_URL = 'https://zocteouwoaufekghxtnf.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvY3Rlb3V3b2F1ZmVrZ2h4dG5mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1Mjk0NDIsImV4cCI6MjA5MDEwNTQ0Mn0.h4CbX7_Pm2-Vgr4ogllR7eZIypdYpyxmYQ6je89DpQ4';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const STATUS_LABELS = {
+      ativo: { text: 'Certificado Válido', icon: '✓' },
+      expirado: { text: 'Certificado Expirado', icon: '⚠' },
+      revogado: { text: 'Certificado Revogado', icon: '✕' },
+    };
+
+    async function verificar() {
+      const content = document.getElementById('content');
+      const pathParts = window.location.pathname.split('/');
+      const code = pathParts[pathParts.length - 1];
+
+      // Validar formato: alfanumérico (token) ou XX-YYYYYY (número legado)
+      const validCode = /^[a-zA-Z0-9\-]{4,20}$/;
+      if (!code || !validCode.test(code)) {
+        content.innerHTML = `
+          <div class="error-box">
+            <div class="icon">🔍</div>
+            <h3>Código não encontrado</h3>
+            <p>O link de verificação parece estar incompleto ou inválido. Verifique o QR code do certificado.</p>
+          </div>`;
+        return;
+      }
+
+      try {
+        // Buscar certificado por token ou número via RPC (SECURITY DEFINER)
+        const { data, error } = await supabase.rpc('verificar_certificado', { p_codigo: code });
+        if (error) throw error;
+        if (!data || data.length === 0) {
+          content.innerHTML = `
+            <div class="error-box">
+              <div class="icon">❌</div>
+              <h3>Certificado não encontrado</h3>
+              <p>Nenhum certificado encontrado com este código de verificação. O certificado pode não ter sido emitido pela SimpleNDT.</p>
+            </div>`;
+          return;
+        }
+
+        const cert = data[0];
+        const certNumero = cert.numero || code;
+        const statusInfo = STATUS_LABELS[cert.status] || STATUS_LABELS.ativo;
+        const metodos = (cert.metodos || []).map(m => `<span class="method-tag">${m}</span>`).join('');
+
+        content.innerHTML = `
+          <div class="card">
+            <div class="card-status ${cert.status}">
+              <span class="dot"></span>
+              ${statusInfo.text}
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <div class="field-label">Nº do Certificado / Certificate Number</div>
+                <div class="field-value highlight">${certNumero}</div>
+              </div>
+
+              <div class="field">
+                <div class="field-label">Profissional / Professional</div>
+                <div class="field-value" style="font-size:20px; font-weight:600">${cert.nome_profissional}</div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <div class="field-label">Empregador / Employer</div>
+                  <div class="field-value">${cert.empregador || '—'}</div>
+                </div>
+                <div class="field">
+                  <div class="field-label">Setor / Sector</div>
+                  <div class="field-value">${cert.setor || '—'}</div>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <div class="field-label">Método(s) / Method(s)</div>
+                  <div class="methods">${metodos}</div>
+                </div>
+                <div class="field">
+                  <div class="field-label">Nível / Level</div>
+                  <div class="field-value" style="font-weight:600; color:var(--accent)">${cert.nivel}</div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="field-row">
+                <div class="field">
+                  <div class="field-label">Data de Certificação / Certification Date</div>
+                  <div class="field-value">${cert.data_certificacao || '—'}</div>
+                </div>
+                <div class="field">
+                  <div class="field-label">Validade / Valid Until</div>
+                  <div class="field-value">${cert.data_validade || '—'}</div>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field-label">Emitido por / Issued by</div>
+                <div class="field-value">${cert.emissor_nome || 'SimpleNDT Engenharia Ltda'}</div>
+              </div>
+            </div>
+            <div class="card-footer">
+              Norma de referência: SNT-TC-1A (2020 Edition) &bull; Emitido por SimpleNDT Engenharia Ltda
+            </div>
+          </div>`;
+      } catch (err) {
+        content.innerHTML = `
+          <div class="error-box">
+            <div class="icon">⚠️</div>
+            <h3>Erro na verificação</h3>
+            <p>Não foi possível verificar o certificado neste momento. Tente novamente mais tarde.</p>
+          </div>`;
+      }
+    }
+
+    verificar();
+  </script>
+</body>
+</html>

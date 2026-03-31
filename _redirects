@@ -1,2 +1,5 @@
 # Redirect HTTP non-www → HTTPS www (eliminates double-hop)
 http://simplendt.com.br/*  https://www.simplendt.com.br/:splat  301!
+
+# Verificação de certificados — SPA routing
+/verificar/*  /verificar/index.html  200

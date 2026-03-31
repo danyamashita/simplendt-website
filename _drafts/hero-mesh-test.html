@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleNDT — Mesh Hero Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:           #06070d;
+      --text-primary: #eeeef5;
+      --text-dim:     rgba(238,238,245,0.55);
+      --text-ghost:   rgba(238,238,245,0.25);
+      --accent:       #5eaed5;
+      --accent-light: #7ec4e8;
+      --border:       rgba(255,255,255,0.07);
+      --border-soft:  rgba(255,255,255,0.04);
+      --font-main:    'Outfit', -apple-system, sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --ease:         cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    ::selection { background: var(--accent); color: #06070d; }
+
+    /* ── debug ── */
+    .test-label {
+      position: fixed; top: 12px; right: 16px; z-index: 10000;
+      font-family: var(--font-mono); font-size: 10px; color: var(--accent);
+      background: rgba(6,7,13,0.9); border: 1px solid rgba(94,174,213,0.2);
+      border-radius: 4px; padding: 4px 10px; letter-spacing: 1px; pointer-events: none;
+    }
+
+    /* ════════════════════════════════════════
+       NAV
+    ════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 28px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: transparent;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 30px; height: 30px;
+      border: 1.5px solid rgba(94,174,213,0.6);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      color: var(--accent);
+    }
+    .nav-logo-text {
+      font-weight: 600; font-size: 15px;
+      color: rgba(238,238,245,0.9); letter-spacing: 0.3px;
+    }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 32px;
+    }
+    .nav-link {
+      font-size: 13px; color: var(--text-dim); text-decoration: none;
+      transition: color 0.3s; letter-spacing: 0.2px;
+    }
+    .nav-link:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      font-size: 13px; font-weight: 500;
+      color: var(--bg); background: var(--accent);
+      padding: 9px 22px; border-radius: 6px;
+      text-decoration: none; letter-spacing: 0.2px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ════════════════════════════════════════
+       HERO — MESH GRADIENT
+    ════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;          /* texto cola na base */
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* ── Camada de mesh gradient (CSS puro) ─────────────────
+       Vários blobs com mix-blend-mode para criar o efeito de
+       malha pintada. Cada @keyframes tem uma trajetória única.
+    ──────────────────────────────────────────────────────── */
+    .mesh {
+      position: absolute;
+      inset: -30%;       /* maior que a viewport = nunca mostra borda branca */
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .mesh-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+
+    /* Blob A — azul médio, canto sup-esq */
+    .mb-a {
+      width: 75vw; height: 75vw; max-width: 900px; max-height: 900px;
+      top: -5%; left: -10%;
+      background: radial-gradient(ellipse, rgba(30, 90, 160, 0.75) 0%, transparent 65%);
+      animation: meshA 20s ease-in-out infinite;
+    }
+    /* Blob B — azul-ciano, canto sup-dir */
+    .mb-b {
+      width: 55vw; height: 55vw; max-width: 700px; max-height: 700px;
+      top: -15%; right: -8%;
+      background: radial-gradient(ellipse, rgba(20, 110, 180, 0.6) 0%, transparent 65%);
+      animation: meshB 25s ease-in-out infinite;
+      animation-delay: -8s;
+    }
+    /* Blob C — azul profundo, centro */
+    .mb-c {
+      width: 70vw; height: 70vw; max-width: 800px; max-height: 800px;
+      top: 10%; left: 15%;
+      background: radial-gradient(ellipse, rgba(15, 55, 120, 0.55) 0%, transparent 60%);
+      animation: meshC 18s ease-in-out infinite;
+      animation-delay: -5s;
+    }
+    /* Blob D — teal escuro, centro-baixo */
+    .mb-d {
+      width: 60vw; height: 60vw; max-width: 750px; max-height: 750px;
+      bottom: -10%; right: 5%;
+      background: radial-gradient(ellipse, rgba(20, 90, 130, 0.5) 0%, transparent 65%);
+      animation: meshD 22s ease-in-out infinite;
+      animation-delay: -12s;
+    }
+    /* Blob E — azul claro pontual, realce */
+    .mb-e {
+      width: 30vw; height: 30vw; max-width: 400px; max-height: 400px;
+      top: 30%; left: 40%;
+      background: radial-gradient(ellipse, rgba(94,174,213,0.22) 0%, transparent 65%);
+      animation: meshE 15s ease-in-out infinite;
+      animation-delay: -3s;
+      filter: blur(60px);
+    }
+    /* Blob F — indigo muito escuro, base inteira */
+    .mb-f {
+      width: 120%; height: 50%;
+      bottom: -5%; left: -10%;
+      background: radial-gradient(ellipse, rgba(8, 20, 55, 0.85) 0%, transparent 70%);
+      filter: blur(50px);
+      animation: meshF 30s ease-in-out infinite;
+    }
+
+    @keyframes meshA {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(6%, 8%) scale(1.1); }
+      66%      { transform: translate(-4%, 4%) scale(0.95); }
+    }
+    @keyframes meshB {
+      0%,100% { transform: translate(0,0) scale(1); }
+      40%      { transform: translate(-8%, 6%) scale(1.08); }
+      70%      { transform: translate(4%, -3%) scale(1.04); }
+    }
+    @keyframes meshC {
+      0%,100% { transform: translate(0,0) rotate(0deg); }
+      50%      { transform: translate(5%, 5%) rotate(5deg) scale(1.06); }
+    }
+    @keyframes meshD {
+      0%,100% { transform: translate(0,0) scale(1); }
+      45%      { transform: translate(-6%, -5%) scale(1.1); }
+    }
+    @keyframes meshE {
+      0%,100% { transform: translate(0,0) scale(1); opacity: 0.7; }
+      50%      { transform: translate(-8%, 6%) scale(1.3); opacity: 1; }
+    }
+    @keyframes meshF {
+      0%,100% { transform: scaleX(1); }
+      50%      { transform: scaleX(1.04); }
+    }
+
+    /* ── Ruído (grain) sobre o mesh — dá textura, reduz banding ── */
+    .hero-grain {
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 3;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── Vinheta de profundidade ── */
+    .hero-vignette {
+      position: absolute; inset: 0; z-index: 4;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 100% 60% at 50% 100%, rgba(6,7,13,0.95) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 0% 50%, rgba(6,7,13,0.5) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(6,7,13,0.4) 0%, transparent 50%);
+    }
+
+    /* ── Conteúdo ── */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      padding: 0 52px 72px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Linha superior de meta info ── */
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeIn 1s var(--ease-out) 0.3s forwards;
+    }
+
+    .meta-tag {
+      font-family: var(--font-mono); font-size: 10px;
+      color: rgba(94,174,213,0.7); letter-spacing: 2px; text-transform: uppercase;
+    }
+    .meta-sep { flex: 1; height: 1px; background: var(--border); margin: 0 20px; }
+    .meta-count {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--text-ghost); letter-spacing: 1px;
+    }
+
+    /* ── Título — ocupa quase toda a largura ── */
+    .hero-title {
+      font-size: clamp(52px, 8.5vw, 128px);
+      font-weight: 700;
+      line-height: 0.94;
+      letter-spacing: -4px;
+      margin-bottom: 0;
+      opacity: 0;
+      animation: slideUp 1s var(--ease-out) 0.1s forwards;
+    }
+
+    .hero-title .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    /* Linha 2 indentada — efeito editorial */
+    .hero-title .line-2 {
+      padding-left: clamp(40px, 6vw, 100px);
+      color: var(--text-dim);
+    }
+
+    /* "métodos" em azul claro translúcido */
+    .hero-title .accent-word {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(126, 196, 232, 0.7);
+    }
+
+    /* ── Bloco inferior: subtítulo + ctas ── */
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeIn 1s var(--ease-out) 0.55s forwards;
+      flex-wrap: wrap;
+    }
+
+    .hero-sub {
+      font-size: clamp(14px, 1.5vw, 17px);
+      color: var(--text-dim);
+      max-width: 420px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 8px;
+      font-family: var(--font-main); font-size: 14px; font-weight: 500;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.35s var(--ease); letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent); color: #06070d;
+      box-shadow: 0 0 0 0 rgba(94,174,213,0);
+    }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(94,174,213,0.4);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text-primary);
+      border-color: rgba(94,174,213,0.25);
+    }
+
+    .btn-arrow { display: inline-block; transition: transform 0.3s var(--ease); }
+    .btn:hover .btn-arrow { transform: translateX(5px); }
+
+    /* ── Creds flutuantes (canto direito) ── */
+    .hero-creds-float {
+      position: absolute;
+      right: 52px; top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      display: flex; flex-direction: column; gap: 10px;
+      opacity: 0;
+      animation: fadeIn 1.2s var(--ease-out) 0.8s forwards;
+    }
+
+    .cred-pill {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      color: rgba(94,174,213,0.65);
+      border: 1px solid rgba(94,174,213,0.15);
+      border-radius: 3px; padding: 4px 9px;
+      letter-spacing: 1px; text-align: center;
+      background: rgba(6,7,13,0.5);
+      backdrop-filter: blur(6px);
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .cred-pill:hover {
+      color: var(--accent);
+      border-color: rgba(94,174,213,0.4);
+      background: rgba(94,174,213,0.06);
+    }
+
+    /* ── Scroll line ── */
+    .scroll-line-wrap {
+      position: absolute;
+      left: 52px; bottom: 72px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 1s var(--ease-out) 1.2s forwards;
+    }
+    .scroll-line-label {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 3px;
+      color: var(--text-ghost); text-transform: uppercase;
+      writing-mode: vertical-rl; text-orientation: mixed;
+    }
+    .scroll-line-bar {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, rgba(94,174,213,0.5), transparent);
+      position: relative; overflow: hidden;
+    }
+    .scroll-line-bar::after {
+      content: '';
+      position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(94,174,213,0.9), transparent);
+      animation: scanDrop 2s ease-in-out infinite;
+    }
+    @keyframes scanDrop {
+      0% { top: -100%; } 100% { top: 200%; }
+    }
+
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ════════════════════════════════════════
+       PRÓXIMA SEÇÃO
+    ════════════════════════════════════════ */
+    .next-section {
+      min-height: 50vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #07080f;
+      padding: 80px 52px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .next-inner { text-align: center; max-width: 600px; }
+    .next-label {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .next-inner h2 {
+      font-size: clamp(26px, 3vw, 40px); font-weight: 600;
+      letter-spacing: -1.5px; line-height: 1.2; margin-bottom: 16px;
+    }
+    .next-inner p { font-size: 15px; color: var(--text-dim); line-height: 1.8; font-weight: 300; }
+
+    /* ════════════════════════════════════════
+       RESPONSIVO
+    ════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      nav, .hero-content { padding-left: 24px; padding-right: 24px; }
+      .hero-creds-float { display: none; }
+      .scroll-line-wrap { left: 24px; }
+      .hero-title { letter-spacing: -2.5px; }
+      .hero-title .line-2 { padding-left: 24px; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .hero-actions { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="test-label">⚠ TEST · hero-mesh-test.html</div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">S</div>
+      <span class="nav-logo-text">SimpleNDT</span>
+    </a>
+    <div class="nav-right">
+      <a href="#" class="nav-link">Serviços</a>
+      <a href="#" class="nav-link">Sobre</a>
+      <a href="#" class="nav-cta">Contato</a>
+    </div>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section class="hero" id="hero">
+
+    <!-- Mesh gradient CSS -->
+    <div class="mesh" id="meshLayer">
+      <div class="mesh-blob mb-a"></div>
+      <div class="mesh-blob mb-b"></div>
+      <div class="mesh-blob mb-c"></div>
+      <div class="mesh-blob mb-d"></div>
+      <div class="mesh-blob mb-e"></div>
+      <div class="mesh-blob mb-f"></div>
+    </div>
+
+    <!-- Grain / noise -->
+    <div class="hero-grain"></div>
+
+    <!-- Vinheta -->
+    <div class="hero-vignette"></div>
+
+    <!-- Credenciais flutuantes (lado direito) -->
+    <div class="hero-creds-float">
+      <div class="cred-pill">ASNT III</div>
+      <div class="cred-pill">ISO 9712</div>
+      <div class="cred-pill">ASME V</div>
+      <div class="cred-pill">PED</div>
+      <div class="cred-pill">PAUT</div>
+    </div>
+
+    <!-- Scroll indicator esquerdo -->
+    <div class="scroll-line-wrap">
+      <div class="scroll-line-bar"></div>
+      <span class="scroll-line-label">scroll</span>
+    </div>
+
+    <!-- Conteúdo principal (base) -->
+    <div class="hero-content">
+
+      <div class="hero-meta">
+        <span class="meta-tag">Consultoria END · Nível 3 · São Paulo</span>
+        <div class="meta-sep"></div>
+        <span class="meta-count">ASNT · PCN · ASME · ISO 9712</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line line-1">Uma consultoria.</span>
+        <span class="line line-2">Todos os <span class="accent-word">métodos</span>.</span>
+        <span class="line line-3">Todos os códigos.</span>
+      </h1>
+
+      <div class="hero-bottom">
+        <p class="hero-sub">
+          Nível 3 certificado ASNT e PCN em VT, PT, MT, UT, PAUT e RT.
+          Procedimentos, qualificações, auditorias e treinamento —
+          ASME, PED e ISO&nbsp;9712.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">Solicitar Orçamento <span class="btn-arrow">→</span></a>
+          <a href="#next" class="btn btn-ghost">Ver Serviços</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="next-section" id="next">
+    <div class="next-inner">
+      <div class="next-label">Transição de Scroll</div>
+      <h2>Mesh gradient + parallax ao rolar</h2>
+      <p>Role de volta ao topo para ver o efeito de mesh gradient na hero section.</p>
+    </div>
+  </div>
+
+  <script>
+    /* ══════════════════════════════════════════
+       JS mínimo:
+       1. Mouse tilt no mesh (desktop)
+       2. Parallax leve ao scroll
+    ══════════════════════════════════════════ */
+
+    const hero      = document.getElementById('hero');
+    const mesh      = document.getElementById('meshLayer');
+    const isMobile  = matchMedia('(max-width: 900px)').matches;
+
+    // ── 1. Mouse parallax no mesh ────────────
+    if (!isMobile) {
+      let mx = 0, my = 0, cx = 0, cy = 0;
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      ;(function tick() {
+        cx = lerp(cx, mx, 0.035);
+        cy = lerp(cy, my, 0.035);
+
+        const nx = (cx / innerWidth  - 0.5);  // -0.5 → +0.5
+        const ny = (cy / innerHeight - 0.5);
+
+        /* Translação suave do mesh inteiro em resposta ao mouse.
+           O mesh é 160% do tamanho da viewport, então se desloca
+           sem revelar borda. */
+        mesh.style.transform = `translate(${nx * 30}px, ${ny * 22}px)`;
+
+        requestAnimationFrame(tick);
+      })();
+
+      addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    }
+
+    // ── 2. Scroll parallax ────────────────────
+    const content = hero.querySelector('.hero-content');
+    const title   = hero.querySelector('.hero-title');
+    let raf = false;
+
+    function onScroll() {
+      if (!raf) { requestAnimationFrame(applyScroll); raf = true; }
+    }
+
+    function applyScroll() {
+      const sy = scrollY;
+      const heroH = hero.offsetHeight;
+      const p = Math.min(sy / heroH, 1);
+
+      /* Mesh sobe mais devagar que o scroll → sensação de profundidade */
+      if (!isMobile) {
+        mesh.style.transform = `translate(${
+          parseFloat(mesh.style.transform.match(/translate\(([^,]+),/) ?.[1]) || 0
+        }px, ${
+          (parseFloat(mesh.style.transform.match(/,\s*([^p]+)px/) ?.[1]) || 0) + sy * 0.12
+        }px)`;
+      } else {
+        mesh.style.transform = `translateY(${sy * 0.12}px)`;
+      }
+
+      /* Conteúdo: fade suave ao sair */
+      content.style.opacity = Math.max(1 - p * 1.8, 0);
+      content.style.transform = `translateY(${sy * 0.05}px)`;
+
+      raf = false;
+    }
+
+    addEventListener('scroll', onScroll, { passive: true });
+  </script>
+</body>
+</html>

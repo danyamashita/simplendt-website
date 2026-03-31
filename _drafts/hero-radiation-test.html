@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleNDT — Radiation Hero Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #04050c;
+      --text:      #eeeef5;
+      --text-dim:  rgba(238,238,245,0.50);
+      --text-ghost:rgba(238,238,245,0.20);
+      --accent:    #5eaed5;
+      --border:    rgba(255,255,255,0.07);
+      --font:      'Outfit', -apple-system, sans-serif;
+      --mono:      'Space Mono', monospace;
+      --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+      --ease:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { font-size:16px; -webkit-font-smoothing:antialiased; background:var(--bg); scroll-behavior:smooth; }
+    body { font-family:var(--font); background:var(--bg); color:var(--text); overflow-x:hidden; }
+    ::selection { background:var(--accent); color:var(--bg); }
+
+    .test-label {
+      position:fixed; top:12px; right:16px; z-index:10000;
+      font-family:var(--mono); font-size:10px; color:var(--accent);
+      background:rgba(4,5,12,0.92); border:1px solid rgba(94,174,213,0.2);
+      border-radius:4px; padding:4px 10px; letter-spacing:1px; pointer-events:none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      padding:0 52px; height:68px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .nav-logo-mark {
+      width:30px; height:30px; border:1.5px solid rgba(94,174,213,0.55);
+      border-radius:7px; display:flex; align-items:center; justify-content:center;
+      font-family:var(--mono); font-size:11px; font-weight:700; color:var(--accent);
+    }
+    .nav-logo-text { font-weight:600; font-size:15px; color:rgba(238,238,245,0.88); }
+    .nav-right { display:flex; align-items:center; gap:36px; }
+    .nav-link { font-size:13px; color:var(--text-dim); text-decoration:none; transition:color 0.3s; }
+    .nav-link:hover { color:var(--text); }
+    .nav-cta {
+      font-size:13px; font-weight:500; color:var(--bg);
+      background:var(--accent); padding:9px 22px; border-radius:6px;
+      text-decoration:none; transition:all 0.3s;
+    }
+    .nav-cta:hover { background:#7ec4e8; transform:translateY(-1px); }
+
+    /* ════════════════════════════════════
+       HERO
+    ════════════════════════════════════ */
+    .hero {
+      position:relative; min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden; background:var(--bg);
+    }
+
+    #cloudCanvas {
+      position:absolute; inset:0; width:100%; height:100%; z-index:1;
+    }
+
+    /* Névoa da câmara — dá textura de vapor supersaturado */
+    .chamber-mist {
+      position:absolute; inset:0; z-index:2; pointer-events:none;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 50%,
+          rgba(8,12,30,0) 0%,
+          rgba(4,5,12,0.45) 100%);
+    }
+
+    /* Vinheta nas bordas */
+    .hero-vignette {
+      position:absolute; inset:0; z-index:2; pointer-events:none;
+      background:
+        radial-gradient(ellipse 85% 75% at 50% 50%, transparent 30%, rgba(4,5,12,0.7) 100%),
+        linear-gradient(to bottom, rgba(4,5,12,0.6) 0%, transparent 15%,
+          transparent 75%, rgba(4,5,12,0.85) 100%);
+    }
+
+    /* Linha sutil no topo */
+    .hero-topline {
+      position:absolute; top:0; left:0; right:0; height:1px; z-index:3;
+      background:linear-gradient(90deg, transparent, rgba(94,174,213,0.25) 50%, transparent);
+      pointer-events:none;
+    }
+
+    /* Legenda de partícula no canto — tipo painel de laboratório */
+    .chamber-legend {
+      position:absolute; bottom:88px; left:52px; z-index:10;
+      display:flex; flex-direction:column; gap:9px;
+      opacity:0; animation:fadeIn 1s var(--ease-out) 1.1s forwards;
+    }
+    .legend-item {
+      display:flex; align-items:center; gap:10px;
+      font-family:var(--mono); font-size:9px; letter-spacing:1.5px;
+      color:var(--text-ghost); text-transform:uppercase;
+    }
+    .legend-track {
+      width:28px; height:2px; border-radius:1px;
+      position:relative; overflow:visible;
+    }
+    .legend-track::after {
+      content:''; position:absolute; inset:0;
+      border-radius:1px;
+      box-shadow:0 0 4px currentColor;
+    }
+    .lt-gamma  { background:rgba(94,174,213,0.8);   color:rgba(94,174,213,0.8);   height:1px; }
+    .lt-beta   { background:rgba(148,100,240,0.75); color:rgba(148,100,240,0.75); }
+    .lt-alpha  { background:rgba(195,235,255,0.65); color:rgba(195,235,255,0.65); height:3.5px; width:14px; }
+    .lt-muon   { background:rgba(190,160,255,0.65); color:rgba(190,160,255,0.65); height:1px; width:36px; }
+
+    /* Contador de eventos (Geiger-style) */
+    .geiger-count {
+      position:absolute; bottom:88px; right:52px; z-index:10;
+      text-align:right;
+      opacity:0; animation:fadeIn 1s var(--ease-out) 1.1s forwards;
+    }
+    .geiger-value {
+      font-family:var(--mono); font-size:28px; font-weight:700;
+      color:rgba(94,174,213,0.5); letter-spacing:-1px; line-height:1;
+    }
+    .geiger-label {
+      font-family:var(--mono); font-size:9px; letter-spacing:2px;
+      color:var(--text-ghost); text-transform:uppercase; margin-top:4px;
+    }
+
+    /* ── Conteúdo central ── */
+    .hero-content {
+      position:relative; z-index:10;
+      text-align:center; max-width:860px; padding:0 40px;
+      will-change:transform,opacity;
+    }
+
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:10px;
+      font-family:var(--mono); font-size:10px; letter-spacing:2.5px;
+      color:rgba(94,174,213,0.6); text-transform:uppercase;
+      margin-bottom:40px;
+      opacity:0; animation:fadeUp 1s var(--ease-out) 0.2s forwards;
+    }
+    .ew-dot {
+      width:5px; height:5px; border-radius:50%; background:var(--accent);
+      animation:dotPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(94,174,213,0); }
+      50%      { opacity:0.4; box-shadow:0 0 0 7px rgba(94,174,213,0.12); }
+    }
+
+    .hero-title {
+      font-size:clamp(48px, 7.8vw, 100px);
+      font-weight:600; line-height:1.0; letter-spacing:-3.5px;
+      margin-bottom:30px;
+      opacity:0; animation:fadeUp 1s var(--ease-out) 0.32s forwards;
+    }
+    .hero-title .line { display:block; }
+    .hero-title .accent {
+      color:transparent;
+      background:linear-gradient(120deg, #5eaed5 0%, #9dd5f0 55%, #cceeff 100%);
+      -webkit-background-clip:text; background-clip:text;
+    }
+
+    .hero-sub {
+      font-size:clamp(14px,1.6vw,17px); color:var(--text-dim);
+      max-width:480px; margin:0 auto 52px;
+      line-height:1.8; font-weight:300;
+      opacity:0; animation:fadeUp 1s var(--ease-out) 0.46s forwards;
+    }
+
+    .hero-ctas {
+      display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+      opacity:0; animation:fadeUp 1s var(--ease-out) 0.6s forwards;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:9px;
+      padding:13px 28px; border-radius:8px;
+      font-family:var(--font); font-size:14px; font-weight:500;
+      text-decoration:none; border:none; cursor:pointer;
+      transition:all 0.35s var(--ease); letter-spacing:0.1px;
+    }
+    .btn-primary { background:var(--accent); color:var(--bg); }
+    .btn-primary:hover { background:#7ec4e8; transform:translateY(-2px); box-shadow:0 10px 40px rgba(94,174,213,0.35); }
+    .btn-ghost { background:rgba(255,255,255,0.05); color:var(--text-dim); border:1px solid var(--border); backdrop-filter:blur(8px); }
+    .btn-ghost:hover { background:rgba(255,255,255,0.09); color:var(--text); border-color:rgba(94,174,213,0.25); }
+    .btn-arrow { display:inline-block; transition:transform 0.3s var(--ease); }
+    .btn:hover .btn-arrow { transform:translateX(5px); }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+      z-index:10; display:flex; flex-direction:column; align-items:center; gap:8px;
+      opacity:0; animation:fadeIn 1s var(--ease-out) 1.4s forwards; pointer-events:none;
+    }
+    .scroll-bar { width:1px; height:44px; background:linear-gradient(to bottom, rgba(94,174,213,0.5), transparent); overflow:hidden; position:relative; }
+    .scroll-bar::after { content:''; position:absolute; top:-100%; left:0; width:100%; height:100%; background:linear-gradient(to bottom, transparent, rgba(94,174,213,0.9), transparent); animation:scrollDrop 2s ease-in-out infinite; }
+    @keyframes scrollDrop { 0%{top:-100%} 100%{top:200%} }
+    .scroll-label { font-family:var(--mono); font-size:9px; letter-spacing:3px; color:var(--text-ghost); text-transform:uppercase; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    /* ── next ── */
+    .next-section {
+      min-height:50vh; display:flex; align-items:center; justify-content:center;
+      background:#05060e; border-top:1px solid rgba(255,255,255,0.04); padding:80px 52px;
+    }
+    .next-inner { text-align:center; max-width:600px; }
+    .next-label { font-family:var(--mono); font-size:11px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+    .next-inner h2 { font-size:clamp(24px,3vw,38px); font-weight:600; letter-spacing:-1.5px; line-height:1.2; margin-bottom:16px; }
+    .next-inner p { font-size:15px; color:var(--text-dim); line-height:1.8; font-weight:300; }
+
+    @media (max-width:768px) {
+      nav { padding:0 20px; }
+      .hero-content { padding:0 20px; }
+      .chamber-legend, .geiger-count { display:none; }
+      .nav-right .nav-link { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="test-label">⚠ TEST · hero-radiation-test.html</div>
+
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">S</div>
+      <span class="nav-logo-text">SimpleNDT</span>
+    </a>
+    <div class="nav-right">
+      <a href="#" class="nav-link">Serviços</a>
+      <a href="#" class="nav-link">Sobre</a>
+      <a href="#" class="nav-cta">Contato</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+
+    <canvas id="cloudCanvas"></canvas>
+    <div class="chamber-mist"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-topline"></div>
+
+    <!-- Legenda das partículas -->
+    <div class="chamber-legend">
+      <div class="legend-item">
+        <div class="legend-track lt-gamma"></div>
+        <span>γ · Raios Gama</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-track lt-beta"></div>
+        <span>β · Partícula Beta</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-track lt-alpha"></div>
+        <span>α · Partícula Alfa</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-track lt-muon"></div>
+        <span>μ · Múon Cósmico</span>
+      </div>
+    </div>
+
+    <!-- Contador Geiger -->
+    <div class="geiger-count">
+      <div class="geiger-value" id="geigerVal">0</div>
+      <div class="geiger-label">eventos detectados</div>
+    </div>
+
+    <!-- Conteúdo central -->
+    <div class="hero-content" id="heroContent">
+      <div class="hero-eyebrow">
+        <span class="ew-dot"></span>
+        Consultoria END · RT · PAUT · Nível 3
+        <span class="ew-dot"></span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line">Uma consultoria.</span>
+        <span class="line">Todos os <span class="accent">métodos</span>.</span>
+        <span class="line">Todos os códigos.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Nível 3 certificado ASNT e PCN em VT, PT, MT, UT, PAUT e RT.
+        Procedimentos, qualificações, auditorias e treinamento —
+        ASME, PED e ISO&nbsp;9712.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary">Solicitar Orçamento <span class="btn-arrow">→</span></a>
+        <a href="#next" class="btn btn-ghost">Ver Serviços</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-bar"></div>
+      <span class="scroll-label">scroll</span>
+    </div>
+
+  </section>
+
+  <div class="next-section" id="next">
+    <div class="next-inner">
+      <div class="next-label">Câmara de Wilson</div>
+      <h2>Trilhas de radiação ionizante em tempo real</h2>
+      <p>Quatro tipos de partícula: γ gama (azul, retos), β beta (violeta, curvados pelo campo magnético), α alfa (branco-azul, curtos e espessos) e μ múons cósmicos (lavanda, longos e raros). Câmara de Wilson real — com a paleta do SimpleNDT.</p>
+    </div>
+  </div>
+
+  <script>
+  /* ═══════════════════════════════════════════════════════
+     CLOUD CHAMBER ENGINE — SimpleNDT
+     Simulação de câmara de Wilson: partículas de radiação
+     α, β e γ deixam trilhas luminosas que desvanecem.
+     Canvas 2D puro, zero dependências.
+  ═══════════════════════════════════════════════════════ */
+
+  const canvas  = document.getElementById('cloudCanvas');
+  const ctx     = canvas.getContext('2d');
+  const hero    = document.getElementById('hero');
+  const content = document.getElementById('heroContent');
+  const geigerEl = document.getElementById('geigerVal');
+
+  let W, H;
+  let tracks  = [];         // trilhas ativas
+  let totalEvents = 0;      // contador geiger
+  let lastBurst  = 0;       // timestamp do último burst
+
+  /* ── Tipos de partícula ───────────────────────────────
+     Baseado na física real da câmara de Wilson:
+     γ (gama)  → retas, compridas, finíssimas, semi-transparentes
+     β (beta)  → médias, levemente curvas (deflexão magnética)
+     α (alfa)  → curtas, grossas, mais brilhantes, bem localizadas
+  ─────────────────────────────────────────────────────── */
+  const TYPES = {
+    // γ Gama — reto, fino, longo. Azul accent.
+    gamma: {
+      prob:      0.35,
+      speedMin:  6,   speedMax: 10,
+      curvMin:   0,   curvMax:  0.002,
+      lenMin:    260, lenMax:   480,
+      widthCore: 0.7, widthGlow: 3,
+      alphaCore: 0.70, alphaGlow: 0.09,
+      decay:     0.0032,
+      color:     [94, 174, 213],         // #5eaed5 — azul accent
+    },
+    // β Beta — curva moderada. Violeta médio.
+    beta: {
+      prob:      0.35,
+      speedMin:  3.5, speedMax: 5.5,
+      curvMin:   0.010, curvMax: 0.032,
+      lenMin:    110, lenMax:   240,
+      widthCore: 1.5, widthGlow: 5,
+      alphaCore: 0.78, alphaGlow: 0.11,
+      decay:     0.0042,
+      color:     [148, 100, 240],        // violeta médio
+    },
+    // α Alfa — curto, espesso. Azul quase-branco.
+    alpha: {
+      prob:      0.20,
+      speedMin:  2.5, speedMax: 4,
+      curvMin:   0.002, curvMax: 0.010,
+      lenMin:    38,  lenMax:   80,
+      widthCore: 3.0, widthGlow: 7.5,
+      alphaCore: 0.88, alphaGlow: 0.16,
+      decay:     0.0058,
+      color:     [195, 235, 255],        // azul-branco
+    },
+    // μ Múon — raio cósmico. Lavanda. Raro, longo, quase reto.
+    muon: {
+      prob:      0.10,
+      speedMin:  9,   speedMax: 14,
+      curvMin:   0,   curvMax:  0.001,  // praticamente reto
+      lenMin:    420, lenMax:   700,    // atravessa a tela
+      widthCore: 0.8, widthGlow: 4,
+      alphaCore: 0.65, alphaGlow: 0.08,
+      decay:     0.0022,                // dura mais
+      color:     [190, 160, 255],       // lavanda (#be9fff)
+    },
+  };
+
+  /* ── Classe Track ─────────────────────────────────── */
+  class Track {
+    constructor(x, y, angle, typeName) {
+      const T       = TYPES[typeName];
+      this.type     = typeName;
+      this.col      = T.color;
+      this.life     = 1.0;
+      this.decay    = T.decay * (0.8 + Math.random() * 0.4);
+      this.speed    = T.speedMin + Math.random() * (T.speedMax - T.speedMin);
+      // Curvatura: alternamos sinal para β curvarem para ambos os lados
+      const curvMag = T.curvMin + Math.random() * (T.curvMax - T.curvMin);
+      this.curv     = curvMag * (Math.random() < 0.5 ? 1 : -1);
+      this.maxLen   = T.lenMin + Math.random() * (T.lenMax - T.lenMin);
+      this.wCore    = T.widthCore;
+      this.wGlow    = T.widthGlow;
+      this.aCore    = T.alphaCore;
+      this.aGlow    = T.alphaGlow;
+      // Posição e direção atuais
+      this.angle    = angle;
+      this.cx       = x;
+      this.cy       = y;
+      this.growing  = true;
+      this.traveled = 0;
+      // Armazena pontos para desenhar o caminho
+      this.pts      = [{x, y}];
+    }
+
+    update() {
+      if (this.growing) {
+        this.angle  += this.curv;
+        this.cx     += Math.cos(this.angle) * this.speed;
+        this.cy     += Math.sin(this.angle) * this.speed;
+        this.pts.push({x: this.cx, y: this.cy});
+        this.traveled += this.speed;
+        if (this.traveled >= this.maxLen) this.growing = false;
+      }
+      this.life -= this.decay;
+    }
+
+    draw() {
+      if (this.pts.length < 2 || this.life <= 0) return;
+      const [r, g, b] = this.col;
+      const l = this.life;
+
+      ctx.lineCap  = 'round';
+      ctx.lineJoin = 'round';
+
+      // Camada 1: glow largo e tênue
+      ctx.beginPath();
+      ctx.moveTo(this.pts[0].x, this.pts[0].y);
+      for (let i = 1; i < this.pts.length; i++)
+        ctx.lineTo(this.pts[i].x, this.pts[i].y);
+      ctx.strokeStyle = `rgba(${r},${g},${b},${this.aGlow * l})`;
+      ctx.lineWidth   = this.wGlow;
+      ctx.stroke();
+
+      // Camada 2: núcleo fino e brilhante
+      ctx.beginPath();
+      ctx.moveTo(this.pts[0].x, this.pts[0].y);
+      for (let i = 1; i < this.pts.length; i++)
+        ctx.lineTo(this.pts[i].x, this.pts[i].y);
+      ctx.strokeStyle = `rgba(${r},${g},${b},${this.aCore * l})`;
+      ctx.lineWidth   = this.wCore;
+      ctx.stroke();
+
+      // Flash na ponta (partícula em movimento)
+      if (this.growing && l > 0.3) {
+        const tip = this.pts[this.pts.length - 1];
+        const tipAlpha = (l - 0.3) / 0.7;
+        ctx.beginPath();
+        ctx.arc(tip.x, tip.y, this.wGlow * 0.7, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${tipAlpha * 0.5})`;
+        ctx.fill();
+      }
+    }
+
+    isDead() { return this.life <= 0; }
+  }
+
+  /* ── Emitir nova partícula ────────────────────────── */
+  function emit(fromX, fromY, angle) {
+    // Escolhe tipo pela probabilidade
+    const rnd = Math.random();
+    let type;
+    if      (rnd < 0.35)  type = 'gamma';
+    else if (rnd < 0.70)  type = 'beta';
+    else if (rnd < 0.90)  type = 'alpha';
+    else                   type = 'muon';
+
+    tracks.push(new Track(fromX, fromY, angle, type));
+    totalEvents++;
+    if (geigerEl) geigerEl.textContent = totalEvents;
+  }
+
+  /* ── Origem dos eventos ───────────────────────────── */
+  // Três fontes: centro e dois pontos aleatórios que derivam
+  const sources = [
+    { x: 0, y: 0, vx: 0, vy: 0 },  // será centralizado no resize
+    { x: 0, y: 0, vx: 0.3, vy: 0.15 },
+    { x: 0, y: 0, vx: -0.2, vy: 0.25 },
+  ];
+
+  function initSources() {
+    sources[0].x = W * 0.50; sources[0].y = H * 0.48;
+    sources[1].x = W * 0.25; sources[1].y = H * 0.55;
+    sources[2].x = W * 0.75; sources[2].y = H * 0.40;
+  }
+
+  /* ── Spawn: emissão periódica + bursts ─────────────── */
+  let spawnTimer = 0;
+
+  function spawnTick(ts) {
+    spawnTimer++;
+
+    // Emissão contínua aleatória de qualquer borda ou fonte
+    if (spawnTimer % 15 === 0) {
+      // Partícula de borda — traversa a tela como raio cósmico
+      const side = Math.floor(Math.random() * 4);
+      let ox, oy, angle;
+      switch (side) {
+        case 0: ox = Math.random()*W; oy = -5;    angle =  Math.PI/2 + (Math.random()-0.5)*0.6; break;
+        case 1: ox = W+5; oy = Math.random()*H;   angle =  Math.PI   + (Math.random()-0.5)*0.6; break;
+        case 2: ox = Math.random()*W; oy = H+5;   angle = -Math.PI/2 + (Math.random()-0.5)*0.6; break;
+        default:ox = -5;  oy = Math.random()*H;   angle =              (Math.random()-0.5)*0.6; break;
+      }
+      emit(ox, oy, angle);
+    }
+
+    // Emissão a partir das fontes internas
+    if (spawnTimer % 38 === 0) {
+      const src = sources[Math.floor(Math.random() * sources.length)];
+      const angle = Math.random() * Math.PI * 2;
+      emit(src.x, src.y, angle);
+    }
+
+    // Burst ocasional (decay event) — várias partículas de um ponto
+    if (ts - lastBurst > 5500 + Math.random() * 6000) {
+      lastBurst = ts;
+      const bx = W * (0.15 + Math.random() * 0.7);
+      const by = H * (0.15 + Math.random() * 0.7);
+      const count = 2 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < count; i++) {
+        emit(bx, by, Math.random() * Math.PI * 2);
+      }
+      // Flash de ionização no ponto de burst
+      flashPoints.push({ x: bx, y: by, r: 0, life: 1 });
+    }
+
+    // Move fontes lentamente (deriva térmica simulada)
+    sources.forEach(s => {
+      s.x += s.vx; s.y += s.vy;
+      if (s.x < 0 || s.x > W) s.vx *= -1;
+      if (s.y < 0 || s.y > H) s.vy *= -1;
+    });
+  }
+
+  /* ── Flash de ionização ───────────────────────────── */
+  let flashPoints = [];
+  function drawFlashes() {
+    flashPoints = flashPoints.filter(f => f.life > 0);
+    flashPoints.forEach(f => {
+      f.r    += 3;
+      f.life -= 0.06;
+      const alpha = f.life * 0.5;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(94,174,213,${alpha})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+  }
+
+  /* ── Resize ─────────────────────────────────────────── */
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    initSources();
+  }
+  resize();
+  window.addEventListener('resize', () => { resize(); tracks = []; });
+
+  /* ── Loop principal ─────────────────────────────────── */
+  function loop(ts) {
+    // Fundo: trail leve — controla quanto as trilhas persistem
+    ctx.fillStyle = 'rgba(4,5,12,0.24)';
+    ctx.fillRect(0, 0, W, H);
+
+    spawnTick(ts);
+    drawFlashes();
+
+    // Desenha e atualiza trilhas
+    for (let i = tracks.length - 1; i >= 0; i--) {
+      tracks[i].update();
+      tracks[i].draw();
+      if (tracks[i].isDead()) tracks.splice(i, 1);
+    }
+
+    // Limita memória: máximo 120 trilhas simultâneas
+    if (tracks.length > 120) tracks.splice(0, tracks.length - 120);
+
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  /* ── Scroll ─────────────────────────────────────────── */
+  let rafS = false;
+  function onScroll() { if (!rafS) { requestAnimationFrame(doScroll); rafS = true; } }
+  function doScroll() {
+    const sy = scrollY;
+    const p  = Math.min(sy / hero.offsetHeight, 1);
+    content.style.transform = `translateY(${sy * 0.06}px)`;
+    content.style.opacity   = Math.max(1 - p * 1.9, 0);
+    rafS = false;
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+
+  </script>
+</body>
+</html>

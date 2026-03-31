@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleNDT — Signal Hero Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #060810;
+      --text:        #eeeef5;
+      --text-dim:    rgba(238,238,245,0.5);
+      --text-ghost:  rgba(238,238,245,0.22);
+      --accent:      #5eaed5;
+      --accent-glow: rgba(94,174,213,0.18);
+      --border:      rgba(255,255,255,0.06);
+      --font:        'Outfit', -apple-system, sans-serif;
+      --mono:        'Space Mono', monospace;
+      --ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; background: var(--bg); scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); overflow-x: hidden; }
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    .test-label {
+      position: fixed; top: 12px; right: 16px; z-index: 10000;
+      font-family: var(--mono); font-size: 10px; color: var(--accent);
+      background: rgba(6,8,16,0.92); border: 1px solid rgba(94,174,213,0.2);
+      border-radius: 4px; padding: 4px 10px; letter-spacing: 1px; pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════
+       NAV — transparente sobre o visual
+    ══════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 0 52px; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 30px; height: 30px; border: 1.5px solid rgba(94,174,213,0.55);
+      border-radius: 7px; display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent);
+    }
+    .nav-logo-text { font-weight: 600; font-size: 15px; color: rgba(238,238,245,0.85); }
+    .nav-right { display: flex; align-items: center; gap: 36px; }
+    .nav-link { font-size: 13px; color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
+    .nav-link:hover { color: var(--text); }
+    .nav-cta {
+      font-size: 13px; font-weight: 500; color: var(--bg);
+      background: var(--accent); padding: 9px 22px; border-radius: 6px;
+      text-decoration: none; transition: all 0.3s;
+    }
+    .nav-cta:hover { background: #7ec4e8; transform: translateY(-1px); }
+
+    /* ══════════════════════════════════════════
+       HERO — SIGNAL / PAUT VISUALIZATION
+    ══════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* ── Background layer: o visual É o hero ── */
+    .hero-bg {
+      position: absolute;
+      inset: -15%;           /* maior q viewport → sem bordas no parallax */
+      z-index: 1;
+      will-change: transform;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* SVG de visualização: phased array / sonar ─────────────────────────────
+       Representa o padrão de feixes de um ensaio PAUT visto de cima.
+       Anéis concêntricos + linhas radiais + ponto focal central.
+    ─────────────────────────────────────────────────────────────────────── */
+    .signal-svg {
+      width: 130vmax; height: 130vmax;
+      max-width: 1400px; max-height: 1400px;
+      opacity: 0.55;
+      animation: signalRotate 120s linear infinite;
+      will-change: transform;
+    }
+    @keyframes signalRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Anéis individuais — pulse com delay escalonado */
+    .ring {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 0.5;
+      vector-effect: non-scaling-stroke;
+      animation: ringPulse 6s ease-in-out infinite;
+    }
+    .ring:nth-child(1)  { animation-delay: 0s;    opacity: 0.35; }
+    .ring:nth-child(2)  { animation-delay: 0.4s;  opacity: 0.30; }
+    .ring:nth-child(3)  { animation-delay: 0.8s;  opacity: 0.28; }
+    .ring:nth-child(4)  { animation-delay: 1.2s;  opacity: 0.25; }
+    .ring:nth-child(5)  { animation-delay: 1.6s;  opacity: 0.22; }
+    .ring:nth-child(6)  { animation-delay: 2.0s;  opacity: 0.20; }
+    .ring:nth-child(7)  { animation-delay: 2.4s;  opacity: 0.17; }
+    .ring:nth-child(8)  { animation-delay: 2.8s;  opacity: 0.15; }
+    .ring:nth-child(9)  { animation-delay: 3.2s;  opacity: 0.12; }
+    .ring:nth-child(10) { animation-delay: 3.6s;  opacity: 0.10; }
+    .ring:nth-child(11) { animation-delay: 4.0s;  opacity: 0.08; }
+    .ring:nth-child(12) { animation-delay: 4.4s;  opacity: 0.07; }
+    @keyframes ringPulse {
+      0%,100% { stroke-width: 0.5; }
+      50%      { stroke-width: 1.2; }
+    }
+
+    /* Linhas radiais do padrão PAUT */
+    .radial-line {
+      stroke: var(--accent);
+      stroke-width: 0.4;
+      opacity: 0.10;
+      vector-effect: non-scaling-stroke;
+    }
+
+    /* Ponto focal central — pulsa */
+    .focal-point {
+      fill: var(--accent);
+      animation: focalPulse 3s ease-in-out infinite;
+    }
+    @keyframes focalPulse {
+      0%,100% { r: 3; opacity: 0.9; }
+      50%      { r: 5; opacity: 1; }
+    }
+
+    /* Halo do ponto focal */
+    .focal-halo {
+      fill: none; stroke: var(--accent); stroke-width: 1;
+      animation: haloExpand 3s ease-out infinite;
+    }
+    @keyframes haloExpand {
+      0%   { r: 8;  opacity: 0.6; }
+      100% { r: 30; opacity: 0; }
+    }
+
+    /* Arcos de feixe PAUT (fan de ângulos) */
+    .beam-arc {
+      fill: none; stroke: var(--accent); stroke-width: 0.8;
+      opacity: 0.18;
+      vector-effect: non-scaling-stroke;
+      animation: beamGlow 4s ease-in-out infinite alternate;
+    }
+    @keyframes beamGlow {
+      from { opacity: 0.12; }
+      to   { opacity: 0.28; }
+    }
+
+    /* ── Gradiente sobre o background (cria profundidade) ── */
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(6,8,16,0.65) 100%),
+        radial-gradient(ellipse 100% 35% at 50% 100%, rgba(6,8,16,0.98) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 35% at 50% 0%,   rgba(6,8,16,0.85) 0%, transparent 55%);
+    }
+
+    /* ── Glow central: realça o centro do visual ── */
+    .hero-center-glow {
+      position: absolute; z-index: 2;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(94,174,213,0.08) 0%, transparent 65%);
+      filter: blur(30px);
+      pointer-events: none;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+    }
+
+    /* ══════════════════════════════════════════
+       CONTEÚDO — centrado sobre o visual
+    ══════════════════════════════════════════ */
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center;
+      max-width: 900px;
+      padding: 0 40px;
+      will-change: transform, opacity;
+    }
+
+    /* Tag de entrada */
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 2.5px;
+      color: rgba(94,174,213,0.6); text-transform: uppercase;
+      margin-bottom: 36px;
+      opacity: 0; animation: fadeUp 1s var(--ease-out) 0.2s forwards;
+    }
+    .tag-line { width: 32px; height: 1px; background: rgba(94,174,213,0.35); }
+
+    /* Título principal */
+    .hero-title {
+      font-size: clamp(46px, 7.5vw, 96px);
+      font-weight: 600; line-height: 1.0; letter-spacing: -3.5px;
+      margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 1s var(--ease-out) 0.35s forwards;
+    }
+    .hero-title .line { display: block; }
+    /* Linha com gradiente — iluminada como o sinal */
+    .hero-title .accent-line {
+      background: linear-gradient(90deg, var(--text) 0%, var(--accent-light, #7ec4e8) 50%, var(--text) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+      animation: shimmer 5s linear 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    /* Subtítulo */
+    .hero-sub {
+      font-size: clamp(14px, 1.6vw, 17px); color: var(--text-dim);
+      max-width: 500px; margin: 0 auto 48px;
+      line-height: 1.8; font-weight: 300;
+      opacity: 0; animation: fadeUp 1s var(--ease-out) 0.5s forwards;
+    }
+
+    /* CTAs */
+    .hero-ctas {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 1s var(--ease-out) 0.65s forwards;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 13px 28px; border-radius: 8px;
+      font-family: var(--font); font-size: 14px; font-weight: 500;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.35s var(--ease); letter-spacing: 0.1px;
+    }
+    .btn-primary {
+      background: var(--accent); color: var(--bg);
+    }
+    .btn-primary:hover {
+      background: #7ec4e8; transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(94,174,213,0.35);
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-dim); border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.09); color: var(--text);
+      border-color: rgba(94,174,213,0.22);
+    }
+    .btn-arrow { display: inline-block; transition: transform 0.3s var(--ease); }
+    .btn:hover .btn-arrow { transform: translateX(5px); }
+
+    /* ── Barra inferior de métricas/credenciais ── */
+    .hero-stats {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: stretch;
+      border-top: 1px solid var(--border);
+      opacity: 0; animation: fadeIn 1s var(--ease-out) 1s forwards;
+    }
+
+    .stat-item {
+      flex: 1; padding: 20px 0;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      border-right: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(94,174,213,0.03); }
+
+    .stat-value {
+      font-family: var(--mono); font-size: clamp(16px,2vw,22px); font-weight: 700;
+      color: var(--text); letter-spacing: -0.5px;
+    }
+    .stat-value .stat-accent { color: var(--accent); }
+    .stat-label {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
+      color: var(--text-ghost); text-transform: uppercase;
+    }
+
+    /* ── Indicador de scroll ── */
+    .scroll-hint {
+      position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0; animation: fadeIn 1s var(--ease-out) 1.4s forwards; pointer-events: none;
+    }
+    .scroll-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: rgba(94,174,213,0.4);
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    .scroll-dot:nth-child(2) { animation-delay: 0.2s; opacity: 0.6; }
+    .scroll-dot:nth-child(3) { animation-delay: 0.4s; opacity: 0.3; }
+    @keyframes scrollBounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(5px); }
+    }
+
+    /* ══════════════════════════════════════════
+       KEYFRAMES
+    ══════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    /* ══════════════════════════════════════════
+       SEÇÃO SEGUINTE
+    ══════════════════════════════════════════ */
+    .next-section {
+      min-height: 50vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #07080f; border-top: 1px solid rgba(255,255,255,0.04);
+      padding: 80px 52px;
+    }
+    .next-inner { text-align: center; max-width: 600px; }
+    .next-label { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+    .next-inner h2 { font-size: clamp(24px, 3vw, 38px); font-weight: 600; letter-spacing: -1.5px; line-height: 1.2; margin-bottom: 16px; }
+    .next-inner p { font-size: 15px; color: var(--text-dim); line-height: 1.8; font-weight: 300; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVO
+    ══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .hero-content { padding: 0 20px; }
+      .hero-stats { display: none; }
+      .scroll-hint { bottom: 32px; }
+      .hero-title { letter-spacing: -2px; }
+      .nav-right .nav-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="test-label">⚠ TEST · hero-signal-test.html</div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">S</div>
+      <span class="nav-logo-text">SimpleNDT</span>
+    </a>
+    <div class="nav-right">
+      <a href="#" class="nav-link">Serviços</a>
+      <a href="#" class="nav-link">Sobre</a>
+      <a href="#" class="nav-cta">Contato</a>
+    </div>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section class="hero" id="hero">
+
+    <!-- Background: visualização PAUT (parallax layer) -->
+    <div class="hero-bg" id="heroBg">
+      <svg class="signal-svg" viewBox="-600 -600 1200 1200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Gradiente radial para rings mais próximos terem mais brilho -->
+          <radialGradient id="ringGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#5eaed5" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#5eaed5" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- 48 linhas radiais — padrão de feixe PAUT -->
+        <g class="radials">
+          <line class="radial-line" x1="0" y1="0" x2="580" y2="0"/>
+          <line class="radial-line" x1="0" y1="0" x2="567" y2="121"/>
+          <line class="radial-line" x1="0" y1="0" x2="530" y2="238"/>
+          <line class="radial-line" x1="0" y1="0" x2="471" y2="343"/>
+          <line class="radial-line" x1="0" y1="0" x2="393" y2="432"/>
+          <line class="radial-line" x1="0" y1="0" x2="299" y2="501"/>
+          <line class="radial-line" x1="0" y1="0" x2="194" y2="549"/>
+          <line class="radial-line" x1="0" y1="0" x2="82"  y2="574"/>
+          <line class="radial-line" x1="0" y1="0" x2="-33" y2="577"/>
+          <line class="radial-line" x1="0" y1="0" x2="-146" y2="558"/>
+          <line class="radial-line" x1="0" y1="0" x2="-253" y2="516"/>
+          <line class="radial-line" x1="0" y1="0" x2="-349" y2="455"/>
+          <line class="radial-line" x1="0" y1="0" x2="-430" y2="375"/>
+          <line class="radial-line" x1="0" y1="0" x2="-494" y2="279"/>
+          <line class="radial-line" x1="0" y1="0" x2="-536" y2="172"/>
+          <line class="radial-line" x1="0" y1="0" x2="-556" y2="59"/>
+          <line class="radial-line" x1="0" y1="0" x2="-555" y2="-66"/>
+          <line class="radial-line" x1="0" y1="0" x2="-530" y2="-189"/>
+          <line class="radial-line" x1="0" y1="0" x2="-483" y2="-300"/>
+          <line class="radial-line" x1="0" y1="0" x2="-415" y2="-397"/>
+          <line class="radial-line" x1="0" y1="0" x2="-330" y2="-476"/>
+          <line class="radial-line" x1="0" y1="0" x2="-231" y2="-533"/>
+          <line class="radial-line" x1="0" y1="0" x2="-121" y2="-566"/>
+          <line class="radial-line" x1="0" y1="0" x2="-8"   y2="-573"/>
+          <line class="radial-line" x1="0" y1="0" x2="106"  y2="-558"/>
+          <line class="radial-line" x1="0" y1="0" x2="215"  y2="-520"/>
+          <line class="radial-line" x1="0" y1="0" x2="313"  y2="-460"/>
+          <line class="radial-line" x1="0" y1="0" x2="397"  y2="-380"/>
+          <line class="radial-line" x1="0" y1="0" x2="464"  y2="-283"/>
+          <line class="radial-line" x1="0" y1="0" x2="511"  y2="-175"/>
+          <line class="radial-line" x1="0" y1="0" x2="537"  y2="-60"/>
+          <line class="radial-line" x1="0" y1="0" x2="540"  y2="58"/>
+        </g>
+
+        <!-- 12 anéis concêntricos -->
+        <circle class="ring" cx="0" cy="0" r="60"/>
+        <circle class="ring" cx="0" cy="0" r="110"/>
+        <circle class="ring" cx="0" cy="0" r="165"/>
+        <circle class="ring" cx="0" cy="0" r="225"/>
+        <circle class="ring" cx="0" cy="0" r="290"/>
+        <circle class="ring" cx="0" cy="0" r="360"/>
+        <circle class="ring" cx="0" cy="0" r="1"/>
+        <circle class="ring" cx="0" cy="0" r="440"/>
+        <circle class="ring" cx="0" cy="0" r="490"/>
+        <circle class="ring" cx="0" cy="0" r="1"/>
+        <circle class="ring" cx="0" cy="0" r="545"/>
+        <circle class="ring" cx="0" cy="0" r="1"/>
+
+        <!-- Arcos de feixe PAUT — fan de 60° centrado (−30° a +30°) -->
+        <path class="beam-arc" d="M 0,0 L 490,-142 A 510,510 0 0,1 490,142 Z" fill="none"/>
+        <path class="beam-arc" d="M 0,0 L 400,-232 A 465,465 0 0,1 400,232 Z" fill="none" style="animation-delay:1s"/>
+        <path class="beam-arc" d="M 0,0 L 300,-300 A 425,425 0 0,1 300,300 Z" fill="none" style="animation-delay:2s"/>
+
+        <!-- Ponto focal -->
+        <circle class="focal-halo" cx="0" cy="0" r="8"/>
+        <circle class="focal-halo" cx="0" cy="0" r="8" style="animation-delay:1s"/>
+        <circle class="focal-point" cx="0" cy="0" r="3"/>
+
+        <!-- Dados de anotação — como em software NDT real -->
+        <g opacity="0.18" font-family="monospace" font-size="9" fill="#5eaed5">
+          <text x="65"  y="-10">UT-PA</text>
+          <text x="65"  y="0">64el</text>
+          <text x="-140" y="-10" text-anchor="end">f=5MHz</text>
+          <text x="-140" y="2"   text-anchor="end">Ø6.3mm</text>
+          <text x="0"   y="-70"  text-anchor="middle">0°</text>
+          <text x="0"   y="82"   text-anchor="middle">180°</text>
+          <text x="80"  y="370"  text-anchor="middle" transform="rotate(-15,80,370)">+30°</text>
+          <text x="-85" y="370"  text-anchor="middle" transform="rotate(15,-85,370)">−30°</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Camada de overlay -->
+    <div class="hero-overlay"></div>
+    <div class="hero-center-glow"></div>
+
+    <!-- Conteúdo principal -->
+    <div class="hero-content" id="heroContent">
+
+      <div class="hero-tag">
+        <span class="tag-line"></span>
+        Consultoria END · Nível 3 · São Paulo
+        <span class="tag-line"></span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line">Uma consultoria.</span>
+        <span class="line accent-line">Todos os métodos.</span>
+        <span class="line">Todos os códigos.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Nível 3 certificado ASNT e PCN em VT, PT, MT, UT, PAUT e RT.
+        Procedimentos, qualificações, auditorias e treinamento —
+        ASME, PED e ISO&nbsp;9712.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#" class="btn btn-primary">Solicitar Orçamento <span class="btn-arrow">→</span></a>
+        <a href="#next" class="btn btn-ghost">Ver Serviços</a>
+      </div>
+
+    </div>
+
+    <!-- Barra de stats inferior -->
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-value">15<span class="stat-accent">+</span></span>
+        <span class="stat-label">Anos de exp.</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">6 <span class="stat-accent">métodos</span></span>
+        <span class="stat-label">END certificados</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">ASNT <span class="stat-accent">·</span> PCN</span>
+        <span class="stat-label">Certificações</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">ASME <span class="stat-accent">·</span> PED</span>
+        <span class="stat-label">Normas internacionais</span>
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint">
+      <div class="scroll-dot"></div>
+      <div class="scroll-dot"></div>
+      <div class="scroll-dot"></div>
+    </div>
+
+  </section>
+
+  <!-- Seção seguinte -->
+  <div class="next-section" id="next">
+    <div class="next-inner">
+      <div class="next-label">Transição de Scroll</div>
+      <h2>O sinal PAUT parallaxeia ao rolar</h2>
+      <p>A visualização técnica de fundo se move mais devagar que o texto, criando profundidade. Role de volta para ver o efeito completo.</p>
+    </div>
+  </div>
+
+  <script>
+    /* ════════════════════════════════════════════
+       JS mínimo — apenas parallax de scroll
+       e mouse drift no background
+    ════════════════════════════════════════════ */
+
+    const heroBg  = document.getElementById('heroBg');
+    const content = document.getElementById('heroContent');
+    const hero    = document.getElementById('hero');
+    const isMobile = matchMedia('(max-width: 768px)').matches;
+
+    // ── 1. Scroll parallax ─────────────────────
+    let raf = false;
+    function onScroll() {
+      if (!raf) { requestAnimationFrame(doScroll); raf = true; }
+    }
+    function doScroll() {
+      const sy = scrollY;
+      const h  = hero.offsetHeight;
+      const p  = Math.min(sy / h, 1);
+
+      /* Background sobe a 35% da velocidade do scroll */
+      heroBg.style.transform = `translateY(${sy * 0.35}px)`;
+
+      /* Conteúdo: leve impulso + fade suave */
+      content.style.transform = `translateY(${sy * 0.05}px)`;
+      content.style.opacity   = Math.max(1 - p * 1.9, 0);
+
+      raf = false;
+    }
+    addEventListener('scroll', onScroll, { passive: true });
+
+    // ── 2. Mouse drift — rotação sutil (desktop) ──
+    if (!isMobile) {
+      let mx = 0, my = 0, cx = 0, cy = 0;
+      const svg = document.querySelector('.signal-svg');
+
+      ;(function tick() {
+        cx += (mx - cx) * 0.025;
+        cy += (my - cy) * 0.025;
+        const nx = (cx / innerWidth  - 0.5);  // −0.5 → +0.5
+        const ny = (cy / innerHeight - 0.5);
+
+        /* Translação paralaxe sutil do bg com mouse */
+        if (scrollY < 100) {
+          const baseY = scrollY * 0.35;
+          heroBg.style.transform = `translate(${nx * 18}px, calc(${baseY}px + ${ny * 12}px))`;
+        }
+
+        requestAnimationFrame(tick);
+      })();
+
+      addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    }
+  </script>
+</body>
+</html>
